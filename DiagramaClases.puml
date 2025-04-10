@@ -1,0 +1,54 @@
+@startuml
+Class Hecho {
+
+-titulo: String
+-descripcion: String
+-categoria: String
+-ubicacion: Ubicacion
+-fechaDeCarga: Date
+-fecha: Date
+-contenidoMultimedia: Contenido
+-origen: Origen
+
+}
+
+Class Coleccion {
+
+-hechos:Hecho
+-fuente: Fuente
+-titulo: String
+-descripcion: String
+-crierioDePertenencia: Criterio
+
+}
+
+Class Ubicacion {
+
+latitud: Decimal
+longitud: Decimal
+
+}
+
+Class Contribuyente {
+nombre: String
+apellido: String
+edad: Integer
+
+}
+
+Class Solicitud {
+
+hecho: Hecho
+descripcion: String
+
+}
+
+Class LectorCSV {
+
+}
+
+Coleccion o-- Hecho
+Hecho --> Ubicacion
+Solicitud --> Hecho
+
+@enduml
