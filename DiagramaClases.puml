@@ -24,23 +24,27 @@ Class Coleccion {
 
 Class Ubicacion {
 
-latitud: Decimal
-longitud: Decimal
+-latitud: Double
+-longitud: Double
 
 }
 
+Class Persona {}
+
+Class Administrador {}
+
 Class Contribuyente {
-nombre: String
-apellido: String
-edad: Integer
+-nombre: String
+-apellido: String
+-edad: Integer
 
 }
 
 Class Solicitud {
 
-hecho: Hecho
-descripcion: String
-
+-hecho: Hecho
+-descripcion: String
++aceptar()
 }
 
 Class LectorCSV {
@@ -50,5 +54,7 @@ Class LectorCSV {
 Coleccion o-- Hecho
 Hecho --> Ubicacion
 Solicitud --> Hecho
-
+Administrador --|> Persona
+Contribuyente --|> Persona
+Contribuyente ..> Hecho
 @enduml
