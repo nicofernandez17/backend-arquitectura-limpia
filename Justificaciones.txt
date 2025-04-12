@@ -1,0 +1,8 @@
+1. El contenido multimedia no lo modelamos ya que no necesita ser soportado en esta entrega
+2. El origen se modela como un Enum ya que son valores bien conocidos y de momento no deben soportar ningun comportamiento ni estado
+3. Las coordenadas las modelamos en una Clase Ubicacion (Value object) ya que solo tiene estado, y facilitan la mantenibilidad al momento de agregar un nuevo parametro a la misma.
+4. Cada coleccion cuenta con una lista de criterios que permite combinar de forma flexible y expandible los criterios que pertenecen a la misma
+    Lo hacemos a travez de una clase abstracta define el contrato para cada criterio.
+    La collección utiliza estos criterios para entender si el hecho pertenece o no a la misma.
+5.1 Usuario es una interfaz ya que hay usuarios con comportamientos diferetes pero por el momento no queremos forzar una jerarquia ni heredar comportamiento comun
+5.2 Pensamos otra soluciones que es que contribuyente herede de visualizador ya que contribuyente es un visualizador q agrego un hecho.
