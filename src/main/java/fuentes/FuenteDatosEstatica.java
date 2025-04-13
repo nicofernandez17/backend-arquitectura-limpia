@@ -3,21 +3,26 @@ package fuentes;
 import domain.Hecho;
 import java.util.ArrayList;
 import java.util.List;
+
+import lectores.Lector;
 import servicios.LectorCSV;
 
 public class FuenteDatosEstatica implements FuenteDatos {
-  private String rutaCSV;
-  private LectorCSV lectorCSV;
+  private String ruta;
+  private Lector lector;
 
-  public FuenteDatosEstatica(String rutaCSV, LectorCSV lectorCSV) {
-    this.rutaCSV = rutaCSV;
-    this.lectorCSV = lectorCSV;
+  public FuenteDatosEstatica(String ruta, Lector lector) {
+    this.ruta = ruta;
+    this.lector = lector;
   }
 
   @Override
   public List<Hecho> obtenerHechos() {
-    return lectorCSV.leer(rutaCSV);
+    return lector.leer(ruta);
   }
+
+
+
 
   // Otros métodos futuros:
   public List<Hecho> extraerDatosDesdeSQL() {

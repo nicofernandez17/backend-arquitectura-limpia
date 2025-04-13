@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface Lector {
 
-    public List<Hecho> obtenerDatos(String ruta);
+    public List<Hecho> leer(String ruta);
 
 }

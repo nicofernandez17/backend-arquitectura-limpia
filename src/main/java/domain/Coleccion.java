@@ -1,7 +1,6 @@
 package domain;
 
 import criterios.CriterioDePertenencia;
-import fuentes.Fuente;
 
 import fuentes.FuenteDatos;
 import java.util.ArrayList;
