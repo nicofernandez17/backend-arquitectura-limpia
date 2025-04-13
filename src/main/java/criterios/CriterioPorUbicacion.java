@@ -4,12 +4,14 @@ import domain.Hecho;
 import helpers.Ubicacion;
 
 public class CriterioPorUbicacion implements CriterioDePertenencia {
-
     private Ubicacion ubicacion;
 
-    @Override
-    public boolean cumpleCriterio(Hecho hecho) {
-        return false;
+    public CriterioPorUbicacion(Ubicacion ubicacion) {
+        this.ubicacion = ubicacion;
     }
 
+    @Override
+    public boolean cumple(Hecho hecho) {
+        return hecho.getUbicacion().equals(ubicacion);
+    }
 }
