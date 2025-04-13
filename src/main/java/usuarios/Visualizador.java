@@ -3,7 +3,7 @@ package usuarios;
 import domain.Hecho;
 import domain.SolicitudEliminacion;
 
-public class Contribuyente implements Rol {
+public class Visualizador implements Rol {
 
   @Override
   public SolicitudEliminacion solicitarEliminacion(Hecho hecho, String motivo) {
@@ -13,6 +13,6 @@ public class Contribuyente implements Rol {
   @Override
   public void aportarHecho(Hecho hecho) {
     //TODO
-    // lógica para persistir o validar el hecho
+    // lógica opcional para registrar aporte anónimo
   }
 }

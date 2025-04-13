@@ -27,7 +27,6 @@ class Contribuyente implements Rol {
 }
 
 class Administrador{
-    -fundamentoEliminadoSolicitud: Fundamento
 
     +solicitarEliminacion(): SolicitudEliminacion
     +gestionarSolicitudes()

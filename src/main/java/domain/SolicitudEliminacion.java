@@ -8,9 +8,15 @@ public class SolicitudEliminacion {
     private String descripcion;
     private EstadoSolicitud estado;
 
+    public SolicitudEliminacion(Hecho hecho, String motivo) {
+    }
+
     public Void aceptar(){
         //TODO Implementar
         return null;
     }
 
+    public void rechazar() {
+        //TODO Implementar
+    }
 }
