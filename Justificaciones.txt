@@ -1,5 +1,5 @@
 1. El contenido multimedia no lo modelamos ya que no necesita ser soportado en esta entrega
-2. El origen se modela como un Enum ya que son valores bien conocidos y de momento no deben soportar ningun comportamiento ni estado
+2. El origen y estado de solicitud se modelan como un Enum ya que son valores bien conocidos y de momento no deben soportar ningun comportamiento ni estado
 3. Las coordenadas las modelamos en una Clase Ubicacion (Value object) ya que solo tiene estado, y facilitan la mantenibilidad al momento de agregar un nuevo parametro a la misma.
 4. Cada coleccion cuenta con una lista de criterios que permite combinar de forma flexible y expandible los criterios que pertenecen a la misma
     Lo hacemos a travez de una clase abstracta define el contrato para cada criterio.
