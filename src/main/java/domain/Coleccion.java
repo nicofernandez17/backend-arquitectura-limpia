@@ -1,6 +1,7 @@
 package domain;
 
 import criterios.CriterioDePertenencia;
+import fuentes.Fuente;
 
 import java.util.List;
 
@@ -12,6 +13,5 @@ public class Coleccion {
     private String descripcion;
     private Fuente fuente;
 
-    //TODO Fuente, Criterio
 
 }

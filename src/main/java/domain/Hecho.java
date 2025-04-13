@@ -5,6 +5,7 @@ import helpers.Origen;
 import helpers.Ubicacion;
 
 import java.util.Date;
+import java.util.List;
 
 public class Hecho {
 
@@ -16,6 +17,7 @@ public class Hecho {
     private Date fechaDeCarga;
     private Contenido contenidoMultimedia;
     private Origen origen;
+    private List<String> tags;
 
-    //TODO Categoria Contenido Origen
+
 }
