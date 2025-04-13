@@ -146,6 +146,10 @@ interface FuenteDatos {
 }
 
 Class FuenteDatosEstatica implements FuenteDatos{
+
+    -dataset: String
+    -lector: Lector
+
     +obtenerHechos(): List<Hecho>
     +extraerDatos(SQL): List<Hecho>
     +extraerDatos(csv): List<Hecho>
@@ -156,6 +160,8 @@ Class FuenteDatosDinamica implements FuenteDatos {
     +obtenerHechos(): List<Hecho>
 }
 
+FuenteDatosEstatica --> Lector
+
 '-------------------------INTERFAZ GRÁFICA----------------------'
 Class InterfazGrafica {
     +leer (List<Hecho>)
@@ -163,6 +169,19 @@ Class InterfazGrafica {
     +leer (Coleccion)
     +leer (Coleccion, List<FiltroHechos>)
 }
+
+'----------LECTOR CSV ---------------
+
+interface Lector {
+
+    +obtenerDatos(String)
+ }
+
+ Class LectorCSV implements Lector {
+
+    +obtenerDatos(String)
+ }
+
 
 '-------------------------ENUMS Y AUX---------------------------'
 enum Categoria {

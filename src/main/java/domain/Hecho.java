@@ -20,4 +20,7 @@ public class Hecho {
     private List<String> tags;
 
 
+    public String getTitulo() {
+        return titulo;
+    }
 }
