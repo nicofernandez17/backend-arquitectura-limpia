@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lectores.Lector;
-import servicios.LectorCSV;
 
 public class FuenteDatosEstatica implements FuenteDatos {
   private String ruta;

@@ -15,11 +15,21 @@ public class Hecho {
     private String descripcion;
     private Categoria categoria;
     private Ubicacion ubicacion;
-    private LocalDate fecha;
-    private Date fechaDeCarga;
+    private LocalDate fecha; //CAMBIAR
+    private LocalDate fechaDeCarga;
     private Contenido contenidoMultimedia;
     private Origen origen;
     private List<String> tags;
+
+    public Hecho(String titulo, String descripcion, Categoria categoria, Ubicacion ubicacion, LocalDate fecha, LocalDate fechaDeCarga, Origen origen) {
+        this.titulo = titulo;
+        this.descripcion = descripcion;
+        this.categoria = categoria;
+        this.ubicacion = ubicacion;
+        this.fecha = fecha;
+        this.fechaDeCarga = fechaDeCarga;
+        this.origen = origen;
+    }
 
 
     public Categoria getCategoria() {
