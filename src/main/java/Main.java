@@ -1,6 +1,6 @@
 import domain.Hecho;
 import lectores.Lector;
-import lectores.LectorCSV;
+import lectores.AdapterLectorCSV;
 
 import java.util.HashSet;
 import java.util.List;
@@ -11,7 +11,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Lector lector = new LectorCSV();
+        Lector lector = new AdapterLectorCSV();
 
         //lector.leer("desastres_naturales_argentina.csv").forEach(x -> System.out.println(x.getTitulo()));
 

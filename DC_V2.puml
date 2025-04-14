@@ -168,9 +168,14 @@ interface Lector {
     +obtenerDatos(String)
 }
 
-class LectorCSV implements Lector {
+class AdapterLectorCSV implements Lector {
 
     +obtenerDatos(String)
 }
+
+class CSVReader {
+
+}
+AdapterLectorCSV --> CSVReader
 
 @enduml
