@@ -11,6 +11,10 @@ import java.util.List;
 
 public class Hecho {
 
+    public String getTitulo() {
+        return titulo;
+    }
+
     private String titulo;
     private String descripcion;
     private Categoria categoria;
