@@ -45,7 +45,7 @@ public class AdapterLectorCSV implements Lector {
 
                 Ubicacion ubicacion = new Ubicacion(latitud, longitud);
                 Categoria categoria = new Categoria(categoriaNombre);
-                Hecho hecho = new Hecho(
+                Hecho nuevoHecho = new Hecho(
                         titulo,
                         descripcion,
                         categoria,
@@ -54,7 +54,21 @@ public class AdapterLectorCSV implements Lector {
                         LocalDate.now(),
                         Origen.DATASET
                 );
-                hechos.add(hecho);
+
+                // Verificamos si ya hay un Hecho con ese título
+                int indexExistente = -1;
+                for (int i = 0; i < hechos.size(); i++) {
+                    if (hechos.get(i).getTitulo().equalsIgnoreCase(titulo)) {
+                        indexExistente = i;
+                        break;
+                    }
+                }
+
+                if (indexExistente != -1) {
+                    hechos.set(indexExistente, nuevoHecho); // reemplaza el hecho existente
+                } else {
+                    hechos.add(nuevoHecho); // lo agrega si no existía
+                }
             }
 
         } catch (IOException | CsvValidationException e) {
