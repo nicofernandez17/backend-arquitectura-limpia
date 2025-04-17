@@ -4,6 +4,7 @@
 4. Cada coleccion cuenta con una lista de criterios que permite combinar de forma flexible y expandible los criterios que pertenecen a la misma
     Lo hacemos a travez de una clase abstracta define el contrato para cada criterio.
     La collección utiliza estos criterios para entender si el hecho pertenece o no a la misma.
+
 5.1 Usuario es una interfaz ya que hay usuarios con comportamientos diferetes pero por el momento no queremos forzar una jerarquia ni heredar comportamiento comun
 5.2 Pensamos otra soluciones que es que contribuyente herede de visualizador ya que contribuyente es un visualizador q agrego un hecho.
 
@@ -12,3 +13,5 @@
 conozca el lector del tipo de datos que le corresponda. Estariamos haciendo uso del patron adapter.
 8. La fuente, la modelamos como una herencia para la FuenteEstatica y la dinámica (JUSTIFICAR) en esta entrega centrandonos en la estatica, le colocamos un atributo dataset que nos
 indicaria la ruta hacia el archivo fuente y una referencia al lector correspondiente, permitiendonos abarcar distintos tipos de archivos y intercambiando los lectores
+9. Para permitir la creacion de colecciones implementamos un builder que sirve para dividir en pasos la creación de un objeto complejo como es en este caso una coleccion, que requiere
+de varios pasos para su creacion

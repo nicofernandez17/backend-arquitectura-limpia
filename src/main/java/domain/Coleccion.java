@@ -8,10 +8,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Coleccion {
+
+
     private List<Hecho> hechos;
     private FuenteDatos fuente;
     private String titulo;
     private String descripcion;
+
+
     private List<CriterioDePertenencia> criteriosDePertenencia;
 
     public Coleccion(String titulo, String descripcion, FuenteDatos fuente, List<CriterioDePertenencia> criterios) {
@@ -22,6 +26,13 @@ public class Coleccion {
         this.hechos = new ArrayList<>();
     }
 
+    public void cargarColeccion() {
+        this.hechos = fuente.obtenerHechos().stream()
+                .filter(this::cumpleTodosLosCriterios)
+                .collect(Collectors.toList());;
+    }
+
+    //Se puede cambiar por un getter
     public List<Hecho> leerColeccion() {
         List<Hecho> todosLosHechos = fuente.obtenerHechos();
         return todosLosHechos.stream()
@@ -34,4 +45,12 @@ public class Coleccion {
     }
 
     // Getters y setters
+    public List<Hecho> getHechos() {
+        return hechos;
+    }
+
+    public List<CriterioDePertenencia> getCriteriosDePertenencia() {
+        return criteriosDePertenencia;
+    }
+
 }

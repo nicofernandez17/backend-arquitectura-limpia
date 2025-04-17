@@ -16,6 +16,7 @@ public class SolicitudEliminacion {
 
     public void aceptar(){
         estado = EstadoSolicitud.ACEPTADA;
+        //TODO Realizar accion sobre el hecho
 
     }
 

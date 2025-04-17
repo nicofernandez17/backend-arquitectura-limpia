@@ -37,6 +37,7 @@ class Administrador {
 
 Usuario --> Rol
 Administrador --> SolicitudEliminacion
+Administrador --> ColeccionBuilder
 Visualizador --> SolicitudEliminacion
 Contribuyente --> SolicitudEliminacion
 
@@ -67,7 +68,18 @@ class Coleccion {
     -descripcion: String
     -crierioDePertenencia: List<CriterioDePertenencia>
 
+    +cargarColeccion()
     +leerColeccion(): List<Hecho>
+}
+
+class ColeccionBuilder {
+
+    -coleccion: Coleccion
+    +iniciarCon(): ColeccionBuilder
+    +buildCriterios(): ColeccionBuilder
+    +buildHechos(): ColeccionBuilder
+    +build(): Coleccion
+
 }
 
 interface CriterioDePertenencia {
