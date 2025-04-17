@@ -32,7 +32,7 @@ public class Coleccion {
                 .collect(Collectors.toList());;
     }
 
-    //Se puede cambiar por un getter
+    //TODO Se puede cambiar por un getter
     public List<Hecho> leerColeccion() {
         List<Hecho> todosLosHechos = fuente.obtenerHechos();
         return todosLosHechos.stream()
