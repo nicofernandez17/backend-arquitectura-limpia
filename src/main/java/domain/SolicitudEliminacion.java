@@ -9,14 +9,17 @@ public class SolicitudEliminacion {
     private EstadoSolicitud estado;
 
     public SolicitudEliminacion(Hecho hecho, String motivo) {
+        this.estado = EstadoSolicitud.PENDIENTE;
+        this.hecho = hecho;
+        this.descripcion = motivo;
     }
 
-    public Void aceptar(){
-        //TODO Implementar
-        return null;
+    public void aceptar(){
+        estado = EstadoSolicitud.ACEPTADA;
+
     }
 
     public void rechazar() {
-        //TODO Implementar
+        estado = EstadoSolicitud.RECHAZADA;
     }
 }

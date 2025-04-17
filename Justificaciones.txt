@@ -9,6 +9,6 @@
 
 6. FiltroHechos
 7.Modelamos el Lector como una interfaz que podrá ser implementada, en este caso por un LectorCSV pero podria serlo para otro tipo de archivos, permitiendonos que cada fuente estatica
-conozca el lector del tipo de datos que le corresponda
+conozca el lector del tipo de datos que le corresponda. Estariamos haciendo uso del patron adapter.
 8. La fuente, la modelamos como una herencia para la FuenteEstatica y la dinámica (JUSTIFICAR) en esta entrega centrandonos en la estatica, le colocamos un atributo dataset que nos
 indicaria la ruta hacia el archivo fuente y una referencia al lector correspondiente, permitiendonos abarcar distintos tipos de archivos y intercambiando los lectores
