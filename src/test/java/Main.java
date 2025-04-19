@@ -13,9 +13,6 @@ public class Main {
 
         Lector lector = new AdapterLectorCSV();
 
-        //lector.leer("desastres_naturales_argentina.csv").forEach(x -> System.out.println(x.getTitulo()));
-
-        Set<String> titulosVistos = new HashSet<>();
         List<Hecho> hechos = lector.leer("src/test/resources/desastres_naturales_argentina.csv");
 
         for (Hecho hecho : hechos) {
