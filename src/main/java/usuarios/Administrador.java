@@ -24,7 +24,6 @@ public class Administrador {
     builder.buildCriterios(criterios);
     builder.buildHechos();
     return builder.build();
-
   }
 
 
