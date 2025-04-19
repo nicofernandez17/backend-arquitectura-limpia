@@ -1,28 +1,19 @@
 package usuarios;
 
 import domain.Hecho;
-import domain.SolicitudEliminacion;
+import Solicitudes.SolicitudAgregado;
 
-public class Usuario {
-  private String nombre;
-  private String apellido;
-  private Integer edad;
-  private Rol rol;
+public abstract class Usuario {
+  private DatosUsuario datosUsuario;
 
-  public Usuario(String nombre, String apellido, Integer edad, Rol rol) {
-    this.nombre = nombre;
-    this.apellido = apellido;
-    this.edad = edad;
-    this.rol = rol;
-  }
-
-  public SolicitudEliminacion solicitarEliminacion(Hecho hecho, String motivo) {
-    return rol.solicitarEliminacion(hecho, motivo);
+  public Usuario(String nombre, String apellido, Integer edad) {
+    this.datosUsuario = new DatosUsuario(nombre, apellido, edad);
   }
 
   public void aportarHecho(Hecho hecho) {
-    rol.aportarHecho(hecho);
+    var solicitud = new SolicitudAgregado(hecho, datosUsuario);
+    solicitud.agregar();
+
   }
 
-  // Getters y setters
 }

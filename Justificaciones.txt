@@ -15,3 +15,5 @@ conozca el lector del tipo de datos que le corresponda. Estariamos haciendo uso 
 indicaria la ruta hacia el archivo fuente y una referencia al lector correspondiente, permitiendonos abarcar distintos tipos de archivos y intercambiando los lectores
 9. Para permitir la creacion de colecciones implementamos un builder que sirve para dividir en pasos la creación de un objeto complejo como es en este caso una coleccion, que requiere
 de varios pasos para su creacion
+10. Para los roles dentro del sistema como son adm,contribuyente y visualizador lo que hacemos es diferenciarlos por clase
+esto quiere decir que en la interfaz grafica solo le va aparecer

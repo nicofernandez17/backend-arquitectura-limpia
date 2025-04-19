@@ -18,12 +18,18 @@ rectangle "Sistema MetaMapa" {
     Administrador --> UC1
     Administrador --> UC2
     Administrador --> UC6
+    Administrador --> UC3
 
     Visualizador --> UC3
     Visualizador --> UC4
-    Visualizador --> UC5
 
+/'    Visualizador --> UC5'/
+
+    Contribuyente --> UC4
     Contribuyente --> UC5
+    Contribuyente --> UC3
+/'El contribuyente puede solicitar la eliminacion de un hecho
+si bien el visualizador puede llegar a ser un contribuyente, no lo es hasta que no contribuya'/
 }
 
 @enduml

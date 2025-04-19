@@ -8,9 +8,9 @@ public class FiltroTexto implements FiltroHechos{
 
     @Override
     public boolean filtrar(Hecho hecho) {
-
-        //Habria que ver como saber que campo queremos chequear, sino crear una clase por cada atributo filtrable
-        //hecho.getTitulo().equalsIgnoreCase(texto);
-        return false;
+        if (hecho == null || hecho.getTitulo() == null) {
+            return false;
+        }
+        return hecho.getTitulo().equalsIgnoreCase(texto);
     }
 }

@@ -3,46 +3,43 @@ left to right direction
 skinparam classAttributeIconSize 0
 
 '---------------------- Usuarios ----------------------
-class Usuario {
-    -nombre: String
-    -apellido: String
-    -edad: Integer
-    -rol: Rol
-
-    +verHecho(): A DEFINIR
-}
-
-interface Rol {
-    +solicitarEliminacion(): SolicitudEliminacion
+abstract class Usuario {
+    -datos: DatosUsuario
     +aportarHecho()
 }
 
-class Visualizador implements Rol {
-    +solicitarEliminacion(): SolicitudEliminacion
-    +aportarHecho()
+class Visualizador extends Usuario {
+
 }
 
-class Contribuyente implements Rol {
+class Contribuyente extends Usuario {
     +solicitarEliminacion(): SolicitudEliminacion
-    +aportarHecho()
 }
 
 class Administrador {
-
-    +solicitarEliminacion(): SolicitudEliminacion
-    +gestionarSolicitudes()
     +crearColeccion(): Coleccion
     +importarCSV()
 }
 
-Usuario --> Rol
-Administrador --> SolicitudEliminacion
-Administrador --> ColeccionBuilder
-Visualizador --> SolicitudEliminacion
+class DatosUsuario {
+    -nombre: String
+    -apellido: String
+    -edad: Integer
+}
+
 Contribuyente --> SolicitudEliminacion
+Administrador --> ColeccionBuilder
+ColeccionBuilder --> Coleccion
+Usuario --> DatosUsuario
+
+'---------------------- Solicitudes ----------------------
+abstract class Solicitud {
+    +actualizar()
+    +agregar()
+}
 
 '---------------------- Solicitud Eliminación ----------------------
-class SolicitudEliminacion {
+class SolicitudEliminacion extends Solicitud{
     -hecho: Hecho
     -motivo: String
     -estado: EstadoSolicitud
@@ -59,6 +56,20 @@ enum EstadoSolicitud {
 
 SolicitudEliminacion --> Hecho
 SolicitudEliminacion --> EstadoSolicitud
+
+'---------------------- Solicitud Agregado ----------------------
+class SolicitudAgregado extends Solicitud{
+    -hecho: Hecho
+    -datosUsuario : DatosUsuario
+    -estadoSolicitud : EstadoSolicitud
+
+    +aceptar()
+    +rechazar()
+}
+Usuario --> SolicitudAgregado
+SolicitudAgregado --> Hecho
+SolicitudAgregado --> EstadoSolicitud
+SolicitudAgregado --> DatosUsuario
 
 '---------------------- Colecciones ----------------------
 class Coleccion {
@@ -171,6 +182,7 @@ class FuenteEstatica implements FuenteDatos {
 
 class FuenteDinamica implements FuenteDatos {
     +obtenerHechos(): List<Hecho>
+    + agregarHecho(Hecho hecho)
 }
 
 FuenteEstatica --> Lector

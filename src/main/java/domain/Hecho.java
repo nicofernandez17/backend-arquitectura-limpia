@@ -11,6 +11,10 @@ import java.util.List;
 
 public class Hecho {
 
+    public Hecho(String descripcionDelHecho) {
+        this.descripcion = descripcionDelHecho;
+    }
+
     public String getTitulo() {
         return titulo;
     }
@@ -46,5 +50,9 @@ public class Hecho {
 
     public LocalDate getFecha() {
         return fecha;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
     }
 }
