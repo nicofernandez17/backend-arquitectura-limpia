@@ -47,4 +47,8 @@ public class Hecho {
     public LocalDate getFecha() {
         return fecha;
     }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
 }
