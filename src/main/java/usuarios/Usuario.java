@@ -1,21 +1,19 @@
 package usuarios;
 
 import domain.Hecho;
-import domain.SolicitudEliminacion;
+import Solicitudes.SolicitudAgregado;
 
 public abstract class Usuario {
-  private String nombre;
-  private String apellido;
-  private Integer edad;
+  private DatosUsuario datosUsuario;
 
   public Usuario(String nombre, String apellido, Integer edad) {
-    this.nombre = nombre;
-    this.apellido = apellido;
-    this.edad = edad;
+    this.datosUsuario = new DatosUsuario(nombre, apellido, edad);
   }
 
   public void aportarHecho(Hecho hecho) {
-    //TODO
+    var solicitud = new SolicitudAgregado(hecho, datosUsuario);
+    solicitud.agregar();
+
   }
 
 }

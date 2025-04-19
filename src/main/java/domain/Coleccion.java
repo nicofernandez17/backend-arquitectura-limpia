@@ -3,6 +3,8 @@ package domain;
 import criterios.CriterioDePertenencia;
 
 import fuentes.FuenteDatos;
+import lombok.Getter;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,12 +12,15 @@ import java.util.stream.Collectors;
 public class Coleccion {
 
 
+    // Getters y setters
+    @Getter
     private List<Hecho> hechos;
     private FuenteDatos fuente;
     private String titulo;
     private String descripcion;
 
 
+    @Getter
     private List<CriterioDePertenencia> criteriosDePertenencia;
 
     public Coleccion(String titulo, String descripcion, FuenteDatos fuente, List<CriterioDePertenencia> criterios) {
@@ -42,15 +47,6 @@ public class Coleccion {
 
     private boolean cumpleTodosLosCriterios(Hecho hecho) {
         return criteriosDePertenencia.stream().allMatch(c -> c.cumple(hecho));
-    }
-
-    // Getters y setters
-    public List<Hecho> getHechos() {
-        return hechos;
-    }
-
-    public List<CriterioDePertenencia> getCriteriosDePertenencia() {
-        return criteriosDePertenencia;
     }
 
 }

@@ -27,13 +27,19 @@ class DatosUsuario {
     -edad: Integer
 }
 
-SolicitudEliminacion --> Usuario
+Contribuyente --> SolicitudEliminacion
 Administrador --> ColeccionBuilder
 ColeccionBuilder --> Coleccion
 Usuario --> DatosUsuario
 
+'---------------------- Solicitudes ----------------------
+abstract class Solicitud {
+    +actualizar()
+    +agregar()
+}
+
 '---------------------- Solicitud Eliminación ----------------------
-class SolicitudEliminacion {
+class SolicitudEliminacion extends Solicitud{
     -hecho: Hecho
     -motivo: String
     -estado: EstadoSolicitud
@@ -52,7 +58,7 @@ SolicitudEliminacion --> Hecho
 SolicitudEliminacion --> EstadoSolicitud
 
 '---------------------- Solicitud Agregado ----------------------
-class SolicitudAgregado {
+class SolicitudAgregado extends Solicitud{
     -hecho: Hecho
     -datosUsuario : DatosUsuario
     -estadoSolicitud : EstadoSolicitud

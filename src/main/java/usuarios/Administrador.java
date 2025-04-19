@@ -3,7 +3,7 @@ package usuarios;
 import criterios.CriterioDePertenencia;
 import domain.Coleccion;
 import domain.Hecho;
-import domain.SolicitudEliminacion;
+import Solicitudes.SolicitudEliminacion;
 import fuentes.FuenteDatos;
 import helpers.ColeccionBuilder;
 
