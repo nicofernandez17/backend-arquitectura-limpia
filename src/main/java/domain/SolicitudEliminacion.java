@@ -24,5 +24,18 @@ public class SolicitudEliminacion {
 
     public void rechazar() {
         this.estado = EstadoSolicitud.RECHAZADA;
+        this.estado = EstadoSolicitud.PENDIENTE;
+        this.hecho = hecho;
+        this.descripcion = motivo;
+    }
+
+    public void aceptar(){
+        estado = EstadoSolicitud.ACEPTADA;
+        //TODO Realizar accion sobre el hecho
+
+    }
+
+    public void rechazar() {
+        estado = EstadoSolicitud.RECHAZADA;
     }
 }

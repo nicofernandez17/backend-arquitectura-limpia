@@ -1,22 +1,35 @@
 package usuarios;
 
+import criterios.CriterioDePertenencia;
+import domain.Coleccion;
 import domain.Hecho;
 import domain.SolicitudEliminacion;
+import fuentes.FuenteDatos;
+import helpers.ColeccionBuilder;
+
 import java.util.List;
 
 public class Administrador {
+
+  private ColeccionBuilder builder;
+
 
   public SolicitudEliminacion solicitarEliminacion(Hecho hecho, String motivo) {
     return new SolicitudEliminacion(hecho, motivo);
   }
 
-  public void gestionarSolicitudes(List<SolicitudEliminacion> solicitudes) {
-    //TODO Implementar
+  //Simplificar parametros
+  public Coleccion crearColeccion(String titulo, String descripcion, FuenteDatos fuente, List<CriterioDePertenencia> criterios) {
+    builder.iniciarCon(titulo, descripcion, fuente);
+    builder.buildCriterios(criterios);
+    builder.buildHechos();
+    return builder.build();
   }
 
-  public void importarCSV() {
-    // lógica de carga de datos
-  }
+
 
   // Constructor, getters/setters
+  public void setBuilder(ColeccionBuilder builder) {
+    this.builder = builder;
+  }
 }

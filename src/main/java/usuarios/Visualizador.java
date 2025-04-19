@@ -3,16 +3,11 @@ package usuarios;
 import domain.Hecho;
 import domain.SolicitudEliminacion;
 
-public class Visualizador implements Rol {
+public class Visualizador extends Usuario {
 
-  @Override
-  public SolicitudEliminacion solicitarEliminacion(Hecho hecho, String motivo) {
-    return new SolicitudEliminacion(hecho, motivo);
-  }
+    public Visualizador(String nombre, String apellido, Integer edad) {
+        super(nombre, apellido, edad);
+    }
 
-  @Override
-  public void aportarHecho(Hecho hecho) {
-    //TODO
-    // lógica opcional para registrar aporte anónimo
-  }
+
 }

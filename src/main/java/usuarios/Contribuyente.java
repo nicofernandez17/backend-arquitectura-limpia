@@ -3,16 +3,13 @@ package usuarios;
 import domain.Hecho;
 import domain.SolicitudEliminacion;
 
-public class Contribuyente implements Rol {
+public class Contribuyente extends Usuario {
 
-  @Override
-  public SolicitudEliminacion solicitarEliminacion(Hecho hecho, String motivo) {
-    return new SolicitudEliminacion(hecho, motivo);
+  public Contribuyente(String nombre, String apellido, Integer edad) {
+    super(nombre, apellido, edad);
   }
 
-  @Override
-  public void aportarHecho(Hecho hecho) {
-    //TODO
-    // lógica para persistir o validar el hecho
+  public SolicitudEliminacion solicitarEliminacion(Hecho hecho, String motivo) {
+    return new SolicitudEliminacion(hecho, motivo);
   }
 }

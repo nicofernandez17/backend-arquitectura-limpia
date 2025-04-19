@@ -3,42 +3,34 @@ left to right direction
 skinparam classAttributeIconSize 0
 
 '---------------------- Usuarios ----------------------
-class Usuario {
-    -nombre: String
-    -apellido: String
-    -edad: Integer
-    -rol: Rol
-
-    +verHecho(): A DEFINIR
-}
-
-interface Rol {
-    +solicitarEliminacion(): SolicitudEliminacion
+abstract class Usuario {
+    -datos: DatosUsuario
     +aportarHecho()
 }
 
-class Visualizador implements Rol {
-    +solicitarEliminacion(): SolicitudEliminacion
-    +aportarHecho()
+class Visualizador extends Usuario {
+
 }
 
-class Contribuyente implements Rol {
+class Contribuyente extends Usuario {
     +solicitarEliminacion(): SolicitudEliminacion
-    +aportarHecho()
 }
 
 class Administrador {
-
-    +solicitarEliminacion(): SolicitudEliminacion
-    +gestionarSolicitudes()
     +crearColeccion(): Coleccion
     +importarCSV()
 }
 
-Usuario --> Rol
-Administrador --> SolicitudEliminacion
-Visualizador --> SolicitudEliminacion
-Contribuyente --> SolicitudEliminacion
+class DatosUsuario {
+    -nombre: String
+    -apellido: String
+    -edad: Integer
+}
+
+SolicitudEliminacion --> Usuario
+Administrador --> ColeccionBuilder
+ColeccionBuilder --> Coleccion
+Usuario --> DatosUsuario
 
 '---------------------- Solicitud Eliminación ----------------------
 class SolicitudEliminacion {
@@ -59,6 +51,20 @@ enum EstadoSolicitud {
 SolicitudEliminacion --> Hecho
 SolicitudEliminacion --> EstadoSolicitud
 
+'---------------------- Solicitud Agregado ----------------------
+class SolicitudAgregado {
+    -hecho: Hecho
+    -datosUsuario : DatosUsuario
+    -estadoSolicitud : EstadoSolicitud
+
+    +aceptar()
+    +rechazar()
+}
+Usuario --> SolicitudAgregado
+SolicitudAgregado --> Hecho
+SolicitudAgregado --> EstadoSolicitud
+SolicitudAgregado --> DatosUsuario
+
 '---------------------- Colecciones ----------------------
 class Coleccion {
     -hechos: List<Hecho>
@@ -67,7 +73,18 @@ class Coleccion {
     -descripcion: String
     -crierioDePertenencia: List<CriterioDePertenencia>
 
+    +cargarColeccion()
     +leerColeccion(): List<Hecho>
+}
+
+class ColeccionBuilder {
+
+    -coleccion: Coleccion
+    +iniciarCon(): ColeccionBuilder
+    +buildCriterios(): ColeccionBuilder
+    +buildHechos(): ColeccionBuilder
+    +build(): Coleccion
+
 }
 
 interface CriterioDePertenencia {
@@ -159,6 +176,7 @@ class FuenteEstatica implements FuenteDatos {
 
 class FuenteDinamica implements FuenteDatos {
     +obtenerHechos(): List<Hecho>
+    + agregarHecho(Hecho hecho)
 }
 
 FuenteEstatica --> Lector
