@@ -8,6 +8,7 @@ import helpers.Ubicacion;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import lombok.Getter;
 
 public class Hecho {
 
@@ -15,14 +16,15 @@ public class Hecho {
         this.descripcion = descripcionDelHecho;
     }
 
-    public String getTitulo() {
-        return titulo;
-    }
-
+    @Getter
     private String titulo;
+    @Getter
     private String descripcion;
+    @Getter
     private Categoria categoria;
+    @Getter
     private Ubicacion ubicacion;
+    @Getter
     private LocalDate fecha; //CAMBIAR
     private LocalDate fechaDeCarga;
     private Contenido contenidoMultimedia;
@@ -40,19 +42,4 @@ public class Hecho {
     }
 
 
-    public Categoria getCategoria() {
-        return categoria;
-    }
-
-    public Ubicacion getUbicacion() {
-        return ubicacion;
-    }
-
-    public LocalDate getFecha() {
-        return fecha;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
 }

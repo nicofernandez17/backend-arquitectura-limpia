@@ -9,7 +9,7 @@ public class CriterioPorFecha implements CriterioDePertenencia {
     private LocalDate desde;
     private LocalDate hasta;
 
-    public void CriterioPorRangoDeFecha(LocalDate desde, LocalDate hasta) {
+    public CriterioPorFecha(LocalDate desde, LocalDate hasta) {
         this.desde = desde;
         this.hasta = hasta;
     }

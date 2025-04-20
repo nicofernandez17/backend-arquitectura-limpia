@@ -20,12 +20,11 @@ public class Administrador {
 
   //Simplificar parametros
   public Coleccion crearColeccion(String titulo, String descripcion, FuenteDatos fuente, List<CriterioDePertenencia> criterios) {
-    builder.iniciarCon(titulo, descripcion, fuente);
+    builder.iniciarCon(titulo, descripcion, fuente,criterios);
     builder.buildCriterios(criterios);
     builder.buildHechos();
     return builder.build();
   }
-
 
 
   // Constructor, getters/setters

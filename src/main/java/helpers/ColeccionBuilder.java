@@ -11,8 +11,8 @@ import java.util.List;
 public class ColeccionBuilder {
     private Coleccion coleccion;
 
-    public ColeccionBuilder iniciarCon(String titulo, String descripcion, FuenteDatos fuente) {
-        this.coleccion = new Coleccion(titulo, descripcion, fuente, new ArrayList<>());
+    public ColeccionBuilder iniciarCon(String titulo, String descripcion, FuenteDatos fuente, List<CriterioDePertenencia> criterios) {
+        this.coleccion = new Coleccion(titulo, descripcion, fuente, criterios);
         return this;
     }
 

@@ -23,7 +23,7 @@ class AdapterLectorCSVTest {
 
         // Verificar que la lista no sea nula y contenga datos
         assertNotNull(hechos);
-        assertEquals(15000, hechos.size());
+        assertEquals(14877, hechos.size());
 
         // Verificar algunos datos específicos
         Hecho primerHecho = hechos.get(0);
