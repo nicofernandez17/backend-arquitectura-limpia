@@ -1,9 +1,10 @@
 package Solicitudes;
 
 import helpers.EstadoSolicitud;
+import lombok.Getter;
 
 public abstract class Solicitud {
-
+    @Getter
     EstadoSolicitud estado;
 
     public void agregar() {

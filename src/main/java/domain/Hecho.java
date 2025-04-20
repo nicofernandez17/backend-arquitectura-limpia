@@ -32,6 +32,8 @@ public class Hecho {
     private Origen origen;
     @Getter
     private List<String> etiquetas;
+    @Getter
+    private boolean eliminado;
 
     public Hecho(String titulo, String descripcion, Categoria categoria, Ubicacion ubicacion, LocalDate fecha, LocalDate fechaDeCarga, Origen origen) {
         this.titulo = titulo;
@@ -58,5 +60,13 @@ public class Hecho {
         if (!etiquetas.contains(etiqueta)) {
             etiquetas.add(etiqueta);
         }
+    }
+
+    public void marcarComoEliminado() {
+        this.eliminado = true;
+    }
+
+    public boolean puedeAgregarseAColeccion() {
+        return !eliminado;
     }
 }

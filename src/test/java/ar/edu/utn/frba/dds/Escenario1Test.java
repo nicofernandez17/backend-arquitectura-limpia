@@ -5,7 +5,6 @@ import criterios.CriterioPorCategoria;
 import criterios.CriterioPorFecha;
 import domain.Coleccion;
 import domain.Hecho;
-import filtros.FiltroTexto;
 import helpers.Categoria;
 import helpers.ColeccionBuilder;
 import helpers.Origen;
@@ -19,7 +18,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class EscenarioUnoTest {
+public class Escenario1Test {
 
   @Test
   public void testCreacionDeColeccionConCargaManual() {
