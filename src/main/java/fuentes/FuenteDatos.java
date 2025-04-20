@@ -5,5 +5,5 @@ import java.util.List;
 
 public interface FuenteDatos {
   List<Hecho> obtenerHechos();
-  //TODO
+
 }

@@ -40,7 +40,7 @@ public class Coleccion {
 
     public void cargarColeccion() {
         // Aplica todos los criterios para filtrar los hechos
-        this.hechos = this.hechos.stream()
+        this.hechos = fuente.obtenerHechos().stream()
             .filter(hecho -> this.criteriosDePertenencia.stream().allMatch(criterio -> criterio.cumple(hecho)))
             .collect(Collectors.toList());
     }
