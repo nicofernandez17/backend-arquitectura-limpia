@@ -13,7 +13,7 @@ import helpers.Ubicacion;
 import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 
-public class EscenarioTresTest {
+public class Escenario3Test {
 
   @Test
   public void testSolicitudesDeEliminacion() {
