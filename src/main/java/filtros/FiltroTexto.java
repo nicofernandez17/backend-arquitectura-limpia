@@ -1,9 +1,11 @@
 package filtros;
 
 import domain.Hecho;
+import lombok.Getter;
+import lombok.Setter;
 
 public class FiltroTexto implements FiltroHechos{
-
+    @Getter @Setter
     private String texto;
 
     @Override

@@ -1,9 +1,11 @@
 package ar.edu.utn.frba.dds;
 
+import criterios.CriterioFiltroTitulo;
 import criterios.CriterioPorCategoria;
 import criterios.CriterioPorFecha;
 import domain.Coleccion;
 import domain.Hecho;
+import filtros.FiltroTexto;
 import helpers.Categoria;
 import helpers.ColeccionBuilder;
 import helpers.Origen;
@@ -15,8 +17,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class ColeccionTest {
+public class EscenarioUnoTest {
 
   @Test
   public void testCreacionDeColeccionConCargaManual() {
@@ -138,5 +141,68 @@ public class ColeccionTest {
     assertEquals(2, hechosFiltrados.size());
     assertEquals("Caída de aeronave impacta en Olavarría", hechosFiltrados.get(0).getTitulo());
     assertEquals("Caída de aeronave impacta en Venado Tuerto, Santa Fe", hechosFiltrados.get(1).getTitulo());
+  }
+
+  @Test
+  public void testFiltroVisualizador() {
+    // Datos de prueba
+    Hecho hecho1 = new Hecho(
+        "Caída de aeronave impacta en Olavarría",
+        "Grave caída de aeronave ocurrió en las inmediaciones de Olavarría, Buenos Aires.",
+        new Categoria("CAIDA_DE_AERONAVE"),
+        new Ubicacion(-36.868375, -60.343297),
+        LocalDate.of(2001, 11, 29),
+        LocalDate.now(),
+        Origen.CARGA_MANUAL
+    );
+
+    Hecho hecho2 = new Hecho(
+        "Serio incidente: Accidente con maquinaria industrial en Chos Malal, Neuquén",
+        "Un grave accidente con maquinaria industrial se registró en Chos Malal, Neuquén.",
+        new Categoria("ACCIDENTE_CON_MAQUINARIA"),
+        new Ubicacion(-37.345571, -70.241485),
+        LocalDate.of(2001, 8, 16),
+        LocalDate.now(),
+        Origen.CARGA_MANUAL
+    );
+
+    // Construcción de la colección
+    Coleccion coleccion = new Coleccion("Colección prueba", "Esto es una prueba", null, List.of());
+    coleccion.agregarHecho(hecho1);
+    coleccion.agregarHecho(hecho2);
+
+    // Crear criterios
+    CriterioFiltroTitulo criterioTitulo = new CriterioFiltroTitulo("un título");
+    CriterioPorCategoria criterioCategoria = new CriterioPorCategoria(new Categoria("Caída de Aeronave"));
+
+    // Aplicar criterios
+    coleccion.agregarCriterio(criterioTitulo);
+    coleccion.agregarCriterio(criterioCategoria);
+    coleccion.cargarColeccion();
+
+    // Validar que no hay hechos que cumplan con el filtro
+    assertEquals(0, coleccion.getHechos().size());
+  }
+  @Test
+  public void testEtiquetasEnHecho() {
+    // Crear el hecho
+    Hecho hecho = new Hecho(
+        "Caída de aeronave impacta en Olavarría",
+        "Grave caída de aeronave ocurrió en las inmediaciones de Olavarría, Buenos Aires.",
+        new Categoria("CAIDA_DE_AERONAVE"),
+        new Ubicacion(-36.868375, -60.343297),
+        LocalDate.of(2001, 11, 29),
+        LocalDate.now(),
+        Origen.CARGA_MANUAL,
+        List.of("Olavarria")
+    );
+
+    // Agregar etiquetas
+    hecho.agregarEtiqueta("Grave");
+
+    // Verificar que el hecho retenga ambas etiquetas
+    assertEquals(2, hecho.getEtiquetas().size());
+    assertTrue(hecho.getEtiquetas().contains("Olavarria"));
+    assertTrue(hecho.getEtiquetas().contains("Grave"));
   }
 }

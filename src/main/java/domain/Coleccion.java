@@ -3,6 +3,7 @@ package domain;
 import criterios.CriterioDePertenencia;
 
 import criterios.CriterioPorFecha;
+import filtros.FiltroHechos;
 import fuentes.FuenteDatos;
 import lombok.Getter;
 
@@ -59,4 +60,10 @@ public class Coleccion {
     public void agregarCriterio(CriterioDePertenencia criterio) {
         this.criteriosDePertenencia.add(criterio);
     }
+
+    //public List<Hecho> aplicarFiltros(List<FiltroHechos> filtros) {
+    //    return this.hechos.stream()
+    //        .filter(hecho -> filtros.stream().allMatch(filtro -> filtro.filtrar(hecho)))
+    //        .collect(Collectors.toList());
+    //}
 }
