@@ -33,8 +33,11 @@ public class Coleccion {
         this.hechos = new ArrayList<>();
     }
 
+
     public void agregarHecho(Hecho hecho) {
-        this.hechos.add(hecho);
+        if (criteriosDePertenencia.stream().allMatch(criterio -> criterio.cumple(hecho))) {
+            this.hechos.add(hecho);
+        }
     }
 
 
@@ -42,14 +45,6 @@ public class Coleccion {
         // Aplica todos los criterios para filtrar los hechos
         this.hechos = fuente.obtenerHechos().stream()
             .filter(hecho -> this.criteriosDePertenencia.stream().allMatch(criterio -> criterio.cumple(hecho)))
-            .collect(Collectors.toList());
-    }
-
-    //TODO Se puede cambiar por un getter
-    public List<Hecho> leerColeccion() {
-        List<Hecho> todosLosHechos = fuente.obtenerHechos();
-        return todosLosHechos.stream()
-            .filter(this::cumpleTodosLosCriterios)
             .collect(Collectors.toList());
     }
 
@@ -61,9 +56,4 @@ public class Coleccion {
         this.criteriosDePertenencia.add(criterio);
     }
 
-    //public List<Hecho> aplicarFiltros(List<FiltroHechos> filtros) {
-    //    return this.hechos.stream()
-    //        .filter(hecho -> filtros.stream().allMatch(filtro -> filtro.filtrar(hecho)))
-    //        .collect(Collectors.toList());
-    //}
 }

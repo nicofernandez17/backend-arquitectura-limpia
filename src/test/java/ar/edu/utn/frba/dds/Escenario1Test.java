@@ -5,11 +5,14 @@ import criterios.CriterioPorCategoria;
 import criterios.CriterioPorFecha;
 import domain.Coleccion;
 import domain.Hecho;
+import fuentes.FuenteDatos;
 import helpers.Categoria;
 import helpers.ColeccionBuilder;
 import helpers.Origen;
 import helpers.Ubicacion;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -17,106 +20,99 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.when;
 
 public class Escenario1Test {
 
-  @Test
-  public void testCreacionDeColeccionConCargaManual() {
-    // Datos de prueba
-    Hecho hecho1 = new Hecho(
-        "Caída de aeronave impacta en Olavarría",
-        "Grave caída de aeronave ocurrió en las inmediaciones de Olavarría, Buenos Aires.",
-        new Categoria("CAIDA_DE_AERONAVE"),
-        new Ubicacion(-36.868375, -60.343297),
-        LocalDate.of(2001, 11, 29),
-        LocalDate.now(),
-        Origen.CARGA_MANUAL
+  Hecho hecho1;
+  Hecho hecho2;
+  Hecho hecho3;
+  Hecho hecho4;
+  Hecho hecho5;
+  Coleccion coleccion;
+  FuenteDatos fuente;
+
+  @BeforeEach
+  public void init(){
+
+    hecho1 = new Hecho(
+            "Caída de aeronave impacta en Olavarría",
+            "Grave caída de aeronave ocurrió en las inmediaciones de Olavarría, Buenos Aires.",
+            new Categoria("CAIDA_DE_AERONAVE"),
+            new Ubicacion(-36.868375, -60.343297),
+            LocalDate.of(2001, 11, 29),
+            LocalDate.now(),
+            Origen.CARGA_MANUAL,
+            List.of("Olavarria")
     );
 
-    Hecho hecho2 = new Hecho(
-        "Serio incidente: Accidente con maquinaria industrial en Chos Malal, Neuquén",
-        "Un grave accidente con maquinaria industrial se registró en Chos Malal, Neuquén.",
-        new Categoria("ACCIDENTE_CON_MAQUINARIA"),
-        new Ubicacion(-37.345571, -70.241485),
-        LocalDate.of(2001, 8, 16),
-        LocalDate.now(),
-        Origen.CARGA_MANUAL
+    hecho2 = new Hecho(
+            "Serio incidente: Accidente con maquinaria industrial en Chos Malal, Neuquén",
+            "Un grave accidente con maquinaria industrial se registró en Chos Malal, Neuquén.",
+            new Categoria("ACCIDENTE_CON_MAQUINARIA"),
+            new Ubicacion(-37.345571, -70.241485),
+            LocalDate.of(2001, 8, 16),
+            LocalDate.now(),
+            Origen.CARGA_MANUAL
     );
 
-    // Criterios de prueba
-    CriterioPorCategoria criterioCategoria = new CriterioPorCategoria(new Categoria("CAIDA_DE_AERONAVE"));
-    CriterioPorFecha criterioFecha = new CriterioPorFecha(LocalDate.of(2000, 1, 1), LocalDate.of(2020, 12, 31));
+    hecho3 = new Hecho(
+            "Caída de aeronave impacta en Venado Tuerto, Santa Fe",
+            "Grave caída de aeronave ocurrió en las inmediaciones de Venado Tuerto, Santa Fe.",
+            new Categoria("CAIDA_DE_AERONAVE"),
+            new Ubicacion(-33.768051, -61.921032),
+            LocalDate.of(2008, 8, 8),
+            LocalDate.now(),
+            Origen.CARGA_MANUAL
+    );
+
+    hecho4 = new Hecho(
+            "Accidente en paso a nivel deja múltiples daños en Pehuajó, Buenos Aires",
+            "Grave accidente en paso a nivel ocurrió en las inmediaciones de Pehuajó, Buenos Aires.",
+            new Categoria("ACCIDENTE_EN_PASO_A_NIVEL"),
+            new Ubicacion(-35.855811, -61.940589),
+            LocalDate.of(2020, 1, 27),
+            LocalDate.now(),
+            Origen.CARGA_MANUAL
+    );
+
+    hecho5 = new Hecho(
+            "Devastador Derrumbe en obra en construcción afecta a Presidencia Roque Sáenz Peña",
+            "Un grave derrumbe en obra en construcción se registró en Presidencia Roque Sáenz Peña, Chaco.",
+            new Categoria("Derrumbe en obra en construcción"),
+            new Ubicacion(-26.780008, -60.458782),
+            LocalDate.of(2016, 6, 4),
+            LocalDate.now(),
+            Origen.CARGA_MANUAL
+    );
+
+    // Mockear la fuente
+    fuente = Mockito.mock(FuenteDatos.class);
+
+    when(fuente.obtenerHechos()).thenReturn(List.of(hecho1, hecho2, hecho3, hecho4, hecho5));
+
+    CriterioPorFecha criterioFecha = new CriterioPorFecha(LocalDate.of(2000, 1, 1), LocalDate.of(2025, 12, 31));
 
     // Construcción de la colección
     ColeccionBuilder builder = new ColeccionBuilder();
-    Coleccion coleccion = builder
-        .iniciarCon("Colección prueba", "Esto es una prueba", null, Arrays.asList(criterioCategoria, criterioFecha))
-        .agregarHecho(hecho1)
-        .agregarHecho(hecho2)
-        .build();
+    coleccion = builder
+            .iniciarCon("Colección prueba", "Esto es una prueba", fuente, Arrays.asList(criterioFecha))
+            .buildHechos()
+            .build();
+
+  }
+
+  @Test
+  public void testCreacionDeColeccionConCargaManual() {
 
     // Validación
     List<Hecho> hechos = coleccion.getHechos();
-    assertEquals(2, hechos.size());
-    assertEquals("Caída de aeronave impacta en Olavarría", hechos.get(0).getTitulo());
-    assertEquals("Serio incidente: Accidente con maquinaria industrial en Chos Malal, Neuquén", hechos.get(1).getTitulo());
+    assertEquals(5, hechos.size());
+
   }
 
   @Test
   public void testCriteriosDePertenencia() {
-    // Datos de prueba
-    Hecho hecho1 = new Hecho(
-        "Caída de aeronave impacta en Olavarría",
-        "Grave caída de aeronave ocurrió en las inmediaciones de Olavarría, Buenos Aires.",
-        new Categoria("CAIDA_DE_AERONAVE"),
-        new Ubicacion(-36.868375, -60.343297),
-        LocalDate.of(2001, 11, 29),
-        LocalDate.now(),
-        Origen.CARGA_MANUAL
-    );
-
-    Hecho hecho2 = new Hecho(
-        "Serio incidente: Accidente con maquinaria industrial en Chos Malal, Neuquén",
-        "Un grave accidente con maquinaria industrial se registró en Chos Malal, Neuquén.",
-        new Categoria("ACCIDENTE_CON_MAQUINARIA"),
-        new Ubicacion(-37.345571, -70.241485),
-        LocalDate.of(2001, 8, 16),
-        LocalDate.now(),
-        Origen.CARGA_MANUAL
-    );
-
-    Hecho hecho3 = new Hecho(
-        "Caída de aeronave impacta en Venado Tuerto, Santa Fe",
-        "Grave caída de aeronave ocurrió en las inmediaciones de Venado Tuerto, Santa Fe.",
-        new Categoria("CAIDA_DE_AERONAVE"),
-        new Ubicacion(-33.768051, -61.921032),
-        LocalDate.of(2008, 8, 8),
-        LocalDate.now(),
-        Origen.CARGA_MANUAL
-    );
-
-    Hecho hecho4 = new Hecho(
-        "Accidente en paso a nivel deja múltiples daños en Pehuajó, Buenos Aires",
-        "Grave accidente en paso a nivel ocurrió en las inmediaciones de Pehuajó, Buenos Aires.",
-        new Categoria("ACCIDENTE_EN_PASO_A_NIVEL"),
-        new Ubicacion(-35.855811, -61.940589),
-        LocalDate.of(2020, 1, 27),
-        LocalDate.now(),
-        Origen.CARGA_MANUAL
-    );
-
-    // Construcción inicial de la colección
-    ColeccionBuilder builder = new ColeccionBuilder();
-    Coleccion coleccion = builder
-        .iniciarCon("Colección prueba", "Esto es una prueba", null, List.of())
-        .agregarHecho(hecho1)
-        .agregarHecho(hecho2)
-        .agregarHecho(hecho3)
-        .agregarHecho(hecho4)
-        .build();
-
-    // Validación inicial
-    assertEquals(4, coleccion.getHechos().size());
 
     // Agregar criterio de pertenencia por rango de fechas
     CriterioPorFecha criterioFecha = new CriterioPorFecha(LocalDate.of(2000, 1, 1), LocalDate.of(2010, 1, 1));
@@ -144,31 +140,6 @@ public class Escenario1Test {
 
   @Test
   public void testFiltroVisualizador() {
-    // Datos de prueba
-    Hecho hecho1 = new Hecho(
-        "Caída de aeronave impacta en Olavarría",
-        "Grave caída de aeronave ocurrió en las inmediaciones de Olavarría, Buenos Aires.",
-        new Categoria("CAIDA_DE_AERONAVE"),
-        new Ubicacion(-36.868375, -60.343297),
-        LocalDate.of(2001, 11, 29),
-        LocalDate.now(),
-        Origen.CARGA_MANUAL
-    );
-
-    Hecho hecho2 = new Hecho(
-        "Serio incidente: Accidente con maquinaria industrial en Chos Malal, Neuquén",
-        "Un grave accidente con maquinaria industrial se registró en Chos Malal, Neuquén.",
-        new Categoria("ACCIDENTE_CON_MAQUINARIA"),
-        new Ubicacion(-37.345571, -70.241485),
-        LocalDate.of(2001, 8, 16),
-        LocalDate.now(),
-        Origen.CARGA_MANUAL
-    );
-
-    // Construcción de la colección
-    Coleccion coleccion = new Coleccion("Colección prueba", "Esto es una prueba", null, List.of());
-    coleccion.agregarHecho(hecho1);
-    coleccion.agregarHecho(hecho2);
 
     // Crear criterios
     CriterioFiltroTitulo criterioTitulo = new CriterioFiltroTitulo("un título");
@@ -182,26 +153,16 @@ public class Escenario1Test {
     // Validar que no hay hechos que cumplan con el filtro
     assertEquals(0, coleccion.getHechos().size());
   }
+
   @Test
   public void testEtiquetasEnHecho() {
-    // Crear el hecho
-    Hecho hecho = new Hecho(
-        "Caída de aeronave impacta en Olavarría",
-        "Grave caída de aeronave ocurrió en las inmediaciones de Olavarría, Buenos Aires.",
-        new Categoria("CAIDA_DE_AERONAVE"),
-        new Ubicacion(-36.868375, -60.343297),
-        LocalDate.of(2001, 11, 29),
-        LocalDate.now(),
-        Origen.CARGA_MANUAL,
-        List.of("Olavarria")
-    );
 
     // Agregar etiquetas
-    hecho.agregarEtiqueta("Grave");
+    hecho1.agregarEtiqueta("Grave");
 
     // Verificar que el hecho retenga ambas etiquetas
-    assertEquals(2, hecho.getEtiquetas().size());
-    assertTrue(hecho.getEtiquetas().contains("Olavarria"));
-    assertTrue(hecho.getEtiquetas().contains("Grave"));
+    assertEquals(2, hecho1.getEtiquetas().size());
+    assertTrue(hecho1.getEtiquetas().contains("Olavarria"));
+    assertTrue(hecho1.getEtiquetas().contains("Grave"));
   }
 }

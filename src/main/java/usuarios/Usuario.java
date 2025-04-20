@@ -1,19 +1,18 @@
 package usuarios;
 
+import domain.Coleccion;
 import domain.Hecho;
-import Solicitudes.SolicitudAgregado;
 
 public abstract class Usuario {
-  private DatosUsuario datosUsuario;
+  private String nombre;
+  private String apellido;
+  private Integer edad;
 
   public Usuario(String nombre, String apellido, Integer edad) {
-    this.datosUsuario = new DatosUsuario(nombre, apellido, edad);
+    this.nombre = nombre;
+    this.apellido = apellido;
+    this.edad = edad;
   }
 
-  public void aportarHecho(Hecho hecho) {
-    var solicitud = new SolicitudAgregado(hecho, datosUsuario);
-    solicitud.agregar();
-
-  }
 
 }

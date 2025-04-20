@@ -26,7 +26,7 @@ public class Hecho {
     @Getter
     private Ubicacion ubicacion;
     @Getter
-    private LocalDate fecha; //CAMBIAR
+    private LocalDate fecha;
     private LocalDate fechaDeCarga;
     private Contenido contenidoMultimedia;
     private Origen origen;

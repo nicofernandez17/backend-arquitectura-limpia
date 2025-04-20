@@ -5,8 +5,9 @@ import helpers.EstadoSolicitud;
 import java.time.LocalDateTime;
 import lombok.Getter;
 
-public class SolicitudEliminacion extends Solicitud {
-
+public class SolicitudEliminacion {
+    @Getter
+    private EstadoSolicitud estado;
     @Getter
     private Hecho hecho;
     @Getter
@@ -24,9 +25,14 @@ public class SolicitudEliminacion extends Solicitud {
         this.estado = EstadoSolicitud.PENDIENTE;
     }
 
-    @Override
     public void aceptar() {
         this.estado = EstadoSolicitud.ACEPTADA;
         this.hecho.marcarComoEliminado();
+    }
+
+
+    public void rechazar(){
+        estado = EstadoSolicitud.RECHAZADA;
+        //Eliminar Fecha
     }
 }

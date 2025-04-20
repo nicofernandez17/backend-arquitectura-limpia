@@ -34,6 +34,7 @@ class SolicitudEliminacion {
     -hecho: Hecho
     -motivo: String
     -estado: EstadoSolicitud
+    -fechaCreacion: LocalDateTime
 
     +aceptar()
     +rechazar()
