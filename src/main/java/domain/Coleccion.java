@@ -2,6 +2,7 @@ package domain;
 
 import criterios.CriterioDePertenencia;
 
+import criterios.CriterioPorFecha;
 import fuentes.FuenteDatos;
 import lombok.Getter;
 
@@ -27,14 +28,20 @@ public class Coleccion {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.fuente = fuente;
-        this.criteriosDePertenencia = criterios;
+        this.criteriosDePertenencia = new ArrayList<>(criterios);
         this.hechos = new ArrayList<>();
     }
 
+    public void agregarHecho(Hecho hecho) {
+        this.hechos.add(hecho);
+    }
+
+
     public void cargarColeccion() {
-        this.hechos = fuente.obtenerHechos().stream()
-                .filter(this::cumpleTodosLosCriterios)
-                .collect(Collectors.toList());;
+        // Aplica todos los criterios para filtrar los hechos
+        this.hechos = this.hechos.stream()
+            .filter(hecho -> this.criteriosDePertenencia.stream().allMatch(criterio -> criterio.cumple(hecho)))
+            .collect(Collectors.toList());
     }
 
     //TODO Se puede cambiar por un getter
@@ -49,4 +56,7 @@ public class Coleccion {
         return criteriosDePertenencia.stream().allMatch(c -> c.cumple(hecho));
     }
 
+    public void agregarCriterio(CriterioDePertenencia criterio) {
+        this.criteriosDePertenencia.add(criterio);
+    }
 }

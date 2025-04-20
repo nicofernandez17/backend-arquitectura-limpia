@@ -16,8 +16,6 @@ public class CriterioPorFecha implements CriterioDePertenencia {
 
     @Override
     public boolean cumple(Hecho hecho) {
-        LocalDate fecha = hecho.getFecha();
-        return (fecha.isEqual(desde) || fecha.isAfter(desde)) &&
-            (fecha.isEqual(hasta) || fecha.isBefore(hasta));
+        return !hecho.getFecha().isBefore(desde) && !hecho.getFecha().isAfter(hasta);
     }
 }

@@ -12,6 +12,6 @@ public class CriterioPorCategoria implements CriterioDePertenencia {
 
     @Override
     public boolean cumple(Hecho hecho) {
-        return hecho.getCategoria() == categoria;
+        return hecho.getCategoria().getNombre().equals(categoria.getNombre());
     }
 }
