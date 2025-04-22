@@ -114,7 +114,10 @@ class Hecho {
     -fecha: Date
     -contenidoMultimedia: Contenido
     -origen: Origen
-    -tags: List<String>
+    -etiquetas: List<String>
+    -eliminado: Boolean
+    +marcarComoEliminado()
+    +puedeAgregarseacoleccion()
 }
 
 class Categoria {
@@ -159,18 +162,18 @@ interface FuenteDatos {
     +obtenerHechos(): List<Hecho>
 }
 
-class FuenteEstatica implements FuenteDatos {
+class FuenteDatosEstatica implements FuenteDatos {
     -dataset: String
     -lector: Lector
     +obtenerHechos(): List<Hecho>
 }
 
-class FuenteDinamica implements FuenteDatos {
+class FuenteDatosDinamica implements FuenteDatos {
     +obtenerHechos(): List<Hecho>
     + agregarHecho(Hecho hecho)
 }
 
-FuenteEstatica --> Lector
+FuenteDatosEstatica --> Lector
 
 '---------------------- Lectores ----------------------
 interface Lector {
