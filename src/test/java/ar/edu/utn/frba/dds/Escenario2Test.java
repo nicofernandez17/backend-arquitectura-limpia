@@ -1,7 +1,7 @@
 package ar.edu.utn.frba.dds;
 
 import domain.Hecho;
-import lectores.AdapterLectorCSV;
+import lectores.AdapterLectorCsv;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Paths;
@@ -18,7 +18,7 @@ class Escenario2Test {
         String rutaArchivo = Paths.get("src", "test", "resources", "desastres_naturales_argentina.csv").toString();
 
         // Instanciar el adaptador y leer el archivo
-        AdapterLectorCSV adapter = new AdapterLectorCSV();
+        AdapterLectorCsv adapter = new AdapterLectorCsv();
         List<Hecho> hechos = adapter.leer(rutaArchivo);
 
         // Verificar que la lista no sea nula y contenga datos

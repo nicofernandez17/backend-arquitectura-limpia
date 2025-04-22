@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FuenteDatosDinamica implements FuenteDatos {
-  private List<Hecho> hechosDinamicos;
+  private final List<Hecho> hechosDinamicos;
 
   public FuenteDatosDinamica() {
     this.hechosDinamicos = new ArrayList<>();

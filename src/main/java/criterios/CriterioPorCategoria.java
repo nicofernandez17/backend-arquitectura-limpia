@@ -4,14 +4,14 @@ import domain.Hecho;
 import helpers.Categoria;
 
 public class CriterioPorCategoria implements CriterioDePertenencia {
-    private Categoria categoria;
+  private final Categoria categoria;
 
-    public CriterioPorCategoria(Categoria categoria) {
-        this.categoria = categoria;
-    }
+  public CriterioPorCategoria(Categoria categoria) {
+    this.categoria = categoria;
+  }
 
-    @Override
-    public boolean cumple(Hecho hecho) {
-        return hecho.getCategoria().getNombre().equals(categoria.getNombre());
-    }
+  @Override
+  public boolean cumple(Hecho hecho) {
+    return hecho.getCategoria().getNombre().equals(categoria.getNombre());
+  }
 }

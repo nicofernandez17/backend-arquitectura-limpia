@@ -3,12 +3,11 @@ package fuentes;
 import domain.Hecho;
 import java.util.ArrayList;
 import java.util.List;
-
 import lectores.Lector;
 
 public class FuenteDatosEstatica implements FuenteDatos {
-  private String ruta;
-  private Lector lector;
+  private final String ruta;
+  private final Lector lector;
 
   public FuenteDatosEstatica(String ruta, Lector lector) {
     this.ruta = ruta;
@@ -21,15 +20,13 @@ public class FuenteDatosEstatica implements FuenteDatos {
   }
 
 
-
-
   // Otros métodos futuros:
-  public List<Hecho> extraerDatosDesdeSQL() {
+  public List<Hecho> extraerDatosdesdesql() {
     // no requerido aún
     return new ArrayList<>();
   }
 
-  public List<Hecho> extraerDatosDesdeWord() {
+  public List<Hecho> extraerDatosdesdeword() {
     // no requerido aún
     return new ArrayList<>();
   }

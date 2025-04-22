@@ -1,21 +1,19 @@
 package criterios;
 
 import domain.Hecho;
-
 import java.time.LocalDate;
-import java.util.Date;
 
 public class CriterioPorFecha implements CriterioDePertenencia {
-    private LocalDate desde;
-    private LocalDate hasta;
+  private final LocalDate desde;
+  private final LocalDate hasta;
 
-    public CriterioPorFecha(LocalDate desde, LocalDate hasta) {
-        this.desde = desde;
-        this.hasta = hasta;
-    }
+  public CriterioPorFecha(LocalDate desde, LocalDate hasta) {
+    this.desde = desde;
+    this.hasta = hasta;
+  }
 
-    @Override
-    public boolean cumple(Hecho hecho) {
-        return !hecho.getFecha().isBefore(desde) && !hecho.getFecha().isAfter(hasta);
-    }
+  @Override
+  public boolean cumple(Hecho hecho) {
+    return !hecho.getFecha().isBefore(desde) && !hecho.getFecha().isAfter(hasta);
+  }
 }

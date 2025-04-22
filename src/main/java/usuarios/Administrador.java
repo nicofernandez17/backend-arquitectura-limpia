@@ -3,11 +3,10 @@ package usuarios;
 import criterios.CriterioDePertenencia;
 import domain.Coleccion;
 import domain.Hecho;
-import Solicitudes.SolicitudEliminacion;
 import fuentes.FuenteDatos;
 import helpers.ColeccionBuilder;
-
 import java.util.List;
+import solicitudes.SolicitudEliminacion;
 
 public class Administrador {
 
@@ -19,8 +18,9 @@ public class Administrador {
   }
 
   //Simplificar parametros
-  public Coleccion crearColeccion(String titulo, String descripcion, FuenteDatos fuente, List<CriterioDePertenencia> criterios) {
-    builder.iniciarCon(titulo, descripcion, fuente,criterios);
+  public Coleccion crearColeccion(String titulo, String descripcion, FuenteDatos fuente,
+                                  List<CriterioDePertenencia> criterios) {
+    builder.iniciarCon(titulo, descripcion, fuente, criterios);
     builder.buildCriterios(criterios);
     builder.buildHechos();
     return builder.build();

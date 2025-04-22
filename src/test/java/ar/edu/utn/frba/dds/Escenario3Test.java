@@ -1,6 +1,6 @@
 package ar.edu.utn.frba.dds;
 
-import Solicitudes.SolicitudEliminacion;
+import solicitudes.SolicitudEliminacion;
 import domain.Hecho;
 import helpers.Categoria;
 import helpers.EstadoSolicitud;
@@ -20,15 +20,7 @@ public class Escenario3Test {
 
   @BeforeEach
   public void init() {
-    hecho = new Hecho(
-            "Brote de enfermedad contagiosa causa estragos en San Lorenzo, Santa Fe",
-            "Grave brote de enfermedad contagiosa ocurrió en las inmediaciones de San Lorenzo, Santa Fe. El incidente dejó varios heridos y daños materiales. Se ha declarado estado de emergencia en la región para facilitar la asistencia.",
-            new Categoria("Evento sanitario"),
-            new Ubicacion(-32.786098, -60.741543),
-            LocalDate.of(2005, 7, 5),
-            LocalDate.now(),
-            null
-    );
+    hecho = new Hecho("Brote de enfermedad contagiosa causa estragos en San Lorenzo, Santa Fe", "Grave brote de enfermedad contagiosa ocurrió en las inmediaciones de San Lorenzo, Santa Fe. El incidente dejó varios heridos y daños materiales. Se ha declarado estado de emergencia en la región para facilitar la asistencia.", new Categoria("Evento sanitario"), new Ubicacion(-32.786098, -60.741543), LocalDate.of(2005, 7, 5), LocalDate.now(), null);
 
     contribuyente = new Contribuyente("Juan", "Pérez", 30, null);
   }
@@ -46,7 +38,7 @@ public class Escenario3Test {
     // Rechazar la solicitud un día después
     solicitud1.rechazar();
     assertEquals(EstadoSolicitud.RECHAZADA, solicitud1.getEstado());
-    assertTrue(hecho.puedeAgregarseAColeccion());
+    assertTrue(hecho.puedeAgregarseacoleccion());
 
     // Crear una segunda solicitud de eliminación a través del contribuyente
     SolicitudEliminacion solicitud2 = contribuyente.solicitarEliminacion(hecho, motivo);
@@ -54,7 +46,7 @@ public class Escenario3Test {
     // Aceptar la solicitud después
     solicitud2.aceptar();
     assertEquals(EstadoSolicitud.ACEPTADA, solicitud2.getEstado());
-    assertFalse(hecho.puedeAgregarseAColeccion());
+    assertFalse(hecho.puedeAgregarseacoleccion());
   }
 
   @Test

@@ -1,17 +1,15 @@
 import domain.Hecho;
 import lectores.Lector;
-import lectores.AdapterLectorCSV;
+import lectores.AdapterLectorCsv;
 
 import java.io.FileNotFoundException;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class Main {
 
     public static void main(String[] args) throws FileNotFoundException {
 
-        Lector lector = new AdapterLectorCSV();
+        Lector lector = new AdapterLectorCsv();
 
         List<Hecho> hechos = lector.leer("src/test/resources/desastres_naturales_argentina.csv");
 

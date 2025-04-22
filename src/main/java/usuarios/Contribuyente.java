@@ -2,7 +2,7 @@ package usuarios;
 
 import domain.Coleccion;
 import domain.Hecho;
-import Solicitudes.SolicitudEliminacion;
+import solicitudes.SolicitudEliminacion;
 
 public class Contribuyente extends Usuario {
 

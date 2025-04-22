@@ -1,5 +1,5 @@
 package helpers;
 
 public enum Origen {
-    CARGA_MANUAL, DATASET, CONTRIBUYENTE
+  CARGA_MANUAL, DATASET, CONTRIBUYENTE
 }

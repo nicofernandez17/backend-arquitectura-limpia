@@ -2,13 +2,13 @@ package helpers;
 
 public class Categoria {
 
-    private String nombre;
+  private final String nombre;
 
-    public Categoria(String categoriaNombre) {
-        this.nombre = categoriaNombre;
-    }
+  public Categoria(String categoriaNombre) {
+    this.nombre = categoriaNombre;
+  }
 
-    public String getNombre() {
-        return nombre;
-    }
+  public String getNombre() {
+    return nombre;
+  }
 }

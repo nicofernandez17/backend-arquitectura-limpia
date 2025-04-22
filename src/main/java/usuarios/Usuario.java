@@ -1,12 +1,9 @@
 package usuarios;
 
-import domain.Coleccion;
-import domain.Hecho;
-
 public abstract class Usuario {
-  private String nombre;
-  private String apellido;
-  private Integer edad;
+  private final String nombre;
+  private final String apellido;
+  private final Integer edad;
 
   public Usuario(String nombre, String apellido, Integer edad) {
     this.nombre = nombre;

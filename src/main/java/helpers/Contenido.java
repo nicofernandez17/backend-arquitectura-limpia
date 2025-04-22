@@ -1,5 +1,5 @@
 package helpers;
 
 public enum Contenido {
-    FOTO, VIDEO
+  FOTO, VIDEO
 }
