@@ -22,7 +22,13 @@ class Administrador {
 
     -builder: ColeccionBuilder
     +crearColeccion(): Coleccion
+<<<<<<< Updated upstream
 
+=======
+    +importarCSV()
+    +aceptarSolicitud(solicitud: SolicitudEliminacion)
+    +rechazarSolicitud(solicitud: SolicitudEliminacion)
+>>>>>>> Stashed changes
 }
 
 
@@ -51,7 +57,7 @@ enum EstadoSolicitud {
 SolicitudEliminacion --> Usuario
 SolicitudEliminacion --> Hecho
 SolicitudEliminacion --> EstadoSolicitud
-
+SolicitudEliminacion <-- Administrador
 
 '---------------------- Colecciones ----------------------
 class Coleccion {

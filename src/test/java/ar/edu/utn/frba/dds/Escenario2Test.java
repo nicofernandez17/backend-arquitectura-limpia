@@ -1,33 +1,94 @@
 package ar.edu.utn.frba.dds;
 
+import criterios.CriterioPorCategoria;
+import criterios.CriterioDePertenencia;
+import helpers.Categoria;
+import domain.Coleccion;
 import domain.Hecho;
+import fuentes.FuenteDatosEstatica;
+import helpers.ColeccionBuilder;
 import lectores.AdapterLectorCsv;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Paths;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
-class Escenario2Test {
+public class Escenario2Test {
+
+    private ColeccionBuilder builder;
+    private FuenteDatosEstatica fuente;
+    private CriterioDePertenencia criterio;
+
+    @BeforeEach
+    public void init() {
+        // Configurar el builder, la fuente de datos y el criterio de pertenencia
+        builder = new ColeccionBuilder();
+        fuente = new FuenteDatosEstatica(
+            "src/test/resources/desastres_naturales_argentina.csv", new AdapterLectorCsv());
+        criterio = new CriterioPorCategoria(new Categoria("Inundación repentina"));
+    }
 
     @Test
-    void testLeerArchivoDesastresNaturales() {
+    public void testCrearColeccionDesdeCSV() {
+        // Configurar datos de prueba
+        String titulo = "Colección de Inundaciones";
+        String descripcion = "Eventos relacionados con inundaciones repentinas en Argentina";
+        List<CriterioDePertenencia> criterios = List.of(criterio);
+
+        // Crear colección con el builder
+        Coleccion coleccion = builder
+            .iniciarCon(titulo, descripcion, fuente, criterios)
+            .buildHechos()
+            .build();
+
+        // Verificar que la colección se creó correctamente
+        assertEquals(titulo, coleccion.getTitulo());
+        assertEquals(descripcion, coleccion.getDescripcion());
+        assertEquals(criterios, coleccion.getCriteriosDePertenencia());
+        assertNotNull(coleccion.getHechos());
+        assertFalse(coleccion.getHechos().isEmpty());
+    }
+
+    @Test
+    void testFiltrarHechosPorCategoria() {
         // Ruta relativa del archivo CSV
-        String rutaArchivo = Paths.get("src", "test", "resources", "desastres_naturales_argentina.csv").toString();
+        String rutaArchivo = Paths.get("src", "test", "resources",
+            "desastres_naturales_argentina.csv").toString();
 
         // Instanciar el adaptador y leer el archivo
         AdapterLectorCsv adapter = new AdapterLectorCsv();
         List<Hecho> hechos = adapter.leer(rutaArchivo);
 
-        // Verificar que la lista no sea nula y contenga datos
+        // Filtrar hechos por categoría "Inundación repentina"
+        String categoriaBuscada = "Inundación repentina";
+        List<Hecho> hechosFiltrados = hechos.stream()
+            .filter(hecho -> categoriaBuscada.equals(hecho.getCategoria().getNombre()))
+            .toList();
+
+        // Verificar que los hechos filtrados no sean nulos y contengan datos
+        assertNotNull(hechosFiltrados);
+        assertFalse(hechosFiltrados.isEmpty());
+
+        // Verificar que todos los hechos filtrados pertenezcan a la categoría buscada
+        hechosFiltrados.forEach(hecho -> assertEquals(categoriaBuscada,
+            hecho.getCategoria().getNombre()));
+    }
+
+    @Test
+    void testCantidadTotalDeHechosEnArchivo() {
+        // Ruta relativa del archivo CSV
+        String rutaArchivo = Paths.get("src", "test",
+            "resources", "desastres_naturales_argentina.csv").toString();
+
+        // Instanciar el adaptador y leer el archivo
+        AdapterLectorCsv adapter = new AdapterLectorCsv();
+        List<Hecho> hechos = adapter.leer(rutaArchivo);
+
+        // Verificar que la cantidad total de hechos sea la esperada
         assertNotNull(hechos);
         assertEquals(14877, hechos.size());
-
-        // Verificar algunos datos específicos
-        Hecho primerHecho = hechos.get(0);
-        assertNotNull(primerHecho.getTitulo());
-        assertNotNull(primerHecho.getDescripcion());
     }
 }

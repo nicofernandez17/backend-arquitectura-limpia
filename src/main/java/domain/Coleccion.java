@@ -14,7 +14,9 @@ public class Coleccion {
   // Getters y setters
   private List<Hecho> hechos;
   private final FuenteDatos fuente;
+  @Getter
   private final String titulo;
+  @Getter
   private final String descripcion;
   private final List<CriterioDePertenencia> criteriosDePertenencia;
 

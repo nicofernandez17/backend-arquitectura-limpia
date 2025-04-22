@@ -12,11 +12,6 @@ public class Administrador {
 
   private ColeccionBuilder builder;
 
-
-  public SolicitudEliminacion solicitarEliminacion(Hecho hecho, String motivo) {
-    return new SolicitudEliminacion(hecho, motivo);
-  }
-
   //Simplificar parametros
   public Coleccion crearColeccion(String titulo, String descripcion, FuenteDatos fuente,
                                   List<CriterioDePertenencia> criterios) {
@@ -26,6 +21,13 @@ public class Administrador {
     return builder.build();
   }
 
+  public void aceptarSolicitud(SolicitudEliminacion solicitud) {
+    solicitud.aceptar();
+  }
+
+  public void rechazarSolicitud(SolicitudEliminacion solicitud) {
+    solicitud.rechazar();
+  }
 
   // Constructor, getters/setters
   public void setBuilder(ColeccionBuilder builder) {
