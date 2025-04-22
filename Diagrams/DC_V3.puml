@@ -22,13 +22,10 @@ class Administrador {
 
     -builder: ColeccionBuilder
     +crearColeccion(): Coleccion
-<<<<<<< Updated upstream
-
-=======
     +importarCSV()
     +aceptarSolicitud(solicitud: SolicitudEliminacion)
     +rechazarSolicitud(solicitud: SolicitudEliminacion)
->>>>>>> Stashed changes
+
 }
 
 
