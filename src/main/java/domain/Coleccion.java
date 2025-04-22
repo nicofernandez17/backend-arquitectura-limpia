@@ -23,7 +23,7 @@ public class Coleccion {
     this.titulo = titulo;
     this.descripcion = descripcion;
     this.fuente = fuente;
-    this.criteriosDePertenencia = new ArrayList<>(criterios);
+    this.criteriosDePertenencia = criterios != null ? new ArrayList<>(criterios) : new ArrayList<>();
     this.hechos = new ArrayList<>();
   }
 

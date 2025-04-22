@@ -19,8 +19,10 @@ class Contribuyente extends Usuario {
 }
 
 class Administrador {
+
+    -builder: ColeccionBuilder
     +crearColeccion(): Coleccion
-    +importarCSV()
+
 }
 
 
@@ -60,7 +62,7 @@ class Coleccion {
     -crierioDePertenencia: List<CriterioDePertenencia>
 
     +cargarColeccion()
-    +leerColeccion(): List<Hecho>
+
 }
 
 class ColeccionBuilder {

@@ -13,6 +13,7 @@ import helpers.Ubicacion;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.mockito.internal.matchers.Null;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -96,7 +97,7 @@ public class Escenario1Test {
     // Construcción de la colección
     ColeccionBuilder builder = new ColeccionBuilder();
     coleccion = builder
-            .iniciarCon("Colección prueba", "Esto es una prueba", fuente, Arrays.asList(criterioFecha))
+            .iniciarCon("Colección prueba", "Esto es una prueba", fuente, null)
             .buildHechos()
             .build();
 
