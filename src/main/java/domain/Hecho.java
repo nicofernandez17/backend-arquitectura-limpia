@@ -26,11 +26,11 @@ public class Hecho {
   private Ubicacion ubicacion;
   @Getter
   private LocalDate fecha;
-  @SuppressWarnings("unused")
+  @Getter
   private LocalDate fechaDeCarga;
-  @SuppressWarnings("unused")
-  private Contenido contenidoMultimedia;
-  @SuppressWarnings("unused")
+  //@SuppressWarnings("unused")
+  //private Contenido contenidoMultimedia;
+  @Getter
   private Origen origen;
   private List<String> etiquetas;
   @Getter

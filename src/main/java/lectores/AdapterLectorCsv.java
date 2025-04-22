@@ -6,9 +6,12 @@ import domain.Hecho;
 import helpers.Categoria;
 import helpers.Origen;
 import helpers.Ubicacion;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,15 +20,15 @@ public class AdapterLectorCsv implements Lector {
   private CSVReader reader;
 
   public AdapterLectorCsv() {
-
   }
 
   @Override
   public List<Hecho> leer(String rutaArchivo) {
     List<Hecho> hechos = new ArrayList<>();
 
-    try (FileReader fileReader = new FileReader(rutaArchivo)) {
-      this.reader = new CSVReader(fileReader);
+    try (InputStreamReader inputStreamReader =
+             new InputStreamReader(new FileInputStream(rutaArchivo), StandardCharsets.UTF_8)) {
+      this.reader = new CSVReader(inputStreamReader);
 
       String[] linea;
       boolean primeraLinea = true;
@@ -36,33 +39,10 @@ public class AdapterLectorCsv implements Lector {
           continue;
         }
 
-        String titulo = linea[0];
-        String descripcion = linea[1];
-        String categoriaNombre = linea[2];
-        double longitud = Double.parseDouble(linea[3]);
-        double latitud = Double.parseDouble(linea[4]);
-        String fecha = linea[5];
-
-        Ubicacion ubicacion = new Ubicacion(latitud, longitud);
-        Categoria categoria = new Categoria(categoriaNombre);
-        Hecho nuevoHecho = new Hecho(
-            titulo,
-            descripcion,
-            categoria,
-            ubicacion,
-            LocalDate.now(),
-            LocalDate.now(),
-            Origen.DATASET
-        );
+        Hecho nuevoHecho = crearHechoDesdeLinea(linea);
 
         // Verificamos si ya hay un Hecho con ese título
-        int indexExistente = -1;
-        for (int i = 0; i < hechos.size(); i++) {
-          if (hechos.get(i).getTitulo().equalsIgnoreCase(titulo)) {
-            indexExistente = i;
-            break;
-          }
-        }
+        int indexExistente = buscarHechoPorTitulo(hechos, nuevoHecho.getTitulo());
 
         if (indexExistente != -1) {
           hechos.set(indexExistente, nuevoHecho); // reemplaza el hecho existente
@@ -76,5 +56,40 @@ public class AdapterLectorCsv implements Lector {
     }
 
     return hechos;
+  }
+
+  private Hecho crearHechoDesdeLinea(String[] linea) {
+    String titulo = linea[0];
+    String descripcion = linea[1];
+    String categoriaNombre = linea[2];
+    double longitud = Double.parseDouble(linea[3]);
+    double latitud = Double.parseDouble(linea[4]);
+    String fechaStr = linea[5];
+
+    // Convertir la fecha desde el formato del CSV
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    LocalDate fecha = LocalDate.parse(fechaStr, formatter);
+
+    Ubicacion ubicacion = new Ubicacion(latitud, longitud);
+    Categoria categoria = new Categoria(categoriaNombre);
+
+    return new Hecho(
+        titulo,
+        descripcion,
+        categoria,
+        ubicacion,
+        fecha, // Usar la fecha del CSV
+        LocalDate.now(),
+        Origen.DATASET
+    );
+  }
+
+  private int buscarHechoPorTitulo(List<Hecho> hechos, String titulo) {
+    for (int i = 0; i < hechos.size(); i++) {
+      if (hechos.get(i).getTitulo().equalsIgnoreCase(titulo)) {
+        return i;
+      }
+    }
+    return -1;
   }
 }

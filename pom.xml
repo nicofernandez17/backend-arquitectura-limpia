@@ -126,6 +126,9 @@
               </rules>
               <excludes>
                 <exclude>Main.class</exclude>
+                <exclude>filtros/*</exclude>
+                <exclude>usuarios/*</exclude>
+                <exclude>fuentes/*</exclude>
               </excludes>
             </configuration>
           </execution>

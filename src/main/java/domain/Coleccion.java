@@ -16,9 +16,6 @@ public class Coleccion {
   private final FuenteDatos fuente;
   private final String titulo;
   private final String descripcion;
-
-
-  @Getter
   private final List<CriterioDePertenencia> criteriosDePertenencia;
 
   public Coleccion(String titulo, String descripcion, FuenteDatos fuente,
@@ -58,4 +55,7 @@ public class Coleccion {
     this.criteriosDePertenencia.add(criterio);
   }
 
+  public List<CriterioDePertenencia> getCriteriosDePertenencia() {
+    return Collections.unmodifiableList(criteriosDePertenencia);
+  }
 }
