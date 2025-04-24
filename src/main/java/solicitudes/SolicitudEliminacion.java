@@ -4,8 +4,11 @@ import domain.Hecho;
 import helpers.EstadoSolicitud;
 import java.time.LocalDateTime;
 import lombok.Getter;
+import usuarios.Contribuyente;
 
 public class SolicitudEliminacion {
+  @Getter
+  private final Contribuyente usuario;
   @Getter
   private final LocalDateTime fechaCreacion;
   @Getter
@@ -15,8 +18,9 @@ public class SolicitudEliminacion {
   @Getter
   private final String motivo;
 
-  public SolicitudEliminacion(Hecho hecho, String motivo) {
-    if (motivo == null || motivo.length() < 20) {
+  public SolicitudEliminacion(Hecho hecho, String motivo, Contribuyente usuario) {
+      this.usuario = usuario;
+      if (motivo == null || motivo.length() < 20) {
       throw new IllegalArgumentException("El motivo debe tener al menos 20 caracteres.");
     }
     this.hecho = hecho;

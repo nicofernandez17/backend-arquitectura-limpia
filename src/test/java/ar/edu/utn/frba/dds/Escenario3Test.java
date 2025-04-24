@@ -32,7 +32,7 @@ public class Escenario3Test {
         null
     );
 
-    contribuyente = new Contribuyente("Juan", "Pérez", 30, null);
+    contribuyente = new Contribuyente("Juan", "Pérez", 30);
 
   }
 

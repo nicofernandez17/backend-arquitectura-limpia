@@ -2,20 +2,24 @@ package usuarios;
 
 import domain.Coleccion;
 import domain.Hecho;
-import solicitudes.SolicitudEliminacion;
 
-public class Contribuyente extends Usuario {
+public class Contribuyente {
 
-  public Contribuyente(String nombre, String apellido, Integer edad, Usuario rolMock) {
-    super(nombre, apellido, edad);
-  }
 
-  public SolicitudEliminacion solicitarEliminacion(Hecho hecho, String motivo) {
-    return new SolicitudEliminacion(hecho, motivo);
-    //Eventualmente lo guardará en una base de datos dinámica
-  }
+    private final String nombre;
+    private final String apellido;
+    private final Integer edad;
 
-  public void aportarHecho(Coleccion coleccion, Hecho hecho) {
-    coleccion.agregarHecho(hecho);
-  }
+    public Contribuyente(String nombre, String apellido, Integer edad) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.edad = edad;
+    }
+
+    public void aportarHecho(Coleccion coleccion, Hecho hecho) {
+        coleccion.agregarHecho(hecho);
+    }
+
+
+
 }

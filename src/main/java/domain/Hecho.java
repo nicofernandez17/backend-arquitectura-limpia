@@ -10,7 +10,8 @@ import java.util.Collections;
 import java.util.List;
 import lombok.Getter;
 import solicitudes.SolicitudEliminacion;
-import usuarios.Usuario;
+import usuarios.Contribuyente;
+
 
 public class Hecho {
 
@@ -67,8 +68,8 @@ public class Hecho {
     }
   }
 
-  public SolicitudEliminacion solicitarEliminacion(Usuario usuario,String motivo) {
-    return new SolicitudEliminacion(this,motivo);
+  public SolicitudEliminacion solicitarEliminacion(Contribuyente contribuyente, String motivo) {
+    return new SolicitudEliminacion(this,motivo,contribuyente);
   }
 
   public List<String> getEtiquetas() {
