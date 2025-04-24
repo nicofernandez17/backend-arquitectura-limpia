@@ -18,7 +18,7 @@ public class Escenario3Test {
 
   private Hecho hecho;
   private Contribuyente contribuyente;
-  private Administrador administrador;
+
 
   @BeforeEach
   public void init() {
@@ -33,7 +33,7 @@ public class Escenario3Test {
     );
 
     contribuyente = new Contribuyente("Juan", "Pérez", 30, null);
-    administrador = new Administrador();
+
   }
 
   @Test
@@ -41,13 +41,13 @@ public class Escenario3Test {
     String motivo = "Este hecho contiene información sensible y debe ser eliminado por razones de privacidad.".repeat(10);
 
     // Crear solicitud
-    SolicitudEliminacion solicitud = contribuyente.solicitarEliminacion(hecho, motivo);
+    SolicitudEliminacion solicitud = hecho.solicitarEliminacion(contribuyente, motivo);
 
     // Verificar estado inicial
     assertEquals(EstadoSolicitud.PENDIENTE, solicitud.getEstado());
 
     // Administrador acepta la solicitud
-    administrador.aceptarSolicitud(solicitud);
+    solicitud.aceptar();
 
     // Verificar estado final
     assertEquals(EstadoSolicitud.ACEPTADA, solicitud.getEstado());
@@ -59,13 +59,13 @@ public class Escenario3Test {
     String motivo = "Este hecho contiene información sensible y debe ser eliminado por razones de privacidad.".repeat(10);
 
     // Crear solicitud
-    SolicitudEliminacion solicitud = contribuyente.solicitarEliminacion(hecho, motivo);
+    SolicitudEliminacion solicitud = hecho.solicitarEliminacion(contribuyente, motivo);
 
     // Verificar estado inicial
     assertEquals(EstadoSolicitud.PENDIENTE, solicitud.getEstado());
 
     // Administrador rechaza la solicitud
-    administrador.rechazarSolicitud(solicitud);
+    solicitud.rechazar();
 
     // Verificar estado final
     assertEquals(EstadoSolicitud.RECHAZADA, solicitud.getEstado());
@@ -77,7 +77,7 @@ public class Escenario3Test {
     String motivoCorto = "Motivo muy corto";
 
     // Intentar crear una solicitud con un motivo inválido
-    assertThrows(IllegalArgumentException.class, () -> contribuyente.solicitarEliminacion(hecho, motivoCorto));
+    assertThrows(IllegalArgumentException.class, () -> hecho.solicitarEliminacion(contribuyente, motivoCorto));
   }
 
   @Test
@@ -85,7 +85,7 @@ public class Escenario3Test {
     String motivo = "Motivo válido".repeat(50);
 
     // Crear solicitud
-    SolicitudEliminacion solicitud = contribuyente.solicitarEliminacion(hecho, motivo);
+    SolicitudEliminacion solicitud = hecho.solicitarEliminacion(contribuyente, motivo);
 
     // Verificar estado inicial
     assertEquals(EstadoSolicitud.PENDIENTE, solicitud.getEstado());
@@ -96,14 +96,14 @@ public class Escenario3Test {
     String motivo = "Motivo válido".repeat(50);
 
     // Crear solicitud
-    SolicitudEliminacion solicitud = contribuyente.solicitarEliminacion(hecho, motivo);
+    SolicitudEliminacion solicitud = hecho.solicitarEliminacion(contribuyente, motivo);
 
     // Rechazar solicitud
-    administrador.rechazarSolicitud(solicitud);
+    solicitud.rechazar();
     assertEquals(EstadoSolicitud.RECHAZADA, solicitud.getEstado());
 
     // Intentar rechazar nuevamente
-    administrador.rechazarSolicitud(solicitud);
+    solicitud.rechazar();
     assertEquals(EstadoSolicitud.RECHAZADA, solicitud.getEstado());
   }
 
@@ -112,14 +112,14 @@ public class Escenario3Test {
     String motivo = "Motivo válido".repeat(50);
 
     // Crear solicitud
-    SolicitudEliminacion solicitud = contribuyente.solicitarEliminacion(hecho, motivo);
+    SolicitudEliminacion solicitud = hecho.solicitarEliminacion(contribuyente, motivo);
 
     // Aceptar solicitud
-    administrador.aceptarSolicitud(solicitud);
+    solicitud.aceptar();
     assertEquals(EstadoSolicitud.ACEPTADA, solicitud.getEstado());
 
     // Intentar aceptar nuevamente
-    administrador.aceptarSolicitud(solicitud);
+    solicitud.aceptar();
     assertEquals(EstadoSolicitud.ACEPTADA, solicitud.getEstado());
   }
 }

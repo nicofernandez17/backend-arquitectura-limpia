@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import lombok.Getter;
+import solicitudes.SolicitudEliminacion;
+import usuarios.Usuario;
 
 public class Hecho {
 
@@ -63,6 +65,10 @@ public class Hecho {
     if (!etiquetas.contains(etiqueta)) {
       etiquetas.add(etiqueta);
     }
+  }
+
+  public SolicitudEliminacion solicitarEliminacion(Usuario usuario,String motivo) {
+    return new SolicitudEliminacion(this,motivo);
   }
 
   public List<String> getEtiquetas() {
