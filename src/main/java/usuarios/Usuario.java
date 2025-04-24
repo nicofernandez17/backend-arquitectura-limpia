@@ -1,6 +1,9 @@
 package usuarios;
 
-public abstract class Usuario {
+import domain.Coleccion;
+import domain.Hecho;
+
+public  class Usuario {
   private final String nombre;
   private final String apellido;
   private final Integer edad;
@@ -11,5 +14,8 @@ public abstract class Usuario {
     this.edad = edad;
   }
 
+  public void aportarHecho(Coleccion coleccion, Hecho hecho) {
+    coleccion.agregarHecho(hecho);
+  }
 
 }
