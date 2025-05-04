@@ -1,14 +1,13 @@
 package ar.edu.utn.frba.dds;
 
-import solicitudes.SolicitudEliminacion;
-import domain.Hecho;
-import helpers.Categoria;
-import helpers.EstadoSolicitud;
-import helpers.Ubicacion;
+import models.solicitudes.SolicitudEliminacion;
+import models.domain.Hecho;
+import models.helpers.Categoria;
+import models.helpers.EstadoSolicitud;
+import models.helpers.Ubicacion;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import usuarios.Administrador;
-import usuarios.Contribuyente;
+import models.usuarios.Contribuyente;
 
 import java.time.LocalDate;
 

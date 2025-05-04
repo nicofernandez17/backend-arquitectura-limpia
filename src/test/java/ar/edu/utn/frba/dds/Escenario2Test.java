@@ -1,13 +1,13 @@
 package ar.edu.utn.frba.dds;
 
-import criterios.CriterioPorCategoria;
-import criterios.CriterioDePertenencia;
-import helpers.Categoria;
-import domain.Coleccion;
-import domain.Hecho;
-import fuentes.FuenteDatosEstatica;
-import helpers.ColeccionBuilder;
-import lectores.AdapterLectorCsv;
+import models.criterios.CriterioPorCategoria;
+import models.criterios.CriterioDePertenencia;
+import models.helpers.Categoria;
+import models.domain.Coleccion;
+import models.domain.Hecho;
+import models.fuentes.FuenteDatosEstatica;
+import models.helpers.ColeccionBuilder;
+import models.lectores.AdapterLectorCsv;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

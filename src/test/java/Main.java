@@ -1,6 +1,6 @@
-import domain.Hecho;
-import lectores.Lector;
-import lectores.AdapterLectorCsv;
+import models.domain.Hecho;
+import models.lectores.Lector;
+import models.lectores.AdapterLectorCsv;
 
 import java.io.FileNotFoundException;
 import java.util.List;

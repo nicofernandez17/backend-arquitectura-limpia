@@ -1,22 +1,20 @@
 package ar.edu.utn.frba.dds;
 
-import criterios.CriterioFiltroTitulo;
-import criterios.CriterioPorCategoria;
-import criterios.CriterioPorFecha;
-import domain.Coleccion;
-import domain.Hecho;
-import fuentes.FuenteDatos;
-import helpers.Categoria;
-import helpers.ColeccionBuilder;
-import helpers.Origen;
-import helpers.Ubicacion;
+import models.criterios.CriterioFiltroTitulo;
+import models.criterios.CriterioPorCategoria;
+import models.criterios.CriterioPorFecha;
+import models.domain.Coleccion;
+import models.domain.Hecho;
+import models.fuentes.FuenteDatos;
+import models.helpers.Categoria;
+import models.helpers.ColeccionBuilder;
+import models.helpers.Origen;
+import models.helpers.Ubicacion;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.mockito.internal.matchers.Null;
 
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
