@@ -1,7 +1,9 @@
-package agregador.src.main.java;
+package utn;
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+@SpringBootApplication
 public class AgregadorApp {
 
     public static void main(String[] args) {
