@@ -11,7 +11,7 @@
     </parent>
 
     <artifactId>fuente-proxy</artifactId>
-    <name>modulo-api</name>
+    <name>proxy</name>
 
     <dependencies>
         <!-- Solo las dependencias específicas de este módulo -->

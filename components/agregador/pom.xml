@@ -14,13 +14,26 @@
     <name>modulo-api</name>
 
     <dependencies>
-        <!-- Solo las dependencias específicas de este módulo -->
-        <!-- Ejemplo: -->
-        <!--
         <dependency>
-          <groupId>org.springframework.boot</groupId>
-          <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>ar.edu.utn.frba.dds</groupId>
+            <artifactId>common</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
-        -->
     </dependencies>
+
+    <build>
+        <directory>${project.basedir}/target/agregador</directory> <!-- Ruta de salida solo para este módulo -->
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>17</source>
+                    <target>17</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>

@@ -12,6 +12,7 @@
 
     <artifactId>common</artifactId>
     <name>modulo-api</name>
+    <packaging>jar</packaging>
 
     <dependencies>
         <!-- Solo las dependencias específicas de este módulo -->
