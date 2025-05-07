@@ -1,0 +1,147 @@
+@startuml
+left to right direction
+skinparam classAttributeIconSize 0
+
+'---------------------- Usuarios ----------------------
+class Contribuyente {
+    - nombre: String
+    - apellido: String
+    - edad: Integer
+}
+
+class Administrador {
+    - builder: ColeccionBuilder
+    + crearColeccion(): Coleccion
+}
+
+Administrador --> ColeccionBuilder
+SolicitudEliminacion --> Contribuyente
+
+'---------------------- Colecciones ----------------------
+class Coleccion {
+    - hechos: List<Hecho>
+    - fuente: FuenteDatos
+    - titulo: String
+    - descripcion: String
+    - crierioDePertenencia: List<CriterioDePertenencia>
+    + cargarColeccion()
+}
+
+class ColeccionBuilder {
+    - coleccion: Coleccion
+    + iniciarCon(): ColeccionBuilder
+    + buildCriterios(): ColeccionBuilder
+    + buildHechos(): ColeccionBuilder
+    + build(): Coleccion
+}
+
+ColeccionBuilder --> Coleccion
+Coleccion --> "*" Hecho
+Coleccion --> FuenteDatosEstatica
+Coleccion --> "*" CriterioDePertenencia
+
+interface CriterioDePertenencia {
+    + cumple(hecho: Hecho): boolean
+}
+
+class CriterioPorUbicacion implements CriterioDePertenencia {
+    - ubicacion: Ubicacion
+    + cumple(hecho: Hecho): boolean
+}
+
+class CriterioPorFecha implements CriterioDePertenencia {
+    - desde: LocalDate
+    - hasta: LocalDate
+    + cumple(hecho: Hecho): boolean
+}
+
+class CriterioPorCategoria implements CriterioDePertenencia {
+    - categoria: Categoria
+    + cumple(hecho: Hecho): boolean
+}
+
+CriterioPorUbicacion --> Ubicacion
+CriterioPorCategoria --> Categoria
+
+'---------------------- Hechos ----------------------
+class Hecho {
+    - titulo: String
+    - descripcion: String
+    - categoria: Categoria
+    - ubicacion: Ubicacion
+    - fechaDeCarga: Date
+    - fecha: Date
+    - contenidoMultimedia: Contenido
+    - origen: Origen
+    - etiquetas: List<String>
+    - eliminado: Boolean
+    + marcarComoEliminado()
+    + puedeAgregarseacoleccion()
+    +solicitarEliminacion(Usuario)
+}
+
+class Categoria {
+    - nombre: String
+}
+
+enum Origen {
+    CARGA_MANUAL
+    DATASET
+    CONTRIBUYENTE
+}
+
+class Ubicacion {
+    - latitud: Double
+    - longitud: Double
+}
+
+class Contenido {
+    - url: String
+}
+
+Hecho --> Categoria
+Hecho --> Ubicacion
+Hecho --> Origen
+Hecho --> Contenido
+
+'---------------------- Solicitud Eliminación ----------------------
+class SolicitudEliminacion {
+    - hecho: Hecho
+    - motivo: String
+    - estado: EstadoSolicitud
+    - fechaCreacion: LocalDateTime
+    + aceptar()
+    + rechazar()
+}
+
+enum EstadoSolicitud {
+    PENDIENTE
+    ACEPTADA
+    RECHAZADA
+}
+
+SolicitudEliminacion --> Hecho
+SolicitudEliminacion --> EstadoSolicitud
+
+'---------------------- Fuentes de Datos y Lectores ----------------------
+class FuenteDatosEstatica {
+    - dataset: String
+    - lector: Lector
+    + obtenerHechos(): List<Hecho>
+}
+
+interface Lector {
+    + obtenerDatos(path: String)
+}
+
+class AdapterLectorCSV implements Lector {
+    + obtenerDatos(path: String)
+}
+
+class CSVReader {
+}
+
+FuenteDatosEstatica --> Lector
+AdapterLectorCSV --> CSVReader
+
+@enduml

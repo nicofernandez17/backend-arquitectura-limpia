@@ -13,9 +13,20 @@
   <groupId>ar.edu.utn.frba.dds</groupId>
   <artifactId>ejercicio</artifactId>
   <version>1.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
 
   <name>ejercicio</name>
   <url>https://github.com/dds-utn</url>
+
+  <modules>
+    <module>components/agregador</module>
+    <module>components/app-main</module>
+    <module>components/fuente-dinamica</module>
+    <module>components/fuente-estatica</module>
+    <module>components/fuente-proxy</module>
+    <module>components/common</module>
+
+  </modules>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
