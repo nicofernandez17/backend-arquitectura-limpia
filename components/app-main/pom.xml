@@ -14,13 +14,15 @@
     <name>modulo-api</name>
 
     <dependencies>
-        <!-- Solo las dependencias específicas de este módulo -->
-        <!-- Ejemplo: -->
-        <!--
         <dependency>
-          <groupId>org.springframework.boot</groupId>
-          <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
         </dependency>
-        -->
+
+        <!-- Reactor: ya viene con WebFlux, pero puedes agregar explícitamente si necesitás usar más cosas -->
+        <dependency>
+            <groupId>io.projectreactor</groupId>
+            <artifactId>reactor-core</artifactId>
+        </dependency>
     </dependencies>
 </project>
