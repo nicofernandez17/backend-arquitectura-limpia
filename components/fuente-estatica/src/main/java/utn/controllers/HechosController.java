@@ -20,6 +20,7 @@ public class HechosController {
 
     @GetMapping
     public List<HechoDTO> obtenerTodosLosHechos() {
-        return hechosService.obtenerHechos();
+        hechosService.cargarDesdeCsv();
+        return hechosService.obtenerTodos();
     }
 }

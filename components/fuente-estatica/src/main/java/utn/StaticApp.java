@@ -4,6 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import utn.model.HechoDTO;
 import utn.model.lectores.AdapterLectorCsv;
+import utn.services.HechosService;
 
 import java.util.List;
 
