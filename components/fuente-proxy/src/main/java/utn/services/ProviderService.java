@@ -1,5 +1,6 @@
 package utn.services;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
@@ -13,13 +14,17 @@ public class ProviderService {
 
     private final WebClient webClient;
 
-    public ProviderService(WebClient.Builder webClientBuilder) {
-        this.webClient = webClientBuilder.baseUrl("https://catfact.ninja").build();
+    public ProviderService(WebClient.Builder webClientBuilder,
+                           @Value("${api.ddsi.token}") String token) {
+        this.webClient = webClientBuilder
+                .baseUrl("https://api-ddsi.disilab.ar/public")
+                .defaultHeader("Authorization", "Bearer " + token)
+                .build();
     }
 
     public Mono<List<HechoDTO>> getHechos() {
         return webClient.get()
-                .uri("/facts")
+                .uri("/api/desastres")
                 .retrieve()
                 .bodyToMono(HechosResponseDTO.class)
                 .map(HechosResponseDTO::getHechos);
