@@ -1,0 +1,85 @@
+package utn.model.lectores;
+
+import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvValidationException;
+import utn.model.HechoDTO;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+
+public class AdapterLectorCsv implements Lector {
+
+  private CSVReader reader;
+
+  public List<HechoDTO> leer(String rutaArchivo) {
+    List<HechoDTO> hechos = new ArrayList<>();
+
+    try (InputStreamReader inputStreamReader =
+                 new InputStreamReader(new FileInputStream(rutaArchivo), StandardCharsets.UTF_8)) {
+
+      this.reader = new CSVReader(inputStreamReader);
+
+      String[] linea;
+      boolean primeraLinea = true;
+
+      while ((linea = reader.readNext()) != null) {
+        if (primeraLinea) {
+          primeraLinea = false;
+          continue;
+        }
+
+        HechoDTO nuevoHecho = crearHechoDesdeLinea(linea);
+
+        // Verificamos si ya hay un Hecho con ese título
+        int indexExistente = buscarHechoPorTitulo(hechos, nuevoHecho.getTitulo());
+
+        if (indexExistente != -1) {
+          hechos.set(indexExistente, nuevoHecho); // reemplaza el hecho existente
+        } else {
+          hechos.add(nuevoHecho); // lo agrega si no existía
+        }
+      }
+
+    } catch (IOException | CsvValidationException e) {
+      e.printStackTrace();
+    }
+
+    return hechos;
+  }
+
+  private HechoDTO crearHechoDesdeLinea(String[] linea) {
+    String titulo = linea[0];
+    String descripcion = linea[1];
+    String categoria = linea[2];
+    double longitud = Double.parseDouble(linea[3]);
+    double latitud = Double.parseDouble(linea[4]);
+    String fechaStr = linea[5];
+
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    String fechaISO = LocalDate.parse(fechaStr, formatter).toString();
+
+    return HechoDTO.builder()
+            .titulo(titulo)
+            .descripcion(descripcion)
+            .categoria(categoria)
+            .longitud(longitud)
+            .latitud(latitud)
+            .fecha_hecho(fechaISO)
+            .build();
+  }
+
+  private int buscarHechoPorTitulo(List<HechoDTO> hechos, String titulo) {
+    for (int i = 0; i < hechos.size(); i++) {
+      if (hechos.get(i).getTitulo().equalsIgnoreCase(titulo)) {
+        return i;
+      }
+    }
+    return -1;
+  }
+}
