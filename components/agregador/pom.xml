@@ -13,13 +13,6 @@
     <artifactId>agregador</artifactId>
     <name>modulo-api</name>
 
-    <dependencies>
-        <dependency>
-            <groupId>ar.edu.utn.frba.dds</groupId>
-            <artifactId>common</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-    </dependencies>
 
     <build>
         <directory>${project.basedir}/target/agregador</directory> <!-- Ruta de salida solo para este módulo -->
