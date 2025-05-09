@@ -17,7 +17,8 @@ public class HechosController {
 
     @GetMapping("/hechos")
     public Mono<List<HechoDTO>> getHechos() {
-        return providerService.getHechos();
+        return providerService.getHechos()
+                .flatMap(hechos -> providerService.obtenerHechos());
     }
 
 }
