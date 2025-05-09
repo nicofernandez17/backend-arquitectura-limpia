@@ -3,7 +3,7 @@ package utn.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import utn.model.HechoDTO;
-import utn.repositories.HechosRepository;
+import utn.repositories.IHechoRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,15 +11,17 @@ import java.util.Optional;
 @Service
 public class HechoService {
 
-    private final HechosRepository hechosRepository;
+
+    private final IHechoRepository hechosRepository;
 
     @Autowired
-    public HechosService(HechosRepository hechosRepository) {
+    public HechoService(IHechoRepository hechosRepository) {
         this.hechosRepository = hechosRepository;
     }
 
+
     // Obtiene todos los hechos desde el repositorio
-    public List<HechoDTO> obtenerHechos() {
+    public List<HechoDTO> obtenerTodos() {
         return hechosRepository.findAll();
     }
 
