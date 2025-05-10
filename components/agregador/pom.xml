@@ -12,6 +12,12 @@
 
     <artifactId>agregador</artifactId>
     <name>modulo-api</name>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webflux</artifactId>
+        </dependency>
+    </dependencies>
 
 
     <build>
