@@ -2,6 +2,7 @@ package utn.models.domain;
 
 import lombok.Data;
 import lombok.Getter;
+import utn.models.criterios.CriterioDePertenencia;
 import utn.models.dtos.HechoDTO;
 import utn.services.FuenteService;
 import java.util.Collections;
@@ -19,6 +20,7 @@ public class Coleccion {
   private final String titulo;
   @Getter
   private final String descripcion;
+  private  List<CriterioDePertenencia> criteriosDePertenencia;
 
     public Coleccion(String titulo, String descripcion) {
         this.titulo = titulo;
@@ -28,9 +30,9 @@ public class Coleccion {
 
 
   public void agregarHecho(Hecho hecho) {
-
+    if (criteriosDePertenencia.stream().allMatch(criterio -> criterio.cumple(hecho))) {
       this.hechos.add(hecho);
-
+    }
   }
 
   public void actualizarHechos() {

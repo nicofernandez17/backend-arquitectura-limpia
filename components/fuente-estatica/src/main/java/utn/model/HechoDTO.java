@@ -3,6 +3,8 @@ package utn.model;
 import lombok.Builder;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Data
 @Builder
 public class HechoDTO {
@@ -12,4 +14,6 @@ public class HechoDTO {
     private double latitud;
     private double longitud;
     private String fecha_hecho;
+    private LocalDateTime created_at;
+    private LocalDateTime updated_at;
 }

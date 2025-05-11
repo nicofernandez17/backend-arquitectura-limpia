@@ -10,7 +10,7 @@ import lombok.Getter;
 
 public class Coleccion {
 
-
+  private String id;
   // Getters y setters
   private List<Hecho> hechos;
   private final FuenteDatos fuente;
