@@ -27,9 +27,10 @@ public class ColeccionService {
     }
 
     public List<Coleccion> obtenerColecciones() {
+        coleccionRepository.getAll();
     }
 
     public List<Hecho> obtenerHechosPorColeccion(String identificador) {
-        return;
+        return coleccionRepository.findById(identificador).get().getHechos();
     }
 }

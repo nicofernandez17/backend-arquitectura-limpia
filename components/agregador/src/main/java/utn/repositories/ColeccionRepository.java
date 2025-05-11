@@ -7,6 +7,7 @@ import utn.models.dtos.ColeccionDTO;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class ColeccionRepository {
@@ -18,6 +19,12 @@ public class ColeccionRepository {
 
     public void add(Coleccion coleccion) {
         colecciones.add(coleccion);
+    }
+
+    public Optional<Coleccion> findById(String id) {
+        return colecciones.stream()
+                .filter(c -> c.getId().equals(id))
+                .findFirst();
     }
 
     public void update(Coleccion coleccion) {

@@ -1,5 +1,6 @@
 package utn.models.domain;
 
+import lombok.Data;
 import lombok.Getter;
 import utn.models.dtos.HechoDTO;
 import utn.services.FuenteService;
@@ -7,9 +8,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Data
 public class Coleccion {
 
-
+  private String id;
   // Getters y setters
   private List<Hecho> hechos;
   private List<FuenteService> fuentes;

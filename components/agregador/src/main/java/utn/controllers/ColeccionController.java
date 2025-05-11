@@ -30,7 +30,7 @@ public class ColeccionController {
 
     @GetMapping
     public List<ColeccionDTO> obtenerColecciones() {
-
+        //TODO Pasar a dto
         return coleccionService.obtenerColecciones();
     }
 
