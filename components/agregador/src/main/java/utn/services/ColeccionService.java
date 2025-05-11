@@ -2,18 +2,20 @@ package utn.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import utn.models.Coleccion;
+import utn.models.domain.Coleccion;
+import utn.models.domain.Hecho;
+import utn.models.dtos.HechoDTO;
 import utn.repositories.ColeccionRepository;
 
 import java.util.List;
 
 @Service
-public class AgregadorService {
+public class ColeccionService {
 
     private final ColeccionRepository coleccionRepository;
 
     @Autowired
-    public AgregadorService(ColeccionRepository coleccionRepository) {
+    public ColeccionService(ColeccionRepository coleccionRepository) {
         this.coleccionRepository = coleccionRepository;
     }
 
@@ -22,5 +24,12 @@ public class AgregadorService {
         for (Coleccion coleccion : colecciones) {
             coleccion.actualizarHechos();  // Actualiza los hechos de la colección
         }
+    }
+
+    public List<Coleccion> obtenerColecciones() {
+    }
+
+    public List<Hecho> obtenerHechosPorColeccion(String identificador) {
+        return;
     }
 }

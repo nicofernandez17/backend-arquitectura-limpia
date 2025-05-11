@@ -2,11 +2,17 @@ package utn.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import utn.models.Coleccion;
+import utn.models.domain.Coleccion;
+import utn.models.domain.Hecho;
+import utn.models.dtos.ColeccionDTO;
+import utn.models.dtos.HechoDTO;
+import utn.models.dtos.HechoMapper;
 import utn.repositories.ColeccionRepository;
-import utn.services.AgregadorServices;
+import utn.services.ColeccionService;
+
 
 import java.util.List;
 
@@ -14,15 +20,27 @@ import java.util.List;
 @RequestMapping("/colecciones")
 public class ColeccionController {
 
-    private final ColeccionRepository coleccionRepository;
+    private final ColeccionService coleccionService;
 
     @Autowired
-    public ColeccionController(ColeccionRepository coleccionRepository) {
-        this.coleccionRepository = coleccionRepository;
+    public ColeccionController(ColeccionService coleccionService) {
+        this.coleccionService = coleccionService;
     }
 
+
     @GetMapping
-    public List<Coleccion> obtenerColecciones() {
-        return coleccionRepository.getAll();
+    public List<ColeccionDTO> obtenerColecciones() {
+
+        return coleccionService.obtenerColecciones();
     }
+
+    @GetMapping("/{identificador}/hechos")
+    public List<HechoDTO> obtenerHechosPorColeccion(@PathVariable String identificador) {
+        List<Hecho> hechos = coleccionService.obtenerHechosPorColeccion(identificador);
+        return hechos.stream()
+                .map(HechoMapper::aDTO)
+                .toList();
+    }
+
+
 }

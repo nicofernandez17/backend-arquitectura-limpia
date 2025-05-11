@@ -1,4 +1,4 @@
-package utn.models;
+package utn.models.dtos;
 
 import lombok.Builder;
 import lombok.Data;

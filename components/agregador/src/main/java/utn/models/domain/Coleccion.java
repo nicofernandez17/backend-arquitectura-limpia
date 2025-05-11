@@ -1,6 +1,7 @@
-package utn.models;
+package utn.models.domain;
 
 import lombok.Getter;
+import utn.models.dtos.HechoDTO;
 import utn.services.FuenteService;
 import java.util.Collections;
 import java.util.List;
@@ -10,7 +11,7 @@ public class Coleccion {
 
 
   // Getters y setters
-  private List<HechoDTO> hechos;
+  private List<Hecho> hechos;
   private List<FuenteService> fuentes;
   @Getter
   private final String titulo;
@@ -24,7 +25,7 @@ public class Coleccion {
 
 
 
-  public void agregarHecho(HechoDTO hecho) {
+  public void agregarHecho(Hecho hecho) {
 
       this.hechos.add(hecho);
 
@@ -36,7 +37,7 @@ public class Coleccion {
             .collect(Collectors.toList());
   }
 
-  public List<HechoDTO> getHechos() {
+  public List<Hecho> getHechos() {
     return Collections.unmodifiableList(hechos);
   }
 

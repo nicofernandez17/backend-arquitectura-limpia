@@ -2,7 +2,9 @@ package utn.services;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
-import utn.models.HechoDTO;
+import utn.models.domain.Hecho;
+import utn.models.dtos.HechoDTO;
+import utn.models.dtos.HechoMapper;
 
 import java.util.List;
 
@@ -15,12 +17,16 @@ public class FuenteService {
         this.webClient = builder.baseUrl("http://localhost:8083").build();
     }
 
-    public List<HechoDTO> obtenerHechos() {
+
+    public List<Hecho> obtenerHechos() {
         return webClient.get()
                 .uri("/hechos")
                 .retrieve()
                 .bodyToFlux(HechoDTO.class)
                 .collectList()
-                .block();
+                .block()
+                .stream()
+                .map(HechoMapper::aDominio)
+                .toList();
     }
 }
