@@ -1,5 +1,6 @@
 package utn.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,7 +13,12 @@ import java.util.List;
 @RequestMapping("/hechos")
 public class HechoAPIController {
 
-    private HechoService hechoService;
+    private final HechoService hechoService;
+
+    @Autowired
+    public HechoAPIController(HechoService hechoService) {
+        this.hechoService = hechoService;
+    }
 
     @GetMapping
     public List<HechoDTO> obtenerHechos() {
