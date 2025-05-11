@@ -1,10 +1,8 @@
 package utn.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import utn.models.domain.Coleccion;
 import utn.models.domain.Hecho;
 import utn.models.dtos.ColeccionDTO;
@@ -49,5 +47,10 @@ public class ColeccionController {
                 .toList();
     }
 
+    @PostMapping("/inicializar")
+    public ResponseEntity<Void> inicializarColecciones() {
+        coleccionService.inicializarColecciones();  // Llama al método en el servicio que hace la lógica
+        return ResponseEntity.ok().build();
+    }
 
 }
