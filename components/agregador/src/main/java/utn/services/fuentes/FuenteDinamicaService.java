@@ -14,7 +14,7 @@ public class FuenteDinamicaService implements IFuenteService {
     private final WebClient webClient;
 
     public FuenteDinamicaService(WebClient.Builder builder) {
-        this.webClient = builder.baseUrl("http://localhost:8083").build();
+        this.webClient = builder.baseUrl("http://localhost:8082").build();
     }
 
 
