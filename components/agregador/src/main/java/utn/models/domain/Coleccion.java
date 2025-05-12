@@ -5,6 +5,9 @@ import lombok.Getter;
 import utn.models.criterios.CriterioDePertenencia;
 import utn.models.dtos.HechoDTO;
 import utn.services.FuenteService;
+import utn.services.fuentes.IFuenteService;
+
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,17 +18,20 @@ public class Coleccion {
   private String id;
   // Getters y setters
   private List<Hecho> hechos;
-  private List<FuenteService> fuentes;
+  private List<IFuenteService> fuentes;
   @Getter
   private final String titulo;
   @Getter
   private final String descripcion;
   private  List<CriterioDePertenencia> criteriosDePertenencia;
 
-    public Coleccion(String titulo, String descripcion) {
-        this.titulo = titulo;
-        this.descripcion = descripcion;
-    }
+  public Coleccion(String titulo, String descripcion) {
+    this.titulo = titulo;
+    this.descripcion = descripcion;
+    this.hechos = new ArrayList<>();
+    this.fuentes = new ArrayList<>();
+    this.criteriosDePertenencia = new ArrayList<>();
+  }
 
 
 

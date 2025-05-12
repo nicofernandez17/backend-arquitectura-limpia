@@ -21,10 +21,12 @@ import java.util.stream.Collectors;
 public class ColeccionController {
 
     private final ColeccionService coleccionService;
+    private final ColeccionSeeder coleccionSeeder;
 
     @Autowired
-    public ColeccionController(ColeccionService coleccionService) {
+    public ColeccionController(ColeccionService coleccionService, ColeccionSeeder coleccionSeeder) {
         this.coleccionService = coleccionService;
+        this.coleccionSeeder = coleccionSeeder;
     }
 
 
@@ -49,7 +51,7 @@ public class ColeccionController {
 
     @PostMapping("/inicializar")
     public ResponseEntity<Void> inicializarColecciones() {
-        coleccionService.inicializarColecciones();  // Llama al método en el servicio que hace la lógica
+        coleccionSeeder.seed();
         return ResponseEntity.ok().build();
     }
 
