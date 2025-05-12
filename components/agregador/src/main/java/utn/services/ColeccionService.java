@@ -34,12 +34,5 @@ public class ColeccionService {
         return coleccionRepository.findById(identificador).get().getHechos();
     }
 
-    public void inicializarColecciones() {
-        Coleccion coleccion1 = new Coleccion("coleccion1", "Primera colección");
-        Coleccion coleccion2 = new Coleccion("coleccion2", "Segunda colección");
 
-        // Guardar en repositorio
-        coleccionRepository.add(coleccion1);
-        coleccionRepository.add(coleccion2);
-    }
 }

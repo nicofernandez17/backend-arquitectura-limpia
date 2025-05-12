@@ -25,7 +25,8 @@ public class Coleccion {
   private final String descripcion;
   private  List<CriterioDePertenencia> criteriosDePertenencia;
 
-  public Coleccion(String titulo, String descripcion) {
+  public Coleccion(String id,String titulo, String descripcion) {
+    this.id = id;
     this.titulo = titulo;
     this.descripcion = descripcion;
     this.hechos = new ArrayList<>();

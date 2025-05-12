@@ -31,11 +31,11 @@ public class ColeccionSeeder {
     public void seed() {
 
         // Crear colección 1
-        Coleccion coleccion1 = new Coleccion("Economía", "Hechos económicos recientes");
+        Coleccion coleccion1 = new Coleccion("Econo1","Economía", "Hechos económicos recientes");
         coleccion1.setFuentes(List.of(fuenteEstatica));
 
         // Crear colección 2
-        Coleccion coleccion2 = new Coleccion("Tecnología", "Innovaciones tecnológicas");
+        Coleccion coleccion2 = new Coleccion("Tecno1","Tecnología", "Innovaciones tecnológicas");
         coleccion2.setFuentes(List.of(fuenteEstatica)); // misma instancia
 
         // Simulamos que obtenemos los hechos desde las fuentes

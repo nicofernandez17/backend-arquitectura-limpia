@@ -15,13 +15,14 @@ public class ColeccionMapper {
                 .collect(Collectors.toList());
 
         return ColeccionDTO.builder()
-                .id(Long.parseLong(coleccion.getId()))  // Convert from String to Long
+                .id(coleccion.getId())  // Convert from String to Long
                 .titulo(coleccion.getTitulo())
                 .hechos(hechoDTOList)
                 .build();
     }
 
     // Convert ColeccionDTO to Coleccion domain object
+    /*
     public static Coleccion toDomain(ColeccionDTO coleccionDTO) {
         List<Hecho> hechos = coleccionDTO.getHechos().stream()
                 .map(HechoMapper::aDominio)  // Assuming you have HechoMapper for mapping HechoDTO to Hecho
@@ -33,4 +34,5 @@ public class ColeccionMapper {
 
         return coleccion;
     }
+    */
 }
