@@ -3,7 +3,7 @@ package utn.models.usuarios;
 import deprecated.criterios.CriterioDePertenencia;
 import deprecated.Coleccion;
 import deprecated.fuentes.FuenteDatos;
-import utn.models.helpers.ColeccionBuilder;
+import deprecated.ColeccionBuilder;
 import java.util.List;
 import utn.models.domain.SolicitudEliminacion;
 

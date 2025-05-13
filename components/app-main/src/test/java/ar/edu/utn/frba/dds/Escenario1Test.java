@@ -7,7 +7,7 @@ import deprecated.Coleccion;
 import utn.models.domain.Hecho;
 import deprecated.fuentes.FuenteDatos;
 import utn.models.helpers.Categoria;
-import utn.models.helpers.ColeccionBuilder;
+import deprecated.ColeccionBuilder;
 import utn.models.helpers.Origen;
 import utn.models.helpers.Ubicacion;
 import org.junit.jupiter.api.BeforeEach;

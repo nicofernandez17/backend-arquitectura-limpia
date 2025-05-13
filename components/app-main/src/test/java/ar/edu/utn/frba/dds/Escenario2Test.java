@@ -6,7 +6,7 @@ import utn.models.helpers.Categoria;
 import deprecated.Coleccion;
 import utn.models.domain.Hecho;
 import deprecated.fuentes.FuenteDatosEstatica;
-import utn.models.helpers.ColeccionBuilder;
+import deprecated.ColeccionBuilder;
 import deprecated.lectores.AdapterLectorCsv;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

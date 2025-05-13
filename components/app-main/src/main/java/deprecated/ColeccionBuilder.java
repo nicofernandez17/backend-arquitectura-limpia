@@ -1,7 +1,6 @@
-package utn.models.helpers;
+package deprecated;
 
 import deprecated.criterios.CriterioDePertenencia;
-import deprecated.Coleccion;
 import utn.models.domain.Hecho;
 import deprecated.fuentes.FuenteDatos;
 import java.util.List;
