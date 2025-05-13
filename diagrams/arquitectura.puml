@@ -1,0 +1,44 @@
+@startuml
+title Arquitectura - Agregador con Fuentes
+
+skinparam componentStyle rectangle
+
+' ==== Aplicación Principal ====
+component "Aplicación Principal" {
+    [MainApp]
+}
+
+' ==== Agregador ====
+component "Agregador" {
+    [model] as AgregadorModel
+    [API] as AgregadorAPI
+    MainApp --> AgregadorAPI
+    AgregadorAPI --> AgregadorModel
+}
+
+' ==== Fuente Estática ====
+component "Fuente de Datos Estática" {
+    [model] as EstaticaModel
+    [API] as EstaticaAPI
+    AgregadorModel --> EstaticaAPI
+    EstaticaAPI --> EstaticaModel
+}
+
+' ==== Fuente Dinámica ====
+component "Fuente de Datos Dinámica" {
+    [model] as DinamicaModel
+    [API] as DinamicaAPI
+    AgregadorModel --> DinamicaAPI
+    DinamicaAPI --> DinamicaModel
+}
+
+' ==== Fuente Proxy ====
+component "Fuente de Datos Proxy" {
+    [model] as ProxyModel
+    [API] as ProxyAPI
+    AgregadorModel --> ProxyAPI
+    ProxyAPI --> ProxyModel
+}
+
+@enduml
+
