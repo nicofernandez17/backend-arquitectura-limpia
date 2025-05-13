@@ -1,4 +1,4 @@
-package utn.models.lectores;
+package deprecated.lectores;
 
 import utn.models.domain.Hecho;
 import java.util.List;

@@ -19,6 +19,7 @@ public class HechosController {
         this.coleccionService = coleccionService;
     }
 
+    //TODO filtrar
     @GetMapping
     public List<HechoDTO> obtenerTodosLosHechos() {
         return coleccionService.obtenerColecciones().stream()

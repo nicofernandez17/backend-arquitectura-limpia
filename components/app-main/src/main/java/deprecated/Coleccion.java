@@ -1,12 +1,13 @@
-package utn.models.domain;
+package deprecated;
 
-import utn.models.criterios.CriterioDePertenencia;
-import utn.models.fuentes.FuenteDatos;
+import deprecated.criterios.CriterioDePertenencia;
+import deprecated.fuentes.FuenteDatos;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.Getter;
+import utn.models.domain.Hecho;
 
 public class Coleccion {
 
@@ -29,6 +30,9 @@ public class Coleccion {
     this.hechos = new ArrayList<>();
   }
 
+  public List<Hecho> getHechos() {
+    return Collections.unmodifiableList(hechos);
+  }
 
   public void agregarHecho(Hecho hecho) {
     if (criteriosDePertenencia.stream().allMatch(criterio -> criterio.cumple(hecho))) {
@@ -49,9 +53,7 @@ public class Coleccion {
     return criteriosDePertenencia.stream().allMatch(c -> c.cumple(hecho));
   }
 
-  public List<Hecho> getHechos() {
-    return Collections.unmodifiableList(hechos);
-  }
+
 
   public void agregarCriterio(CriterioDePertenencia criterio) {
     this.criteriosDePertenencia.add(criterio);

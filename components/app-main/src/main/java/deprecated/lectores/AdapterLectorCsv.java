@@ -1,4 +1,4 @@
-package utn.models.lectores;
+package deprecated.lectores;
 
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;

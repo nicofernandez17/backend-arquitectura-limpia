@@ -1,9 +1,9 @@
-package utn.models.fuentes;
+package deprecated.fuentes;
 
 import utn.models.domain.Hecho;
 import java.util.ArrayList;
 import java.util.List;
-import utn.models.lectores.Lector;
+import deprecated.lectores.Lector;
 
 public class FuenteDatosEstatica implements FuenteDatos {
   private final String ruta;

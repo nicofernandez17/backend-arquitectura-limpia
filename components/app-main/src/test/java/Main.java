@@ -1,6 +1,6 @@
 import utn.models.domain.Hecho;
-import utn.models.lectores.Lector;
-import utn.models.lectores.AdapterLectorCsv;
+import deprecated.lectores.Lector;
+import deprecated.lectores.AdapterLectorCsv;
 
 import java.io.FileNotFoundException;
 import java.util.List;

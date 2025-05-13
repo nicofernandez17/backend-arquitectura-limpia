@@ -1,11 +1,11 @@
 package utn.models.usuarios;
 
-import utn.models.criterios.CriterioDePertenencia;
-import utn.models.domain.Coleccion;
-import utn.models.fuentes.FuenteDatos;
+import deprecated.criterios.CriterioDePertenencia;
+import deprecated.Coleccion;
+import deprecated.fuentes.FuenteDatos;
 import utn.models.helpers.ColeccionBuilder;
 import java.util.List;
-import utn.models.solicitudes.SolicitudEliminacion;
+import utn.models.domain.SolicitudEliminacion;
 
 public class Administrador {
 

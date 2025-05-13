@@ -1,6 +1,6 @@
 package utn.models.usuarios;
 
-import utn.models.domain.Coleccion;
+import deprecated.Coleccion;
 import utn.models.domain.Hecho;
 
 public class Contribuyente {

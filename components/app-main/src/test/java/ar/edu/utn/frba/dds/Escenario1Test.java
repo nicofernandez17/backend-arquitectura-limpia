@@ -1,11 +1,11 @@
 package ar.edu.utn.frba.dds;
 
-import utn.models.criterios.CriterioFiltroTitulo;
-import utn.models.criterios.CriterioPorCategoria;
-import utn.models.criterios.CriterioPorFecha;
-import utn.models.domain.Coleccion;
+import deprecated.criterios.CriterioFiltroTitulo;
+import deprecated.criterios.CriterioPorCategoria;
+import deprecated.criterios.CriterioPorFecha;
+import deprecated.Coleccion;
 import utn.models.domain.Hecho;
-import utn.models.fuentes.FuenteDatos;
+import deprecated.fuentes.FuenteDatos;
 import utn.models.helpers.Categoria;
 import utn.models.helpers.ColeccionBuilder;
 import utn.models.helpers.Origen;

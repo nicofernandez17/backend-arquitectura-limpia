@@ -1,13 +1,13 @@
 package ar.edu.utn.frba.dds;
 
-import utn.models.criterios.CriterioPorCategoria;
-import utn.models.criterios.CriterioDePertenencia;
+import deprecated.criterios.CriterioPorCategoria;
+import deprecated.criterios.CriterioDePertenencia;
 import utn.models.helpers.Categoria;
-import utn.models.domain.Coleccion;
+import deprecated.Coleccion;
 import utn.models.domain.Hecho;
-import utn.models.fuentes.FuenteDatosEstatica;
+import deprecated.fuentes.FuenteDatosEstatica;
 import utn.models.helpers.ColeccionBuilder;
-import utn.models.lectores.AdapterLectorCsv;
+import deprecated.lectores.AdapterLectorCsv;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

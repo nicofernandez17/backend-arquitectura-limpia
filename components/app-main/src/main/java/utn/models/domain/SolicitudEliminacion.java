@@ -1,6 +1,5 @@
-package utn.models.solicitudes;
+package utn.models.domain;
 
-import utn.models.domain.Hecho;
 import utn.models.helpers.EstadoSolicitud;
 import java.time.LocalDateTime;
 import lombok.Getter;

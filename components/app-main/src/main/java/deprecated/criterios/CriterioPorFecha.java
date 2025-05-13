@@ -1,4 +1,4 @@
-package utn.models.criterios;
+package deprecated.criterios;
 
 import utn.models.domain.Hecho;
 import java.time.LocalDate;

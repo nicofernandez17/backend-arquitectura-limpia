@@ -1,6 +1,6 @@
 package ar.edu.utn.frba.dds;
 
-import utn.models.solicitudes.SolicitudEliminacion;
+import utn.models.domain.SolicitudEliminacion;
 import utn.models.domain.Hecho;
 import utn.models.helpers.Categoria;
 import utn.models.helpers.EstadoSolicitud;

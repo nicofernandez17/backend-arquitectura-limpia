@@ -1,4 +1,4 @@
-package utn.repositories.impl;
+package utn.repositories;
 
 public class HechoRepository {
 }

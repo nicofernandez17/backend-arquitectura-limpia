@@ -1,9 +1,9 @@
 package utn.models.helpers;
 
-import utn.models.criterios.CriterioDePertenencia;
-import utn.models.domain.Coleccion;
+import deprecated.criterios.CriterioDePertenencia;
+import deprecated.Coleccion;
 import utn.models.domain.Hecho;
-import utn.models.fuentes.FuenteDatos;
+import deprecated.fuentes.FuenteDatos;
 import java.util.List;
 
 public class ColeccionBuilder {

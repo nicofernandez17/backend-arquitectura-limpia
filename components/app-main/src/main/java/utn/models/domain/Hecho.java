@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import lombok.Getter;
-import utn.models.solicitudes.SolicitudEliminacion;
 import utn.models.usuarios.Contribuyente;
 
 
