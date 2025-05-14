@@ -43,13 +43,15 @@ public class Coleccion {
   }
 
   public void actualizarHechos() {
-    hechos = fuentes.stream()
+    this.hechos = fuentes.stream()
             .flatMap(fuente -> fuente.obtenerHechos().stream())
             .collect(Collectors.toList());
   }
 
   public List<Hecho> getHechos() {
-    return Collections.unmodifiableList(hechos);
+    return hechos.stream()
+            .filter(hecho -> !hecho.isEliminado())
+            .toList(); // O bien .collect(Collectors.toUnmodifiableList()) si quieres que sea inmodificable
   }
 
 }
