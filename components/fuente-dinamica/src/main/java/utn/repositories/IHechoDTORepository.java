@@ -9,7 +9,6 @@ public interface IHechoDTORepository {
     Long save(HechoDTO hecho);
     Optional<HechoDTO> findById(Long id);
     List<HechoDTO> findAll();
-    void update(Long id, HechoDTO actualizado);
     void delete(Long id);
     void clear();
 }

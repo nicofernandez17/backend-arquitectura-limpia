@@ -30,16 +30,6 @@ public class HechoService {
         return hechosRepository.save(hechoDTO);
     }
 
-    // Actualiza un hecho existente en el repositorio
-    public boolean actualizarHecho(Long id, HechoDTO hechoDTO) {
-        Optional<HechoDTO> hechoExistente = hechosRepository.findById(id);
 
-        if (hechoExistente.isPresent()) {
-            hechosRepository.update(id, hechoDTO);
-            return true;
-        } else {
-            return false;  // No se encuentra el hecho
-        }
-    }
 
 }
