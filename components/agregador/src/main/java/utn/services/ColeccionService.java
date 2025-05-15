@@ -14,7 +14,6 @@ import utn.repositories.ColeccionRepository;
 import java.util.List;
 
 @Service
-@Component
 public class ColeccionService {
 
     private final ColeccionRepository coleccionRepository;
@@ -24,7 +23,7 @@ public class ColeccionService {
         this.coleccionRepository = coleccionRepository;
     }
 
-    @Scheduled(cron = "0 0 * * * *") // Cada hora en el minuto 0
+
     public void actualizarHechosDeTodasLasColecciones() {
         List<Coleccion> colecciones = coleccionRepository.getAll();
         for (Coleccion coleccion : colecciones) {

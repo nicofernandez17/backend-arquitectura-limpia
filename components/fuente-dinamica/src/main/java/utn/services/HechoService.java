@@ -3,7 +3,7 @@ package utn.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import utn.model.HechoDTO;
-import utn.repositories.IHechoRepository;
+import utn.repositories.IHechoDTORepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,10 +12,10 @@ import java.util.Optional;
 public class HechoService {
 
 
-    private final IHechoRepository hechosRepository;
+    private final IHechoDTORepository hechosRepository;
 
     @Autowired
-    public HechoService(IHechoRepository hechosRepository) {
+    public HechoService(IHechoDTORepository hechosRepository) {
         this.hechosRepository = hechosRepository;
     }
 
@@ -26,8 +26,8 @@ public class HechoService {
     }
 
     // Registra un nuevo hecho en el repositorio
-    public void registrarHecho(HechoDTO hechoDTO) {
-        hechosRepository.save(hechoDTO);
+    public Long registrarHecho(HechoDTO hechoDTO) {
+        return hechosRepository.save(hechoDTO);
     }
 
     // Actualiza un hecho existente en el repositorio
@@ -35,20 +35,11 @@ public class HechoService {
         Optional<HechoDTO> hechoExistente = hechosRepository.findById(id);
 
         if (hechoExistente.isPresent()) {
-            HechoDTO hecho = hechoExistente.get();
-            hecho.setTitulo(hechoDTO.getTitulo());
-            hecho.setDescripcion(hechoDTO.getDescripcion());
-            hecho.setCategoria(hechoDTO.getCategoria());
-            hecho.setLatitud(hechoDTO.getLatitud());
-            hecho.setLongitud(hechoDTO.getLongitud());
-            hecho.setFecha_hecho(hechoDTO.getFecha_hecho());
-
-            hechosRepository.save(hecho);
+            hechosRepository.update(id, hechoDTO);
             return true;
         } else {
             return false;  // No se encuentra el hecho
         }
     }
 
-    // Otros métodos si es necesario (por ejemplo, eliminar hechos, buscar por parámetros específicos, etc.)
 }

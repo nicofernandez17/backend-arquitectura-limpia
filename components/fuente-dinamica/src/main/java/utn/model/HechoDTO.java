@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 public class HechoDTO {
+    private Long id;
     private String titulo;
     private String descripcion;
     private String categoria;

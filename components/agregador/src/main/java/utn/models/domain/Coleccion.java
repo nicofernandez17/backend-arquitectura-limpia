@@ -3,8 +3,6 @@ package utn.models.domain;
 import lombok.Data;
 import lombok.Getter;
 import utn.models.criterios.CriterioDePertenencia;
-import utn.models.dtos.HechoDTO;
-import utn.services.FuenteService;
 import utn.services.fuentes.IFuenteService;
 
 import java.util.ArrayList;
