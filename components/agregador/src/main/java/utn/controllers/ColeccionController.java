@@ -51,6 +51,7 @@ public class ColeccionController {
 
     @PostMapping("/inicializar")
     public ResponseEntity<Void> inicializarColecciones() {
+
         coleccionSeeder.seed();
         return ResponseEntity.ok().build();
     }

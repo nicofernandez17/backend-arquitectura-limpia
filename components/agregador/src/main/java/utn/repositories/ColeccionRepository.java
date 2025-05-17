@@ -5,29 +5,48 @@ import org.springframework.stereotype.Repository;
 import utn.models.domain.Coleccion;
 import utn.models.dtos.ColeccionDTO;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.time.LocalDateTime;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicLong;
 
 @Repository
 public class ColeccionRepository {
-    private final List<Coleccion> colecciones = new ArrayList<>();
 
-    public List<Coleccion> getAll() {
-        return colecciones;
-    }
+    private final Map<String, Coleccion> colecciones = new HashMap<>();
+    private final AtomicLong idGenerator = new AtomicLong(1);
 
-    public void add(Coleccion coleccion) {
-        colecciones.add(coleccion);
+    public String save(Coleccion coleccion) {
+        String id = coleccion.getId();
+        boolean isNew = (id == null);
+
+        if (isNew) {
+            id = String.valueOf(idGenerator.getAndIncrement());
+            coleccion.setId(id);
+        } else {
+            // Si no existe en el mapa, la inserto igual (nuevo id personalizado)
+            // Para evitar que retorne null y no guarde nada
+            // Así se inserta o actualiza
+        }
+
+        colecciones.put(id, coleccion);
+
+        return id;
     }
 
     public Optional<Coleccion> findById(String id) {
-        return colecciones.stream()
-                .filter(c -> c.getId().equals(id))
-                .findFirst();
+        return Optional.ofNullable(colecciones.get(id));
     }
 
-    public void update(Coleccion coleccion) {
-        //TODO
+    public List<Coleccion> findAll() {
+        return new ArrayList<>(colecciones.values());
+    }
+
+    public void delete(String id) {
+        colecciones.remove(id);
+    }
+
+    public void clear() {
+        colecciones.clear();
+        idGenerator.set(1);
     }
 }

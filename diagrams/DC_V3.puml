@@ -9,12 +9,9 @@ class Contribuyente {
     - edad: Integer
 }
 
-class Administrador {
-    - builder: ColeccionBuilder
-    + crearColeccion(): Coleccion
-}
 
-Administrador --> ColeccionBuilder
+
+
 SolicitudEliminacion --> Contribuyente
 
 '---------------------- Colecciones ----------------------
@@ -27,17 +24,10 @@ class Coleccion {
     + cargarColeccion()
 }
 
-class ColeccionBuilder {
-    - coleccion: Coleccion
-    + iniciarCon(): ColeccionBuilder
-    + buildCriterios(): ColeccionBuilder
-    + buildHechos(): ColeccionBuilder
-    + build(): Coleccion
-}
 
-ColeccionBuilder --> Coleccion
+
+
 Coleccion --> "*" Hecho
-Coleccion --> FuenteDatosEstatica
 Coleccion --> "*" CriterioDePertenencia
 
 interface CriterioDePertenencia {
@@ -123,25 +113,9 @@ enum EstadoSolicitud {
 SolicitudEliminacion --> Hecho
 SolicitudEliminacion --> EstadoSolicitud
 
-'---------------------- Fuentes de Datos y Lectores ----------------------
-class FuenteDatosEstatica {
-    - dataset: String
-    - lector: Lector
-    + obtenerHechos(): List<Hecho>
-}
 
-interface Lector {
-    + obtenerDatos(path: String)
-}
 
-class AdapterLectorCSV implements Lector {
-    + obtenerDatos(path: String)
-}
 
-class CSVReader {
-}
 
-FuenteDatosEstatica --> Lector
-AdapterLectorCSV --> CSVReader
 
 @enduml

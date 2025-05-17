@@ -1,5 +1,6 @@
 package utn.models.domain;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
 import utn.models.criterios.CriterioDePertenencia;

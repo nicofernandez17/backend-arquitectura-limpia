@@ -18,32 +18,39 @@ public class ColeccionSeeder {
     private final FuenteDinamicaService fuenteDinamica;
     private final FuenteProxyService fuenteProxy;
     private final ColeccionRepository coleccionRepository;
+    private final ColeccionService coleccionService;
 
 
-    public ColeccionSeeder(FuenteEstaticaService fuenteEstatica, FuenteDinamicaService fuenteDinamica, FuenteProxyService fuenteProxy, ColeccionRepository coleccionRepository) {
+    public ColeccionSeeder(FuenteEstaticaService fuenteEstatica, FuenteDinamicaService fuenteDinamica, FuenteProxyService fuenteProxy, ColeccionRepository coleccionRepository, ColeccionService coleccionService) {
         this.fuenteEstatica = fuenteEstatica;
         this.fuenteDinamica = fuenteDinamica;
         this.fuenteProxy = fuenteProxy;
         this.coleccionRepository = coleccionRepository;
+        this.coleccionService = coleccionService;
     }
 
 
     public void seed() {
 
         // Crear colección 1
-        Coleccion coleccion1 = new Coleccion("Econo1","Economía", "Hechos económicos recientes");
+        Coleccion coleccion1 = new Coleccion("Econo1", "Actualidad Económica", "Últimos hechos relevantes en economía");
         coleccion1.setFuentes(List.of(fuenteDinamica));
 
         // Crear colección 2
-        Coleccion coleccion2 = new Coleccion("Tecno1","Tecnología", "Innovaciones tecnológicas");
-        coleccion2.setFuentes(List.of(fuenteDinamica)); // misma instancia
+        Coleccion coleccion2 = new Coleccion("Tecno1", "Innovación Tecnológica", "Novedades y avances tecnológicos");
+        coleccion2.setFuentes(List.of(fuenteEstatica));
 
-        // Simulamos que obtenemos los hechos desde las fuentes
-        coleccion1.actualizarHechos();
-        coleccion2.actualizarHechos();
+        // Crear colección 3
+        Coleccion coleccion3 = new Coleccion("Tecno4", "Tecnología y Sociedad", "Impacto de la tecnología en la sociedad actual");
+        coleccion3.setFuentes(List.of(fuenteProxy));
 
-        coleccionRepository.add(coleccion1);
-        coleccionRepository.add(coleccion2);
+
+
+        coleccionRepository.save(coleccion1);
+        coleccionRepository.save(coleccion2);
+        coleccionRepository.save(coleccion3);
+
+        coleccionService.actualizarHechosDeTodasLasColecciones();
 
     }
 }

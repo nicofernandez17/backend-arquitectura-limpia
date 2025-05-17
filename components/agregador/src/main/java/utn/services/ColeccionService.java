@@ -25,15 +25,16 @@ public class ColeccionService {
 
 
     public void actualizarHechosDeTodasLasColecciones() {
-        List<Coleccion> colecciones = coleccionRepository.getAll();
+        List<Coleccion> colecciones = coleccionRepository.findAll();
         for (Coleccion coleccion : colecciones) {
             coleccion.actualizarHechos();  // Actualiza los hechos de la colección
+
         }
         System.out.println("Tarea ejecutada a las " + java.time.LocalTime.now());
     }
 
     public List<Coleccion> obtenerColecciones() {
-        return coleccionRepository.getAll();
+        return coleccionRepository.findAll();
     }
 
     public List<Hecho> obtenerHechosPorColeccion(String identificador) {
