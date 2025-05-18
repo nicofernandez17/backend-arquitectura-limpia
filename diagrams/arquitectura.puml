@@ -1,5 +1,5 @@
 @startuml
-title Arquitectura - Agregador con Fuentes
+title Arquitectura - Agregador con Fuentes y Cron Job
 
 skinparam componentStyle rectangle
 
@@ -15,6 +15,10 @@ component "Agregador" {
     MainApp --> AgregadorAPI
     AgregadorAPI --> AgregadorModel
 }
+
+' ==== Cron Job ====
+component "⏰" as CronJob
+CronJob --> AgregadorModel : ejecuta periódicamente
 
 ' ==== Fuente Estática ====
 component "Fuente de Datos Estática" {
@@ -40,5 +44,8 @@ component "Fuente de Datos Proxy" {
     ProxyAPI --> ProxyModel
 }
 
-@enduml
+' ==== Servicio Externo ====
+component "API DDS" as ServicioExterno
+ProxyModel --> ServicioExterno : obtiene datos
 
+@enduml
