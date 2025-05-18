@@ -11,29 +11,31 @@ import java.util.Optional;
 
 public class HechoMapper {
 
-    private static final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ISO_LOCAL_DATE;
-
     // Dominio → DTO (para API)
     public static HechoDTO aDTO(Hecho hecho) {
-        // Usar constructor con 6 parámetros para HechoDTO
-        return new HechoDTO(
-                hecho.getTitulo(),
-                hecho.getDescripcion(),
-                Optional.ofNullable(hecho.getCategoria())
+        return HechoDTO.builder()
+                .titulo(hecho.getTitulo())
+                .descripcion(hecho.getDescripcion())
+                .categoria(Optional.ofNullable(hecho.getCategoria())
                         .map(Object::toString)
-                        .orElse(null),
-                Optional.ofNullable(hecho.getUbicacion())
+                        .orElse(null))
+                .latitud(Optional.ofNullable(hecho.getUbicacion())
                         .map(Ubicacion::getLatitud)
-                        .orElse(0.0),
-                Optional.ofNullable(hecho.getUbicacion())
+                        .orElse(0.0))
+                .longitud(Optional.ofNullable(hecho.getUbicacion())
                         .map(Ubicacion::getLongitud)
-                        .orElse(0.0),
-                Optional.ofNullable(hecho.getFecha())
-                        .map(f -> f.format(FORMATO_FECHA))
-                        .orElse(null)
-        );
+                        .orElse(0.0))
+                .fecha_hecho(Optional.ofNullable(hecho.getFecha())
+                        .map(fecha -> fecha.atStartOfDay())  // LocalDate → LocalDateTime a inicio de día
+                        .orElse(null))
+                .created_at(Optional.ofNullable(hecho.getFechaDeCarga())
+                        .map(fecha -> fecha.atStartOfDay())
+                        .orElse(null))
+                .updated_at(null) // No está en dominio, asignar si se tiene info
+                .build();
     }
 
+    // DTO → Dominio
     public static Hecho aDominio(HechoDTO dto) {
         Categoria categoria = null;
         String categoriaStr = dto.getCategoria();
@@ -43,7 +45,10 @@ public class HechoMapper {
         }
 
         Ubicacion ubicacion = new Ubicacion(dto.getLatitud(), dto.getLongitud());
-        LocalDate fecha = LocalDate.parse(dto.getFecha_hecho(), FORMATO_FECHA);
+
+        // Convertir LocalDateTime a LocalDate (tomamos sólo la fecha)
+        LocalDate fecha = dto.getFecha_hecho() != null ? dto.getFecha_hecho().toLocalDate() : null;
+        LocalDate fechaDeCarga = dto.getCreated_at() != null ? dto.getCreated_at().toLocalDate() : LocalDate.now();
 
         return new Hecho(
                 dto.getTitulo(),
@@ -51,7 +56,7 @@ public class HechoMapper {
                 categoria,
                 ubicacion,
                 fecha,
-                LocalDate.now(), // fechaDeCarga
+                fechaDeCarga,
                 Origen.API
         );
     }

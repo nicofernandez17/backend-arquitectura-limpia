@@ -14,7 +14,7 @@ public class HechoDTO {
     private String categoria;
     private double latitud;
     private double longitud;
-    private String fecha_hecho;
+    private LocalDateTime fecha_hecho;
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
 }

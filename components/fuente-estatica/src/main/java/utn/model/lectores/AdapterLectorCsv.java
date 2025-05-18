@@ -58,20 +58,21 @@ public class AdapterLectorCsv implements Lector {
     String titulo = linea[0];
     String descripcion = linea[1];
     String categoria = linea[2];
-    double longitud = Double.parseDouble(linea[3]);
-    double latitud = Double.parseDouble(linea[4]);
-    String fechaStr = linea[5];
+    double latitud = Double.parseDouble(linea[3].trim());   // Corregido
+    double longitud = Double.parseDouble(linea[4].trim());  // Corregido
+    String fechaStr = linea[5].trim();
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-    String fechaISO = LocalDate.parse(fechaStr, formatter).toString();
+    LocalDate fecha = LocalDate.parse(fechaStr, formatter);
+    LocalDateTime fechaHecho = fecha.atStartOfDay();
 
     return HechoDTO.builder()
             .titulo(titulo)
             .descripcion(descripcion)
             .categoria(categoria)
-            .longitud(longitud)
             .latitud(latitud)
-            .fecha_hecho(fechaISO)
+            .longitud(longitud)
+            .fecha_hecho(fechaHecho)
             .created_at(LocalDateTime.now())
             .build();
   }

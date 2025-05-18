@@ -14,9 +14,10 @@ public class FuenteScheduler {
         this.coleccionService = coleccionService;
     }
 
-    @Scheduled(cron = "0 0 * * * *")
+    @Scheduled(cron = "0 * * * * *")
     public void actualizarColecciones() {
         coleccionService.actualizarHechosDeTodasLasColecciones();
+        System.out.println("Actualizando colecciones");
 
     }
 

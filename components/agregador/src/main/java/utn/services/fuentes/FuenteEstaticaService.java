@@ -6,6 +6,7 @@ import utn.models.domain.Hecho;
 import utn.models.dtos.HechoDTO;
 import utn.models.dtos.HechoMapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -19,7 +20,7 @@ public class FuenteEstaticaService implements IFuenteService {
 
 
     public List<Hecho> obtenerHechos() {
-        return webClient.get()
+        List<Hecho> hechos = webClient.get()
                 .uri("/hechos")
                 .retrieve()
                 .bodyToFlux(HechoDTO.class)
@@ -28,5 +29,9 @@ public class FuenteEstaticaService implements IFuenteService {
                 .stream()
                 .map(HechoMapper::aDominio)
                 .toList();
+
+        System.out.println(hechos.size());
+
+        return hechos;
     }
 }
