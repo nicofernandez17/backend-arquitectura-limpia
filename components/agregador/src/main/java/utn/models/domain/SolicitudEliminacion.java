@@ -1,19 +1,21 @@
 package utn.models.domain;
 
+import lombok.Data;
 import lombok.Getter;
 import utn.models.helpers.EstadoSolicitud;
 
 import java.time.LocalDateTime;
 
+@Data
 public class SolicitudEliminacion {
 
-  @Getter
+
   private final LocalDateTime fechaCreacion;
-  @Getter
+
   private EstadoSolicitud estado;
-  @Getter
+
   private final Hecho hecho;
-  @Getter
+
   private final String motivo;
 
   public SolicitudEliminacion(Hecho hecho, String motivo) {
