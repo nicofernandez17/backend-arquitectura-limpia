@@ -1,6 +1,7 @@
 package utn.models.domain;
 
 import lombok.Getter;
+import lombok.Setter;
 import utn.models.helpers.Categoria;
 import utn.models.helpers.Origen;
 import utn.models.helpers.Ubicacion;
@@ -30,8 +31,12 @@ public class Hecho {
   private LocalDate fecha;
   @Getter
   private LocalDate fechaDeCarga;
-  //@SuppressWarnings("unused")
-  //private Contenido contenidoMultimedia;
+  @Getter
+  @Setter
+  private byte[] multimediaArchivo;
+  @Getter
+  @Setter
+  private String multimediaNombre;
   @Getter
   private Origen origen;
   private List<String> etiquetas;
@@ -47,6 +52,8 @@ public class Hecho {
     this.fecha = fecha;
     this.fechaDeCarga = fechaDeCarga;
     this.origen = origen;
+    this.multimediaArchivo = null;
+    this.multimediaNombre = null;
   }
 
   public Hecho(String titulo, String descripcion, Categoria categoria, Ubicacion ubicacion,

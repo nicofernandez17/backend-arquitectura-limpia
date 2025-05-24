@@ -32,6 +32,8 @@ public class HechoMapper {
                         .map(fecha -> fecha.atStartOfDay())
                         .orElse(null))
                 .updated_at(null) // No está en dominio, asignar si se tiene info
+                .archivoContenido(hecho.getMultimediaArchivo())
+                .archivoNombre(hecho.getMultimediaNombre())
                 .build();
     }
 
@@ -50,14 +52,16 @@ public class HechoMapper {
         LocalDate fecha = dto.getFecha_hecho() != null ? dto.getFecha_hecho().toLocalDate() : null;
         LocalDate fechaDeCarga = dto.getCreated_at() != null ? dto.getCreated_at().toLocalDate() : LocalDate.now();
 
-        return new Hecho(
-                dto.getTitulo(),
+        Hecho hecho = new Hecho(dto.getTitulo(),
                 dto.getDescripcion(),
                 categoria,
                 ubicacion,
                 fecha,
                 fechaDeCarga,
-                Origen.API
-        );
+                Origen.API);
+        hecho.setMultimediaArchivo(dto.getArchivoContenido());
+        hecho.setMultimediaNombre(dto.getArchivoNombre());
+
+        return hecho;
     }
 }
