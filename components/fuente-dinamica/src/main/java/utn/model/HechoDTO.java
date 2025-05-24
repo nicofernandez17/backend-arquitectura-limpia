@@ -2,6 +2,7 @@ package utn.model;
 
 import lombok.Builder;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 
@@ -17,4 +18,7 @@ public class HechoDTO {
     private LocalDateTime fecha_hecho;
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
+    private MultipartFile archivo;
+    private byte[] archivoContenido;
+    private String archivoNombre;
 }

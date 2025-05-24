@@ -41,6 +41,8 @@ public class HechoDTORepository implements IHechoDTORepository {
                 .fecha_hecho(hecho.getFecha_hecho())
                 .created_at(createdAt)
                 .updated_at(LocalDateTime.now())
+                .archivoContenido(hecho.getArchivoContenido())
+                .archivoNombre((hecho.getArchivoNombre()))
                 .build();
 
         hechos.put(id, hechoConId);
