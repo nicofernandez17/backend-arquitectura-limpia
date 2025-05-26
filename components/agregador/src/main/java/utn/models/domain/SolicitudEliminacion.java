@@ -2,6 +2,7 @@ package utn.models.domain;
 
 import lombok.Data;
 import lombok.Getter;
+import lombok.Setter;
 import utn.models.helpers.EstadoSolicitud;
 
 import java.time.LocalDateTime;
@@ -15,6 +16,7 @@ public class SolicitudEliminacion {
   private EstadoSolicitud estado;
 
   private final Hecho hecho;
+
 
   private final String motivo;
 
