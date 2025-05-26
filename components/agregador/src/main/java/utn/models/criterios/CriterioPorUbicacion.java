@@ -12,6 +12,8 @@ public class CriterioPorUbicacion implements CriterioDePertenencia {
 
   @Override
   public boolean cumple(Hecho hecho) {
-    return hecho.getUbicacion().equals(ubicacion);
+    if (hecho.getUbicacion() == null || ubicacion == null) return false;
+    return Double.compare(hecho.getUbicacion().getLatitud(), ubicacion.getLatitud()) == 0
+        && Double.compare(hecho.getUbicacion().getLongitud(), ubicacion.getLongitud()) == 0;
   }
 }

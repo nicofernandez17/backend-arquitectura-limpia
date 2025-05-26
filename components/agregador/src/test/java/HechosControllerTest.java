@@ -1,7 +1,6 @@
-package utn.controllers;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import utn.controllers.HechosController;
 import utn.models.dtos.HechoDTO;
 import utn.models.domain.Coleccion;
 import utn.models.domain.Hecho;
@@ -56,11 +55,11 @@ class HechosControllerTest {
     assertEquals(1, resultado.size());
   }
 
-  // testFiltrarPorUbicacion
   @Test
   void testFiltrarPorUbicacion() {
     Hecho hecho = mock(Hecho.class);
-    when(hecho.getUbicacion()).thenReturn(new Ubicacion(10.0, 20.0));
+    Ubicacion ubicacion = new Ubicacion(10.0, 20.0);
+    when(hecho.getUbicacion()).thenReturn(ubicacion);
     when(hecho.getCategoria()).thenReturn(new Categoria("Cualquiera"));
     when(hecho.getFecha()).thenReturn(LocalDate.now());
     when(hecho.getTitulo()).thenReturn("Titulo");
@@ -79,8 +78,8 @@ class HechosControllerTest {
   @Test
   void testFiltrarPorTitulo() {
     Hecho hecho = mock(Hecho.class);
-    when(hecho.getTitulo()).thenReturn("Una gran carrera de Colapinto");
-    when(hecho.getCategoria()).thenReturn(new Categoria("Cualquiera"));
+    when(hecho.getTitulo()).thenReturn("Colapinto en la pista");
+    when(hecho.getCategoria()).thenReturn(new Categoria("Carrera"));
     when(hecho.getFecha()).thenReturn(LocalDate.now());
     when(hecho.getUbicacion()).thenReturn(new Ubicacion(0.0, 0.0));
     Coleccion coleccion = mock(Coleccion.class);
@@ -89,7 +88,7 @@ class HechosControllerTest {
 
     List<HechoDTO> resultado = controller.obtenerTodosLosHechos(
         null, null, null,
-        null, null, "Colapinto");
+        null, null, "Colapinto en la pista");
 
     assertEquals(1, resultado.size());
   }
