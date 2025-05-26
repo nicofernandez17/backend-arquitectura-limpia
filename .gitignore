@@ -24,6 +24,7 @@ hs_err_pid*
 
 # maven build
 target/**
+**/target/**
 
 # IJ files
 *.iml
@@ -31,3 +32,4 @@ target/**
 
 #Compile files
 *.lst
+components/app-main/target/**
