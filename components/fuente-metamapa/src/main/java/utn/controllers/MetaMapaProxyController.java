@@ -22,7 +22,7 @@ public class MetaMapaProxyController {
     @PostMapping
     public ResponseEntity<Void> consumirOtraInstancia(@RequestParam String url) {
         proxyService.obtenerHechosDesdeInstancia(url)
-                .subscribe(hechos -> proxyService.enviarHechosAlAgregador(hechos));
+                .subscribe(proxyService::enviarHechosAlAgregador);
         return ResponseEntity.ok().build();
     }
 }

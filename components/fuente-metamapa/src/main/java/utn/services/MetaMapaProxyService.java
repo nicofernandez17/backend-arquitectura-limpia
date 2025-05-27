@@ -26,7 +26,7 @@ public class MetaMapaProxyService {
 
     public void enviarHechosAlAgregador(List<HechoDTO> hechos) {
         webClient.post()
-                .uri("http://localhost:8080/colecciones/consumirMetaMapa")
+                .uri("http://localhost:8081/colecciones/consumirMetaMapa")
                 .bodyValue(hechos)
                 .retrieve()
                 .toBodilessEntity()
