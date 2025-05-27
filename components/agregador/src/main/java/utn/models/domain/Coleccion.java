@@ -53,4 +53,8 @@ public class Coleccion {
             .toList(); // O bien .collect(Collectors.toUnmodifiableList()) si quieres que sea inmodificable
   }
 
+  public void agregarHechos(List<Hecho> hechos) {
+    this.hechos.addAll(hechos);
+  }
+
 }

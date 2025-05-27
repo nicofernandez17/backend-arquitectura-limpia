@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import utn.models.domain.Coleccion;
 import utn.models.domain.Hecho;
 import utn.models.dtos.HechoDTO;
+import utn.models.dtos.HechoMapper;
 import utn.repositories.ColeccionRepository;
 
 import java.util.List;
@@ -41,5 +42,16 @@ public class ColeccionService {
         return coleccionRepository.findById(identificador).get().getHechos();
     }
 
+    public void agregarHechos (List<HechoDTO> hechosDTO) {
+        List<Coleccion> colecciones = coleccionRepository.findAll();
+        for (Coleccion coleccion : colecciones) {
+            coleccion.agregarHechos(hechosDTO.stream().map(HechoMapper::aDominio).toList());
+        }
+        System.out.println("Hechos agregados a las colecciones");
+    }
 
+    public void crearColeccion(String titulo, String descripcion) {
+        Coleccion coleccion = new Coleccion(null, titulo, descripcion);
+        coleccionRepository.save(coleccion);
+    }
 }

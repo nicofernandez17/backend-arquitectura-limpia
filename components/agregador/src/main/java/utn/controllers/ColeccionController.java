@@ -1,6 +1,7 @@
 package utn.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import utn.models.domain.Coleccion;
@@ -54,6 +55,19 @@ public class ColeccionController {
 
         coleccionSeeder.seed();
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/consumirMetaMapa")
+    public ResponseEntity<String> recibirHechosDesdeProxy(@RequestBody List<HechoDTO> hechos) {
+        coleccionService.agregarHechos(hechos);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Hechos agregados");
+    }
+
+    @PostMapping
+    public ResponseEntity<String> crearColeccion(@RequestParam String titulo, @RequestParam String descripcion) {
+        coleccionService.crearColeccion(titulo, descripcion);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body("Coleccion creada con exito");
     }
 
 }
