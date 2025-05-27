@@ -12,7 +12,11 @@ skinparam component {
     BackgroundColor<<cron>> #D6EAF8
     BorderColor<<cron>> #5DADE2
     FontColor<<cron>> #154360
+    BackgroundColor<<ExternoMorado>> #D8BFD8
+    BorderColor<<ExternoMorado>> #800080
 }
+component "MetamapaExterno" <<ExternoMorado>> as MetamapaExterno
+
 
 skinparam cloud {
     BackgroundColor<<externo>> #FFF9C4
@@ -63,10 +67,20 @@ component "Fuente Proxy" {
     ProxyAPI --> ProxyModel
 }
 
+' ==== metamapa ====
+component "Fuente MetaMapa" {
+    [ ] <<model>> as MetamapaModel
+    component " " <<API>> as MetamapaApi
+    AgregadorModel --> MetamapaApi
+    MetamapaApi --> MetamapaModel
+}
+
 ' ==== Servicio Externo (Nube Amarilla) ====
 cloud "API DDS" <<externo>> as ServicioExterno
 ProxyModel --> ServicioExterno : obtiene datos
 
+' ==== MetaMapa Externo (Rectangulo Morado) ====
+MetamapaModel --> MetamapaExterno : obtiene datos
 @enduml
 
 
