@@ -39,6 +39,6 @@ public class SolicitudEliminacion {
 
   public void rechazar() {
     estado = EstadoSolicitud.RECHAZADA;
-    //Eliminar Fecha
+
   }
 }

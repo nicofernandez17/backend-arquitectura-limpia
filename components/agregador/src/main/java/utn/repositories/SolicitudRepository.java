@@ -15,6 +15,8 @@ public class SolicitudRepository {
     private final List<SolicitudEliminacion> solicitudes = new ArrayList<>();
 
     public void save(SolicitudEliminacion solicitud) {
+        System.out.println(solicitud);
+
         solicitudes.add(solicitud);
     }
 

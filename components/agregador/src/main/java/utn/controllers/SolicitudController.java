@@ -2,12 +2,13 @@ package utn.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import utn.models.domain.SolicitudEliminacion;
+import utn.models.dtos.HechoDTO;
+import utn.models.dtos.HechoMapper;
 import utn.services.SolicitudService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/solicitudes")

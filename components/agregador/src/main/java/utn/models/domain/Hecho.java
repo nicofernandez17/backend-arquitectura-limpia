@@ -74,9 +74,7 @@ public class Hecho {
     }
   }
 
-  public SolicitudEliminacion solicitarEliminacion(String motivo) {
-    return new SolicitudEliminacion(this,motivo);
-  }
+
 
   public List<String> getEtiquetas() {
     return Collections.unmodifiableList(etiquetas);
