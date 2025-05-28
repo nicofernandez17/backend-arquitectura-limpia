@@ -227,7 +227,9 @@ class ControllersAndRepositoriesTest {
             LocalDate.of(2024, 6, 2),
             null
         );
-        SolicitudEliminacion solicitud = hecho.solicitarEliminacion("Motivo suficientemente largo para testear");
+        SolicitudEliminacion solicitud = new SolicitudEliminacion(hecho,"Motivo suficientemente largo para testear");
+
+
         assertEquals(hecho, solicitud.getHecho());
         assertEquals("Motivo suficientemente largo para testear", solicitud.getMotivo());
         assertEquals(EstadoSolicitud.PENDIENTE, solicitud.getEstado());
