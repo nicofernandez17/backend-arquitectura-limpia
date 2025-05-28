@@ -170,6 +170,7 @@
                 <exclude>fuentes/*</exclude>
                 <exclude>**/deprecated/**</exclude>
                 <exclude>utn/*</exclude>
+                <exclude>**/utn/model/**</exclude>
               </excludes>
             </configuration>
           </execution>
