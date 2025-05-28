@@ -33,7 +33,7 @@ public class HechoUIController {
             @RequestParam double latitud,
             @RequestParam double longitud,
             @RequestParam("fecha_hecho") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fechaHecho,
-            @RequestParam MultipartFile archivo) {
+            @RequestParam(required= false) MultipartFile archivo) {
         HechoDTO hechoDTO = HechoDTO.builder()
                         .titulo(titulo)
                         .descripcion(descripcion)
