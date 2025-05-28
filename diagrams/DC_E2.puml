@@ -1,0 +1,634 @@
+@startuml
+
+' COMPONENTE AGREGADOR
+package "components.agregador" {
+  package "utn.services" {
+    class SolicitudService {
+      - SolicitudRepository solicitudRepository
+      - ISpamDetector spamDetector
+      + crearSolicitud(solicitud: SolicitudEliminacion): SolicitudEliminacion
+      + getSolicitudesPendientes(): List<SolicitudEliminacion>
+      + aceptarSolicitud(id: Long): SolicitudEliminacion
+      + rechazarSolicitud(id: Long): SolicitudEliminacion
+    }
+
+    class ColeccionService {
+      - ColeccionRepository coleccionRepository
+      + actualizarHechosDeTodasLasColecciones()
+      + obtenerColecciones(): List<Coleccion>
+      + obtenerHechosPorColeccion(id: String): List<Hecho>
+      + crearColeccion(coleccion: Coleccion): Coleccion
+      + eliminarColeccion(id: String): void
+    }
+
+    package "utn.services.fuentes" {
+      class FuenteDinamicaService {
+        - FuenteDinamica fuenteDinamica
+        + obtenerHechos(): List<Hecho>
+        + actualizarFuente(): void
+      }
+
+      class FuenteEstaticaService {
+        - FuenteEstatica fuenteEstatica
+        + obtenerHechos(): List<Hecho>
+        + actualizarFuente(): void
+      }
+
+      class FuenteProxyService {
+        - FuenteProxy fuenteProxy
+        + obtenerHechos(): List<Hecho>
+        + actualizarFuente(): void
+      }
+
+      class FuenteMetamapaService {
+        - FuenteMetamapa fuenteMetamapa
+        + obtenerHechos(): List<Hecho>
+        + actualizarFuente(): void
+      }
+    }
+
+    package "utn.services.spamDetector" {
+      interface ISpamDetector {
+        + esSpam(motivo: String): boolean
+      }
+
+      class SimpleSpamDetector implements ISpamDetector {
+        - List<String> palabrasProhibidas
+        + esSpam(motivo: String): boolean
+      }
+
+      class AdvancedSpamDetector implements ISpamDetector {
+        - double umbralConfianza
+        + esSpam(motivo: String): boolean
+        - analizarTexto(texto: String): double
+      }
+    }
+  }
+
+  package "utn.controllers" {
+    class SolicitudController {
+      - SolicitudService solicitudService
+      + crearSolicitud(solicitudDto: SolicitudDto): ResponseEntity
+      + getSolicitudesPendientes(): ResponseEntity
+      + aceptarSolicitud(id: Long): ResponseEntity
+      + rechazarSolicitud(id: Long): ResponseEntity
+    }
+
+    class ColeccionController {
+      - ColeccionService coleccionService
+      + getColecciones(): ResponseEntity
+      + getHechosPorColeccion(id: String): ResponseEntity
+      + crearColeccion(coleccionDto: ColeccionDto): ResponseEntity
+      + eliminarColeccion(id: String): ResponseEntity
+    }
+  }
+
+  package "utn.models.domain" {
+    class SolicitudEliminacion {
+      - LocalDateTime fechaCreacion
+      - EstadoSolicitud estado
+      - Hecho hecho
+      - String motivo
+      + SolicitudEliminacion(hecho: Hecho, motivo: String)
+      + aceptar()
+      + rechazar()
+      + getHecho(): Hecho
+      + getMotivo(): String
+      + getEstado(): EstadoSolicitud
+      + getFechaCreacion(): LocalDateTime
+    }
+
+    class Hecho {
+      - String id
+      - String contenido
+      - Boolean eliminado
+      - String fuente
+      - LocalDateTime fechaCreacion
+      + marcarComoEliminado()
+      + getContenido(): String
+      + getFuente(): String
+      + isEliminado(): Boolean
+    }
+
+    class Coleccion {
+      - String id
+      - String nombre
+      - String descripcion
+      - List<Hecho> hechos
+      - LocalDateTime fechaActualizacion
+      + actualizarHechos()
+      + getHechos(): List<Hecho>
+      + agregarHecho(hecho: Hecho)
+      + eliminarHecho(id: String)
+      + getNombre(): String
+    }
+  }
+
+  package "utn.models.dto" {
+    class SolicitudDto {
+      - String hechoId
+      - String motivo
+    }
+
+    class ColeccionDto {
+      - String nombre
+      - String descripcion
+    }
+
+    class HechoMapper {
+      + {static} aDominio(hechoExterno: Object): Hecho
+      + {static} aDto(hecho: Hecho): HechoDto
+    }
+  }
+
+  package "utn.repositories" {
+    interface SolicitudRepository {
+      + save(solicitud: SolicitudEliminacion): SolicitudEliminacion
+      + findByEstado(estado: EstadoSolicitud): List<SolicitudEliminacion>
+      + findById(id: Long): Optional<SolicitudEliminacion>
+      + deleteById(id: Long): void
+    }
+
+    interface ColeccionRepository {
+      + findAll(): List<Coleccion>
+      + findById(id: String): Optional<Coleccion>
+      + save(coleccion: Coleccion): Coleccion
+      + deleteById(id: String): void
+    }
+
+    interface HechoRepository {
+      + findAll(): List<Hecho>
+      + findById(id: String): Optional<Hecho>
+      + save(hecho: Hecho): Hecho
+      + deleteById(id: String): void
+    }
+  }
+
+  package "utn.config" {
+    class AgregadorConfig {
+      + spamDetector(): ISpamDetector
+    }
+  }
+
+  enum EstadoSolicitud {
+    PENDIENTE
+    ACEPTADA
+    RECHAZADA
+  }
+
+  ' Relaciones internas del agregador
+  SolicitudService --> SolicitudRepository
+  SolicitudService --> ISpamDetector
+  SolicitudService ..> SolicitudEliminacion
+
+  SolicitudController --> SolicitudService
+  SolicitudController ..> SolicitudDto
+
+  ColeccionService --> ColeccionRepository
+  ColeccionService ..> Coleccion
+  ColeccionService ..> Hecho
+
+  ColeccionController --> ColeccionService
+  ColeccionController ..> ColeccionDto
+
+  AgregadorConfig ..> ISpamDetector
+  AgregadorConfig ..> SimpleSpamDetector
+
+  SolicitudEliminacion --> Hecho
+  SolicitudEliminacion --> EstadoSolicitud
+
+  Coleccion --> Hecho
+
+  ' Relaciones del agregador con los componentes de fuentes
+  FuenteDinamicaService ..> "components.fuente-dinamica.services.FuenteDinamica"
+  FuenteEstaticaService ..> "components.fuente-estatica.services.FuenteEstatica"
+  FuenteProxyService ..> "components.fuente-proxy.services.FuenteProxy"
+  FuenteMetamapaService ..> "components.fuente-metamapa.services.FuenteMetamapa"
+}
+
+' COMPONENTE FUENTE-DINAMICA
+package "components.fuente-dinamica" {
+  package "services" {
+    class FuenteDinamica {
+      - ApiClient apiClient
+      - FuenteDinamicaAdapter adapter
+      + obtenerDatos(): List<Hecho>
+      + conectar(): void
+      + desconectar(): void
+      - transformarDatos(datos: List<DatoDinamico>): List<Hecho>
+    }
+
+    class FuenteDinamicaAdapter {
+      + adaptar(dato: DatoDinamico): Hecho
+      - normalizarContenido(contenido: String): String
+    }
+
+    class ApiClient {
+      - String baseUrl
+      - HttpClient httpClient
+      + obtenerDatos(): List<DatoDinamico>
+      + establecerConexion(): void
+      - procesarRespuesta(response: HttpResponse): List<DatoDinamico>
+    }
+  }
+
+  package "models" {
+    class DatoDinamico {
+      - String id
+      - String contenido
+      - String categoria
+      - LocalDateTime timestamp
+      + getId(): String
+      + getContenido(): String
+      + getCategoria(): String
+      + getTimestamp(): LocalDateTime
+    }
+  }
+
+  package "config" {
+    class FuenteDinamicaConfig {
+      + fuenteDinamica(): FuenteDinamica
+      + apiClient(): ApiClient
+      + adapter(): FuenteDinamicaAdapter
+    }
+  }
+
+  package "controllers" {
+    class FuenteDinamicaController {
+      - FuenteDinamica fuenteDinamica
+      + obtenerDatos(): ResponseEntity<List<DatoDinamico>>
+      + estado(): ResponseEntity<String>
+    }
+  }
+
+  FuenteDinamica --> DatoDinamico
+  FuenteDinamica --> FuenteDinamicaAdapter
+  FuenteDinamica --> ApiClient
+  FuenteDinamicaController --> FuenteDinamica
+  FuenteDinamicaConfig ..> FuenteDinamica
+  FuenteDinamicaConfig ..> ApiClient
+  FuenteDinamicaConfig ..> FuenteDinamicaAdapter
+}
+
+' COMPONENTE FUENTE-ESTATICA
+package "components.fuente-estatica" {
+  package "services" {
+    class FuenteEstatica {
+      - FileReader fileReader
+      - FuenteEstaticaAdapter adapter
+      + obtenerDatos(): List<Hecho>
+      + cargarArchivo(path: String): void
+      - procesarArchivo(): List<DatoEstatico>
+    }
+
+    class FuenteEstaticaAdapter {
+      + adaptar(dato: DatoEstatico): Hecho
+      - formatearFecha(fechaStr: String): LocalDateTime
+    }
+
+    class FileReader {
+      - String filePath
+      + leerArchivo(): List<DatoEstatico>
+      + existeArchivo(): boolean
+      - parsearLinea(linea: String): DatoEstatico
+    }
+  }
+
+  package "models" {
+    class DatoEstatico {
+      - String id
+      - String contenido
+      - String fuente
+      - String fechaStr
+      + getId(): String
+      + getContenido(): String
+      + getFuente(): String
+      + getFechaStr(): String
+    }
+  }
+
+  package "config" {
+    class FuenteEstaticaConfig {
+      - String defaultFilePath
+      + fuenteEstatica(): FuenteEstatica
+      + fileReader(): FileReader
+      + adapter(): FuenteEstaticaAdapter
+    }
+  }
+
+  package "controllers" {
+    class FuenteEstaticaController {
+      - FuenteEstatica fuenteEstatica
+      + obtenerDatos(): ResponseEntity<List<DatoEstatico>>
+      + cargarArchivo(path: String): ResponseEntity<String>
+    }
+  }
+
+  FuenteEstatica --> DatoEstatico
+  FuenteEstatica --> FuenteEstaticaAdapter
+  FuenteEstatica --> FileReader
+  FuenteEstaticaController --> FuenteEstatica
+  FuenteEstaticaConfig ..> FuenteEstatica
+  FuenteEstaticaConfig ..> FileReader
+  FuenteEstaticaConfig ..> FuenteEstaticaAdapter
+}
+
+' COMPONENTE FUENTE-PROXY
+package "components.fuente-proxy" {
+  package "services" {
+    class FuenteProxy {
+      - List<IFuenteExterna> fuentesExternas
+      - ProxyAdapter adapter
+      + obtenerDatos(): List<Hecho>
+      + agregarFuente(fuente: IFuenteExterna): void
+      + eliminarFuente(id: String): void
+      - consolidarDatos(datosFuentes: List<List<DatoProxy>>): List<DatoProxy>
+    }
+
+    interface IFuenteExterna {
+      + obtenerDatos(): List<DatoProxy>
+      + getId(): String
+    }
+
+    class FuenteExternaImpl implements IFuenteExterna {
+      - String id
+      - String url
+      - RestTemplate restTemplate
+      + obtenerDatos(): List<DatoProxy>
+      + getId(): String
+    }
+
+    class ProxyAdapter {
+      + adaptar(dato: DatoProxy): Hecho
+      - eliminarDuplicados(hechos: List<Hecho>): List<Hecho>
+    }
+  }
+
+  package "models" {
+    class DatoProxy {
+      - String id
+      - String contenido
+      - String fuenteOriginal
+      - LocalDateTime fecha
+      + getId(): String
+      + getContenido(): String
+      + getFuenteOriginal(): String
+      + getFecha(): LocalDateTime
+    }
+
+    class FuenteExternaConfig {
+      - String id
+      - String url
+      - Map<String, String> headers
+      + getId(): String
+      + getUrl(): String
+      + getHeaders(): Map<String, String>
+    }
+  }
+
+  package "config" {
+    class FuenteProxyConfig {
+      - List<FuenteExternaConfig> fuentesConfig
+      + fuenteProxy(): FuenteProxy
+      + fuentesExternas(): List<IFuenteExterna>
+      + adapter(): ProxyAdapter
+    }
+  }
+
+  package "controllers" {
+    class FuenteProxyController {
+      - FuenteProxy fuenteProxy
+      + obtenerDatos(): ResponseEntity<List<DatoProxy>>
+      + agregarFuente(config: FuenteExternaConfig): ResponseEntity<String>
+      + eliminarFuente(id: String): ResponseEntity<String>
+    }
+  }
+
+  FuenteProxy --> DatoProxy
+  FuenteProxy --> ProxyAdapter
+  FuenteProxy --> IFuenteExterna
+  FuenteExternaImpl ..> DatoProxy
+  FuenteExternaImpl ..> FuenteExternaConfig
+  FuenteProxyController --> FuenteProxy
+  FuenteProxyConfig ..> FuenteProxy
+  FuenteProxyConfig ..> IFuenteExterna
+  FuenteProxyConfig ..> ProxyAdapter
+  FuenteProxyConfig ..> FuenteExternaImpl
+}
+
+' COMPONENTE FUENTE-METAMAPA
+package "components.fuente-metamapa" {
+  package "services" {
+    class FuenteMetamapa {
+      - RepositorioMetamapa repositorio
+      - MetamapaAdapter adapter
+      + obtenerDatos(): List<Hecho>
+      + sincronizar(): boolean
+      - filtrarPorRelevancia(datos: List<DatoMetamapa>): List<DatoMetamapa>
+    }
+
+    class RepositorioMetamapa {
+      - String endpointUrl
+      - MetamapaClient client
+      + obtenerDatos(): List<DatoMetamapa>
+      + actualizarRepositorio(): void
+      - validarDatos(datos: List<DatoMetamapa>): List<String>
+    }
+
+    class MetamapaClient {
+      - String apiKey
+      - RestTemplate restTemplate
+      + conectar(): boolean
+      + obtenerDatos(): List<DatoMetamapa>
+      - manejarError(exception: Exception): void
+    }
+
+    class MetamapaAdapter {
+      + adaptar(dato: DatoMetamapa): Hecho
+      - enriquecerMetadatos(hecho: Hecho): Hecho
+    }
+  }
+
+  package "models" {
+    class DatoMetamapa {
+      - String id
+      - String contenido
+      - Map<String, Object> metadatos
+      - double relevancia
+      - LocalDateTime fecha
+      + getId(): String
+      + getContenido(): String
+      + getMetadatos(): Map<String, Object>
+      + getRelevancia(): double
+      + getFecha(): LocalDateTime
+    }
+
+    class MetamapaCredentials {
+      - String apiKey
+      - String userId
+      + getApiKey(): String
+      + getUserId(): String
+    }
+  }
+
+  package "config" {
+    class FuenteMetamapaConfig {
+      - MetamapaCredentials credentials
+      - String endpointUrl
+      + fuenteMetamapa(): FuenteMetamapa
+      + repositorioMetamapa(): RepositorioMetamapa
+      + metamapaClient(): MetamapaClient
+      + adapter(): MetamapaAdapter
+    }
+  }
+
+  package "controllers" {
+    class FuenteMetamapaController {
+      - FuenteMetamapa fuenteMetamapa
+      + obtenerDatos(): ResponseEntity<List<DatoMetamapa>>
+      + sincronizar(): ResponseEntity<Boolean>
+      + estado(): ResponseEntity<String>
+    }
+  }
+
+  FuenteMetamapa --> DatoMetamapa
+  FuenteMetamapa --> MetamapaAdapter
+  FuenteMetamapa --> RepositorioMetamapa
+  RepositorioMetamapa --> MetamapaClient
+  RepositorioMetamapa ..> DatoMetamapa
+  MetamapaClient ..> DatoMetamapa
+  MetamapaClient ..> MetamapaCredentials
+  FuenteMetamapaController --> FuenteMetamapa
+  FuenteMetamapaConfig ..> FuenteMetamapa
+  FuenteMetamapaConfig ..> RepositorioMetamapa
+  FuenteMetamapaConfig ..> MetamapaClient
+  FuenteMetamapaConfig ..> MetamapaAdapter
+  FuenteMetamapaConfig ..> MetamapaCredentials
+}
+
+' COMPONENTE APP-MAIN
+package "components.app-main" {
+  package "utn.appmain.controllers" {
+    class MainController {
+      - MainService mainService
+      + home(): String
+      + status(): String
+      + health(): ResponseEntity<Map<String, Object>>
+      + metrics(): ResponseEntity<Map<String, Object>>
+    }
+
+    class UsuarioController {
+      - UsuarioService usuarioService
+      + getUsuarios(): ResponseEntity<List<Usuario>>
+      + getUsuarioById(id: String): ResponseEntity<Usuario>
+      + crearUsuario(usuario: Usuario): ResponseEntity<Usuario>
+      + actualizarUsuario(id: String, usuario: Usuario): ResponseEntity<Usuario>
+      + eliminarUsuario(id: String): ResponseEntity<Void>
+    }
+
+    class FuentesController {
+      - ColeccionService coleccionService
+      - List<IFuenteService> fuentesServices
+      + obtenerTodasLasFuentes(): ResponseEntity<Map<String, List<?>>>
+      + actualizarTodasLasFuentes(): ResponseEntity<String>
+    }
+  }
+
+  package "utn.appmain.services" {
+    class MainService {
+      + getStatus(): String
+      + getWelcomeMessage(): String
+      + getHealthStatus(): Map<String, Object>
+      + getMetrics(): Map<String, Object>
+    }
+
+    class UsuarioService {
+      - UsuarioRepository usuarioRepository
+      + getUsuarios(): List<Usuario>
+      + getUsuarioById(id: String): Optional<Usuario>
+      + crearUsuario(usuario: Usuario): Usuario
+      + actualizarUsuario(id: String, usuario: Usuario): Usuario
+      + eliminarUsuario(id: String): void
+    }
+
+    interface IFuenteService {
+      + obtenerHechos(): List<Hecho>
+      + actualizarFuente(): void
+      + getNombre(): String
+    }
+  }
+
+  package "utn.appmain.models" {
+    class Usuario {
+      - String id
+      - String nombre
+      - String email
+      - LocalDateTime fechaCreacion
+      - boolean activo
+      + getId(): String
+      + getNombre(): String
+      + getEmail(): String
+      + getFechaCreacion(): LocalDateTime
+      + isActivo(): boolean
+    }
+
+    class SistemaMetricas {
+      - int solicitudesProcesadas
+      - int hechosTotales
+      - int coleccionesTotales
+      - Map<String, Integer> estadisticasPorFuente
+      + incrementarSolicitudes(): void
+      + actualizarHechosTotales(total: int): void
+      + getMetricas(): Map<String, Object>
+    }
+  }
+
+  package "utn.appmain.repositories" {
+    interface UsuarioRepository {
+      + findAll(): List<Usuario>
+      + findById(id: String): Optional<Usuario>
+      + save(usuario: Usuario): Usuario
+      + deleteById(id: String): void
+    }
+  }
+
+  package "utn.appmain.config" {
+    class AppConfig {
+      + mainService(): MainService
+      + sistemaMetricas(): SistemaMetricas
+    }
+
+    class SecurityConfig {
+      - String secretKey
+      - long tokenValidity
+      + configureSecurity(http: HttpSecurity): SecurityFilterChain
+      + passwordEncoder(): PasswordEncoder
+    }
+  }
+
+  MainController --> MainService
+  MainService ..> SistemaMetricas
+
+  UsuarioController --> UsuarioService
+  UsuarioService --> UsuarioRepository
+  UsuarioService ..> Usuario
+
+  FuentesController --> "components.agregador.services.ColeccionService"
+  FuentesController --> IFuenteService
+
+  ' Relaciones con otros componentes
+  IFuenteService <|.. "components.agregador.services.fuentes.FuenteDinamicaService"
+  IFuenteService <|.. "components.agregador.services.fuentes.FuenteEstaticaService"
+  IFuenteService <|.. "components.agregador.services.fuentes.FuenteProxyService"
+  IFuenteService <|.. "components.agregador.services.fuentes.FuenteMetamapaService"
+}
+
+' RELACIONES ENTRE COMPONENTES
+"components.app-main.utn.appmain.controllers.FuentesController" --> "components.agregador.services.ColeccionService"
+
+"components.fuente-dinamica.services.FuenteDinamica" ..> "components.agregador.models.domain.Hecho"
+"components.fuente-estatica.services.FuenteEstatica" ..> "components.agregador.models.domain.Hecho"
+"components.fuente-proxy.services.FuenteProxy" ..> "components.agregador.models.domain.Hecho"
+"components.fuente-metamapa.services.FuenteMetamapa" ..> "components.agregador.models.domain.Hecho"
+
+@enduml
