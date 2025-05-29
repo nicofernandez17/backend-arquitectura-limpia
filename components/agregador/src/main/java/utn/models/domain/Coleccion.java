@@ -3,15 +3,15 @@ package utn.models.domain;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
-import utn.models.criterios.CriterioDePertenencia;
+import utn.models.criterios.ICriterioDePertenencia;
 import utn.services.fuentes.IFuenteService;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Data
+@Builder
 public class Coleccion {
 
   private String id;
@@ -22,7 +22,7 @@ public class Coleccion {
   private final String titulo;
   @Getter
   private final String descripcion;
-  private  List<CriterioDePertenencia> criteriosDePertenencia;
+  private  List<ICriterioDePertenencia> criteriosDePertenencia;
 
   public Coleccion(String id,String titulo, String descripcion) {
     this.id = id;

@@ -1,5 +1,5 @@
 @startuml
-title Arquitectura - Agregador con Fuentes y Cron Job
+title Arquitectura
 
 skinparam componentStyle rectangle
 

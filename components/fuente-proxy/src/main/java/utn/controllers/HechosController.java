@@ -5,7 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 import utn.model.HechoDTO;
-import utn.services.ProviderService;
+import utn.services.ProxyService;
+import utn.services.clientServices.DDSService;
 
 import java.util.List;
 
@@ -13,12 +14,11 @@ import java.util.List;
 public class HechosController {
 
     @Autowired
-    private ProviderService providerService;
+    private ProxyService proxyService;
 
     @GetMapping("/hechos")
     public Mono<List<HechoDTO>> getHechos() {
-        return providerService.getHechos()
-                .flatMap(hechos -> providerService.obtenerHechos());
+        return proxyService.cargarYObtenerHechos();
     }
 
 }

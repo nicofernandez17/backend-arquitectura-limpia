@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import utn.models.domain.Hecho;
 
-public class CriterioFiltroTitulo implements CriterioDePertenencia {
+public class CriterioFiltroTitulo implements ICriterioDePertenencia {
   @Getter
   @Setter
   private String texto;

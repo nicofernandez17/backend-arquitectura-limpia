@@ -4,7 +4,7 @@ import utn.models.domain.Hecho;
 
 import java.time.LocalDate;
 
-public class CriterioPorFecha implements CriterioDePertenencia {
+public class CriterioPorFecha implements ICriterioDePertenencia {
   private final LocalDate desde;
   private final LocalDate hasta;
 

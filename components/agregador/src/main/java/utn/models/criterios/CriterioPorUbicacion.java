@@ -3,7 +3,7 @@ package utn.models.criterios;
 import utn.models.domain.Hecho;
 import utn.models.helpers.Ubicacion;
 
-public class CriterioPorUbicacion implements CriterioDePertenencia {
+public class CriterioPorUbicacion implements ICriterioDePertenencia {
   private final Ubicacion ubicacion;
 
   public CriterioPorUbicacion(Ubicacion ubicacion) {

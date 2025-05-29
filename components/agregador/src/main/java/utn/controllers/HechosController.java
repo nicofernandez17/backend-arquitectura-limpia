@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import utn.models.criterios.CriterioDePertenencia;
+import utn.models.criterios.ICriterioDePertenencia;
 import utn.models.criterios.CriterioFiltroTitulo;
 import utn.models.criterios.CriterioPorCategoria;
 import utn.models.criterios.CriterioPorFecha;
@@ -40,7 +40,7 @@ public class HechosController {
         @RequestParam(required = false) Double longitud,
         @RequestParam(required = false) String titulo
     ) {
-        List<CriterioDePertenencia> criterios = new ArrayList<>();
+        List<ICriterioDePertenencia> criterios = new ArrayList<>();
 
         if (categoria != null) {
             criterios.add(new CriterioPorCategoria(new Categoria(categoria)));

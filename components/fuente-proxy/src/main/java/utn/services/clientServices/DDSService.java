@@ -1,4 +1,4 @@
-package utn.services;
+package utn.services.clientServices;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -11,14 +11,14 @@ import utn.repositories.IHechoRepository;
 import java.util.List;
 
 @Service
-public class ProviderService {
+public class DDSService implements IFuenteService {
 
     private final WebClient webClient;
     private final IHechoRepository hechosRepository;  // Inyección del repositorio
 
-    public ProviderService(WebClient.Builder webClientBuilder,
-                           @Value("${api.ddsi.token}") String token,
-                           IHechoRepository hechosRepository) {
+    public DDSService(WebClient.Builder webClientBuilder,
+                      @Value("${api.ddsi.token}") String token,
+                      IHechoRepository hechosRepository) {
         this.webClient = webClientBuilder
                 .baseUrl("https://api-ddsi.disilab.ar/public")
                 .defaultHeader("Authorization", "Bearer " + token)
@@ -35,17 +35,12 @@ public class ProviderService {
                 .doOnNext(this::guardarHechosEnRepositorio);  // Guardar los hechos en el repositorio
     }
 
-    private void guardarHechosEnRepositorio(List<HechoDTO> hechos) {
+    public void guardarHechosEnRepositorio(List<HechoDTO> hechos) {
         for (HechoDTO hecho : hechos) {
             hechosRepository.save(hecho);  // Guardar cada HechoDTO en el repositorio
         }
     }
 
-    public Mono<List<HechoDTO>> obtenerHechos() {
-        return Mono.just(hechosRepository.findAll());  // Obtener todos los hechos desde el repositorio y devolverlo envuelto en Mono
-    }
 
-    public HechoDTO obtenerHechoPorTitulo(String titulo) {
-        return hechosRepository.findByTitulo(titulo).orElse(null);  // Buscar un Hecho por título
-    }
+
 }
