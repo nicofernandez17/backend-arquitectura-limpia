@@ -14,7 +14,7 @@ public class FuenteProxyService implements IFuenteService {
     private final WebClient webClient;
 
     public FuenteProxyService(WebClient.Builder builder) {
-        this.webClient = builder.baseUrl("http://localhost:8083").build();
+        this.webClient = builder.baseUrl("http://localhost:8084").build();
     }
 
 
