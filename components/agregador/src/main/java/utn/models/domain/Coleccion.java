@@ -23,10 +23,6 @@ public class Coleccion {
   private final String descripcion;
   private  List<ICriterioDePertenencia> criteriosDePertenencia;
 
-
-
-
-
   public void agregarHecho(Hecho hecho) {
     if (criteriosDePertenencia.stream().allMatch(criterio -> criterio.cumple(hecho))) {
       this.hechos.add(hecho);

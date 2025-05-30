@@ -1,4 +1,4 @@
-package utn.model;
+package utn.model.dtos;
 
 public class SolicitudDTO {
 }

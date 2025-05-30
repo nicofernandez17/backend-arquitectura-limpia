@@ -1,0 +1,67 @@
+package utn.model.dtos;
+
+
+import utn.model.domain.Hecho;
+import utn.model.helpers.Categoria;
+import utn.model.helpers.Origen;
+import utn.model.helpers.Ubicacion;
+
+import java.time.LocalDate;
+import java.util.Optional;
+
+public class HechoMapper {
+
+    // Dominio → DTO (para API)
+    public static HechoDTO aDTO(Hecho hecho) {
+        return HechoDTO.builder()
+                .titulo(hecho.getTitulo())
+                .descripcion(hecho.getDescripcion())
+                .categoria(Optional.ofNullable(hecho.getCategoria())
+                        .map(Object::toString)
+                        .orElse(null))
+                .latitud(Optional.ofNullable(hecho.getUbicacion())
+                        .map(Ubicacion::getLatitud)
+                        .orElse(0.0))
+                .longitud(Optional.ofNullable(hecho.getUbicacion())
+                        .map(Ubicacion::getLongitud)
+                        .orElse(0.0))
+                .fecha_hecho(Optional.ofNullable(hecho.getFecha())
+                        .map(fecha -> fecha.atStartOfDay())  // LocalDate → LocalDateTime a inicio de día
+                        .orElse(null))
+                .created_at(Optional.ofNullable(hecho.getFechaDeCarga())
+                        .map(fecha -> fecha.atStartOfDay())
+                        .orElse(null))
+                .updated_at(null) // No está en dominio, asignar si se tiene info
+                .archivoContenido(hecho.getMultimediaArchivo())
+                .archivoNombre(hecho.getMultimediaNombre())
+                .build();
+    }
+
+    // DTO → Dominio
+    public static Hecho aDominio(HechoDTO dto) {
+        Categoria categoria = null;
+        String categoriaStr = dto.getCategoria();
+
+        if (categoriaStr != null && !categoriaStr.isBlank()) {
+            categoria = new Categoria(categoriaStr);
+        }
+
+        Ubicacion ubicacion = new Ubicacion(dto.getLatitud(), dto.getLongitud());
+
+        // Convertir LocalDateTime a LocalDate (tomamos sólo la fecha)
+        LocalDate fecha = dto.getFecha_hecho() != null ? dto.getFecha_hecho().toLocalDate() : null;
+        LocalDate fechaDeCarga = dto.getCreated_at() != null ? dto.getCreated_at().toLocalDate() : LocalDate.now();
+
+        Hecho hecho = new Hecho(dto.getTitulo(),
+                dto.getDescripcion(),
+                categoria,
+                ubicacion,
+                fecha,
+                fechaDeCarga,
+                Origen.API);
+        hecho.setMultimediaArchivo(dto.getArchivoContenido());
+        hecho.setMultimediaNombre(dto.getArchivoNombre());
+
+        return hecho;
+    }
+}

@@ -1,7 +1,7 @@
 package utn.repositories.impl;
 
 import org.springframework.stereotype.Repository;
-import utn.model.HechoDTO;
+import utn.model.dtos.HechoDTO;
 import utn.repositories.IHechoDTORepository;
 
 import java.time.LocalDateTime;

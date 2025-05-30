@@ -8,7 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import utn.model.HechoDTO;
+import utn.model.dtos.HechoDTO;
 import utn.services.HechoService;
 
 import java.time.LocalDateTime;

@@ -3,7 +3,7 @@ package utn.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import utn.model.HechoDTO;
+import utn.model.dtos.HechoDTO;
 import utn.repositories.IHechoDTORepository;
 
 import java.io.IOException;
