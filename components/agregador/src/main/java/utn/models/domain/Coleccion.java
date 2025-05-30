@@ -4,7 +4,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
 import utn.models.criterios.ICriterioDePertenencia;
-import utn.services.fuentes.IFuenteService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,21 +16,14 @@ public class Coleccion {
   private String id;
   // Getters y setters
   private List<Hecho> hechos;
-  private List<IFuenteService> fuentes;
+
   @Getter
   private final String titulo;
   @Getter
   private final String descripcion;
   private  List<ICriterioDePertenencia> criteriosDePertenencia;
 
-  public Coleccion(String id,String titulo, String descripcion) {
-    this.id = id;
-    this.titulo = titulo;
-    this.descripcion = descripcion;
-    this.hechos = new ArrayList<>();
-    this.fuentes = new ArrayList<>();
-    this.criteriosDePertenencia = new ArrayList<>();
-  }
+
 
 
 
@@ -41,10 +33,20 @@ public class Coleccion {
     }
   }
 
-  public void actualizarHechos() {
-    this.hechos = fuentes.stream()
-            .flatMap(fuente -> fuente.obtenerHechos().stream())
-            .collect(Collectors.toList());
+  public void actualizarHechos(List<Hecho> hechos) {
+    if (hechos == null) {
+      this.hechos = new ArrayList<>();
+      return;
+    }
+
+    if (criteriosDePertenencia == null || criteriosDePertenencia.isEmpty()) {
+      this.hechos = new ArrayList<>(hechos); // Todos los hechos se agregan
+    } else {
+      this.hechos = hechos.stream()
+              .filter(hecho -> criteriosDePertenencia.stream()
+                      .allMatch(criterio -> criterio.cumple(hecho)))
+              .collect(Collectors.toList());
+    }
   }
 
   public List<Hecho> getHechos() {

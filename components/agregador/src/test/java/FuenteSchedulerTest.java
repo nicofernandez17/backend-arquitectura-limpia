@@ -1,6 +1,7 @@
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import utn.schedulers.FuenteScheduler;
+import utn.services.AgregadorService;
 import utn.services.ColeccionService;
 
 class FuenteSchedulerTest {
@@ -8,7 +9,8 @@ class FuenteSchedulerTest {
     @Test
     void testActualizarColeccionesLlamaAlServicio() {
         ColeccionService coleccionServiceMock = Mockito.mock(ColeccionService.class);
-        FuenteScheduler scheduler = new FuenteScheduler(coleccionServiceMock);
+        AgregadorService agregadorServiceMock = Mockito.mock(AgregadorService.class);
+        FuenteScheduler scheduler = new FuenteScheduler(coleccionServiceMock,agregadorServiceMock);
 
         scheduler.actualizarColecciones();
 

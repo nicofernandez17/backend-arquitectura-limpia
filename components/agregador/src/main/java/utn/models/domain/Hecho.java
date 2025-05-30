@@ -1,5 +1,6 @@
 package utn.models.domain;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import utn.models.helpers.Categoria;
@@ -11,13 +12,14 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-
+@Data
 public class Hecho {
 
   public Hecho(String descripcionDelHecho) {
     this.descripcion = descripcionDelHecho;
   }
+
+  private String id;
 
   @Getter
   private String titulo;

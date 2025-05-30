@@ -11,27 +11,21 @@ import utn.models.domain.Hecho;
 import utn.models.dtos.HechoDTO;
 import utn.models.dtos.HechoMapper;
 import utn.repositories.ColeccionRepository;
+import utn.repositories.HechoRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class ColeccionService {
 
     private final ColeccionRepository coleccionRepository;
+    private final HechoRepository hechoRepository;
 
     @Autowired
-    public ColeccionService(ColeccionRepository coleccionRepository) {
+    public ColeccionService(ColeccionRepository coleccionRepository, HechoRepository hechoRepository) {
         this.coleccionRepository = coleccionRepository;
-    }
-
-
-    public void actualizarHechosDeTodasLasColecciones() {
-        List<Coleccion> colecciones = coleccionRepository.findAll();
-        for (Coleccion coleccion : colecciones) {
-            coleccion.actualizarHechos();  // Actualiza los hechos de la colección
-
-        }
-        System.out.println("Tarea ejecutada a las " + java.time.LocalTime.now());
+        this.hechoRepository = hechoRepository;
     }
 
     public List<Coleccion> obtenerColecciones() {
@@ -40,6 +34,14 @@ public class ColeccionService {
 
     public List<Hecho> obtenerHechosPorColeccion(String identificador) {
         return coleccionRepository.findById(identificador).get().getHechos();
+    }
+
+    public void actualizarColecciones() {
+        List<Hecho> todosLosHechos = hechoRepository.findAll();
+
+        coleccionRepository.findAll().forEach(coleccion -> {
+            coleccion.actualizarHechos(todosLosHechos);
+        });
     }
 
     public void agregarHechos (List<HechoDTO> hechosDTO) {
@@ -51,7 +53,12 @@ public class ColeccionService {
     }
 
     public void crearColeccion(String titulo, String descripcion) {
-        Coleccion coleccion = new Coleccion(null, titulo, descripcion);
+        Coleccion coleccion = Coleccion.builder()
+                .titulo(titulo)
+                .descripcion(descripcion)
+                .hechos(new ArrayList<>())
+                .criteriosDePertenencia(new ArrayList<>())
+                .build();
         coleccionRepository.save(coleccion);
     }
 }
