@@ -3,7 +3,10 @@ package utn.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import utn.model.domain.Hecho;
 import utn.model.dtos.HechoDTO;
+import utn.model.dtos.HechoMapper;
+import utn.repositories.HechoRepository;
 import utn.repositories.IHechoDTORepository;
 
 import java.io.IOException;
@@ -14,26 +17,26 @@ import java.util.Optional;
 public class HechoService {
 
 
-    private final IHechoDTORepository hechosRepository;
+    private final HechoRepository hechosRepository;
 
     @Autowired
-    public HechoService(IHechoDTORepository hechosRepository) {
+    public HechoService(HechoRepository hechosRepository) {
         this.hechosRepository = hechosRepository;
     }
 
 
     // Obtiene todos los hechos desde el repositorio
-    public List<HechoDTO> obtenerTodos() {
+    public List<Hecho> obtenerTodos() {
         return hechosRepository.findAll();
     }
 
     // Obtiene un hecho por id
-    public Optional<HechoDTO> obtenerPorId(Long id) {
+    public Optional<Hecho> obtenerPorId(String id) {
         return hechosRepository.findById(id);
     }
 
     // Registra un nuevo hecho en el repositorio
-    public Long registrarHecho(HechoDTO hechoDTO) {
+    public String registrarHecho(HechoDTO hechoDTO) {
         MultipartFile archivo = hechoDTO.getArchivo();
 
         if(archivo != null && !archivo.isEmpty()) {
@@ -45,7 +48,7 @@ public class HechoService {
             }
         }
 
-        return hechosRepository.save(hechoDTO);
+        return hechosRepository.save(HechoMapper.aDominio(hechoDTO));
     }
 
 

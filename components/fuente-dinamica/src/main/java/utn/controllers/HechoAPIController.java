@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import utn.model.dtos.HechoDTO;
+import utn.model.dtos.HechoMapper;
 import utn.services.HechoService;
 
 import java.util.List;
@@ -22,7 +23,10 @@ public class HechoAPIController {
 
     @GetMapping
     public List<HechoDTO> obtenerHechos() {
-        return hechoService.obtenerTodos();
+        return hechoService.obtenerTodos()
+                .stream()
+                .map(HechoMapper::aDTO)
+                .toList();
     }
 
 }

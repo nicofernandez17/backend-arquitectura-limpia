@@ -8,7 +8,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import utn.model.domain.Hecho;
 import utn.model.dtos.HechoDTO;
+import utn.model.dtos.HechoMapper;
 import utn.services.HechoService;
 
 import java.time.LocalDateTime;
@@ -51,7 +53,7 @@ public class HechoUIController {
     @PutMapping("/{id}")
     public ResponseEntity<String> actualizarHecho(@PathVariable Long id, @RequestBody HechoDTO hechoDTO) {
         hechoDTO.setId(id);
-        Long idActualizado = hechosUIService.registrarHecho(hechoDTO);
+        String idActualizado = hechosUIService.registrarHecho(hechoDTO);
 
         if (idActualizado != null) {
             return ResponseEntity.ok("Hecho actualizado correctamente");
@@ -61,17 +63,17 @@ public class HechoUIController {
     }
 
     @GetMapping("/{id}/archivo")
-    public ResponseEntity<byte[]> descargarArchivo(@PathVariable Long id) {
-        Optional<HechoDTO> hecho = hechosUIService.obtenerPorId(id);
+    public ResponseEntity<byte[]> descargarArchivo(@PathVariable String id) {
+        Optional<Hecho> hecho = hechosUIService.obtenerPorId(id);
 
-        if (hecho.isEmpty() || hecho.get().getArchivoContenido() == null) {
+        if (hecho.isEmpty() || hecho.get().getMultimediaArchivo() == null) {
             return ResponseEntity.notFound().build();
         }
 
         return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + hecho.get().getArchivoNombre() + "\"")
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + hecho.get().getMultimediaNombre() + "\"")
                 .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                .body(hecho.get().getArchivoContenido());
+                .body(hecho.get().getMultimediaArchivo());
     }
 
 }
