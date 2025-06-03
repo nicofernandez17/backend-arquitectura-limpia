@@ -46,6 +46,8 @@ public class Hecho {
   @Getter
   private boolean eliminado;
 
+  private String usuarioId;
+
   public Hecho(String titulo, String descripcion, Categoria categoria, Ubicacion ubicacion,
                LocalDate fecha, LocalDate fechaDeCarga, Origen origen) {
     this.titulo = titulo;

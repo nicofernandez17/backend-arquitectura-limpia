@@ -7,7 +7,6 @@ import utn.model.domain.Hecho;
 import utn.model.dtos.HechoDTO;
 import utn.model.dtos.HechoMapper;
 import utn.repositories.HechoRepository;
-import utn.repositories.IHechoDTORepository;
 
 import java.io.IOException;
 import java.util.List;
@@ -49,6 +48,11 @@ public class HechoService {
         }
 
         return hechosRepository.save(HechoMapper.aDominio(hechoDTO));
+    }
+
+    public String actualizarHecho(String id,HechoDTO hechoDTO) {
+
+        return hechosRepository.update(id,HechoMapper.aDominio(hechoDTO));
     }
 
 

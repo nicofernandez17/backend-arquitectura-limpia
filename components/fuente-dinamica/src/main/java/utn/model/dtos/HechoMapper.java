@@ -61,7 +61,7 @@ public class HechoMapper {
                 Origen.API);
         hecho.setMultimediaArchivo(dto.getArchivoContenido());
         hecho.setMultimediaNombre(dto.getArchivoNombre());
-
+        hecho.setUsuarioId(dto.getUsuarioId());
         return hecho;
     }
 }

@@ -36,6 +36,16 @@ public class HechoRepository {
         return ids;
     }
 
+    public String update(String id, Hecho hechoActualizado) {
+        if (!hechos.containsKey(id)) {
+            throw new IllegalArgumentException("No existe un hecho con ID: " + id);
+        }
+
+        hechoActualizado.setId(id); // Garantizar que mantiene el ID original
+        hechos.put(id, hechoActualizado);
+        return id;
+    }
+
     // Buscar por ID
     public Optional<Hecho> findById(String id) {
         return Optional.ofNullable(hechos.get(id));

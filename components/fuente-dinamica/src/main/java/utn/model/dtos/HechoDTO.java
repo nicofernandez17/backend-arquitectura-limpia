@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 public class HechoDTO {
-    private Long id;
     private String titulo;
     private String descripcion;
     private String categoria;
@@ -21,4 +20,6 @@ public class HechoDTO {
     private MultipartFile archivo;
     private byte[] archivoContenido;
     private String archivoNombre;
+    private String usuarioId;
+
 }

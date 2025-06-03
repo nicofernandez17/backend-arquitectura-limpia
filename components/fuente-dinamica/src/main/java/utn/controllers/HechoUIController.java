@@ -51,11 +51,11 @@ public class HechoUIController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> actualizarHecho(@PathVariable Long id, @RequestBody HechoDTO hechoDTO) {
-        hechoDTO.setId(id);
-        String idActualizado = hechosUIService.registrarHecho(hechoDTO);
+    public ResponseEntity<String> actualizarHecho(@PathVariable String id, @RequestBody HechoDTO hechoDTO) {
 
-        if (idActualizado != null) {
+        String idResult = hechosUIService.actualizarHecho(id,hechoDTO);
+
+        if (idResult != null) {
             return ResponseEntity.ok("Hecho actualizado correctamente");
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Hecho no encontrado");
