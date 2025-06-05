@@ -1,5 +1,5 @@
 import org.junit.jupiter.api.Test;
-import utn.services.spamDetector.impl.SpamDetector;
+import utn.services.spamDetector.local.SpamDetector;
 
 import static org.junit.jupiter.api.Assertions.*;
 

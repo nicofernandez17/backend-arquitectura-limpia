@@ -21,6 +21,11 @@ public class RevisionService {
         this.revisionRepository = revisionRepository;
     }
 
+    public Revision crearRevision(HechoDTO hechoDTO,String id) {
+
+        return revisionRepository.save(new Revision(hechoDTO,id));
+    }
+
     public void procesarRevision(Long revisionId, RevisionProcesarDTO request) {
         if (request.isAceptado()) {
             aceptarRevision(revisionId);

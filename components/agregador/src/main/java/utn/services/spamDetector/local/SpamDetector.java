@@ -1,4 +1,4 @@
-package utn.services.spamDetector.impl;
+package utn.services.spamDetector.local;
 
 import org.springframework.stereotype.Service;
 import utn.services.spamDetector.ISpamDetector;

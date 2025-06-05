@@ -9,9 +9,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import utn.model.domain.Hecho;
+import utn.model.domain.Revision;
 import utn.model.dtos.HechoDTO;
 import utn.model.dtos.HechoMapper;
 import utn.services.HechoService;
+import utn.services.RevisionService;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -22,6 +24,8 @@ public class HechoUIController {
 
     @Autowired
     private final HechoService hechosUIService;
+    @Autowired
+    private RevisionService revisionService;
 
     public HechoUIController(HechoService hechosUIService) {
         this.hechosUIService = hechosUIService;
@@ -50,16 +54,29 @@ public class HechoUIController {
         return ResponseEntity.status(HttpStatus.CREATED).body("Hecho registrado correctamente");
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<String> actualizarHecho(@PathVariable String id, @RequestBody HechoDTO hechoDTO) {
+    @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Revision> actualizarHecho(
+            @PathVariable String id,
+            @RequestParam String titulo,
+            @RequestParam String descripcion,
+            @RequestParam String categoria,
+            @RequestParam double latitud,
+            @RequestParam double longitud,
+            @RequestParam("fecha_hecho") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fechaHecho,
+            @RequestParam(required = false) MultipartFile archivo) {
 
-        String idResult = hechosUIService.actualizarHecho(id,hechoDTO);
+        HechoDTO hechoDTO = HechoDTO.builder()
+                .titulo(titulo)
+                .descripcion(descripcion)
+                .categoria(categoria)
+                .latitud(latitud)
+                .longitud(longitud)
+                .fecha_hecho(fechaHecho)
+                .archivo(archivo)
+                .build();
 
-        if (idResult != null) {
-            return ResponseEntity.ok("Hecho actualizado correctamente");
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Hecho no encontrado");
-        }
+        Revision revision = revisionService.crearRevision(hechoDTO, id);
+        return ResponseEntity.ok(revision);
     }
 
     @GetMapping("/{id}/archivo")

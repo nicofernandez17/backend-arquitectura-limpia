@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import utn.models.domain.SolicitudEliminacion;
 import utn.models.helpers.EstadoSolicitud;
+import utn.services.spamDetector.akismet.AkismetService;
 import utn.services.spamDetector.ISpamDetector;
 import utn.repositories.SolicitudRepository;
 
@@ -12,6 +13,7 @@ public class SolicitudService {
 
     private final SolicitudRepository solicitudRepository;
     private final ISpamDetector spamDetector;
+
 
 
     @Autowired

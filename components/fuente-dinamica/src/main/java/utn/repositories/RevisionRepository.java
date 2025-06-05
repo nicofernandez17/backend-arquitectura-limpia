@@ -19,6 +19,7 @@ public class RevisionRepository {
             revision.setId(idGenerator.getAndIncrement());
         }
         revisiones.put(revision.getId(), revision);
+        System.out.println(revisiones.size());
         return revision;
     }
 
