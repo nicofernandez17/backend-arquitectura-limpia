@@ -1,16 +1,16 @@
-package utn.controllers;
+package utn.controllers.publics;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import utn.controllers.seeding.ColeccionSeeder;
 import utn.models.domain.Coleccion;
 import utn.models.domain.Hecho;
 import utn.models.dtos.ColeccionDTO;
 import utn.models.dtos.ColeccionMapper;
 import utn.models.dtos.HechoDTO;
 import utn.models.dtos.HechoMapper;
-import utn.repositories.ColeccionRepository;
 import utn.services.ColeccionService;
 
 

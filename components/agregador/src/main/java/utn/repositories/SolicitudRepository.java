@@ -30,6 +30,12 @@ public class SolicitudRepository {
                 .findFirst();
     }
 
+    public Optional<SolicitudEliminacion> findById(Long id) {
+        return solicitudes.stream()
+                .filter(s -> s.getId().equals(id))
+                .findFirst();
+    }
+
     public void delete(SolicitudEliminacion solicitud) {
         solicitudes.remove(solicitud);
     }

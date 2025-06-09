@@ -1,14 +1,10 @@
-package utn.controllers;
+package utn.controllers.publics;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import utn.models.domain.SolicitudEliminacion;
-import utn.models.dtos.HechoDTO;
-import utn.models.dtos.HechoMapper;
 import utn.services.SolicitudService;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/solicitudes")

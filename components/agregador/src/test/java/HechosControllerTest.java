@@ -1,6 +1,6 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import utn.controllers.HechosController;
+import utn.controllers.publics.HechosController;
 import utn.models.dtos.HechoDTO;
 import utn.models.domain.Coleccion;
 import utn.models.domain.Hecho;

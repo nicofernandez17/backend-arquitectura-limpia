@@ -8,6 +8,8 @@ import utn.services.spamDetector.akismet.AkismetService;
 import utn.services.spamDetector.ISpamDetector;
 import utn.repositories.SolicitudRepository;
 
+import java.util.Optional;
+
 @Service
 public class SolicitudService {
 
@@ -35,4 +37,19 @@ public class SolicitudService {
         solicitudRepository.save(solicitud);
         return solicitud;
     }
+
+    public SolicitudEliminacion procesarSolicitud(Long id, String accion) {
+
+        SolicitudEliminacion solicitud = solicitudRepository.findById(id).orElse(null);
+
+        if (accion == "aceptar"){
+            solicitud.aceptar();
+        } else if (accion == "rechazar"){solicitud.rechazar();}
+
+
+        return solicitud;
+
+    }
+
+
 }

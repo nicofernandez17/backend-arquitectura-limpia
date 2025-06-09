@@ -1,4 +1,4 @@
-package utn.controllers;
+package utn.controllers.publics;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -30,7 +30,6 @@ public class HechosController {
         this.coleccionService = coleccionService;
     }
 
-    //TODO filtrar
     @GetMapping
     public List<HechoDTO> obtenerTodosLosHechos(
         @RequestParam(required = false) String categoria,

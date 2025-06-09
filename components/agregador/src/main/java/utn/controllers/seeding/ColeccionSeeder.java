@@ -1,14 +1,9 @@
-package utn.controllers;
+package utn.controllers.seeding;
 
-import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
 import utn.models.domain.Coleccion;
 import utn.repositories.ColeccionRepository;
 import utn.services.AgregadorService;
-import utn.services.ColeccionService;
-
-
-import java.util.List;
 
 @Service
 public class ColeccionSeeder {

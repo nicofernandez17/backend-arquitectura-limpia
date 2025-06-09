@@ -1,6 +1,6 @@
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
-import utn.controllers.SolicitudController;
+import utn.controllers.publics.SolicitudController;
 import utn.models.domain.Hecho;
 import utn.models.domain.SolicitudEliminacion;
 import utn.models.dtos.ColeccionDTO;

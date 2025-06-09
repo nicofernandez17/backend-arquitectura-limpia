@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @Data
 public class SolicitudEliminacion {
 
+  private Long id;
 
   private final LocalDateTime fechaCreacion;
 
