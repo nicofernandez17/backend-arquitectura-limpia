@@ -7,13 +7,13 @@ import utn.models.domain.SolicitudEliminacion;
 import utn.services.SolicitudService;
 
 @RestController
-@RequestMapping("/solicitudes")
-public class SolicitudController {
+@RequestMapping("/admin/solicitudes")
+public class SolicitudAdminController {
 
     private final SolicitudService solicitudService;
 
     @Autowired
-    public SolicitudController(SolicitudService solicitudService) {
+    public SolicitudAdminController(SolicitudService solicitudService) {
         this.solicitudService = solicitudService;
     }
 

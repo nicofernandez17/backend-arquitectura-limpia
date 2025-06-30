@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 public class HechoDTO {
+    private String id;
     private String titulo;
     private String descripcion;
     private String categoria;

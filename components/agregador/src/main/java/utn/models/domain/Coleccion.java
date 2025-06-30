@@ -4,6 +4,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
 import utn.models.criterios.ICriterioDePertenencia;
+import utn.models.helpers.ConsensoNivel;
+import utn.models.helpers.FuenteNombre;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,14 +16,15 @@ import java.util.stream.Collectors;
 public class Coleccion {
 
   private String id;
-  // Getters y setters
-  private List<Hecho> hechos;
 
-  @Getter
-  private final String titulo;
-  @Getter
-  private final String descripcion;
+  private List<Hecho> hechos;
+  private ConsensoNivel consensoNivel = ConsensoNivel.NINGUNO;
+
+  private String titulo;
+
+  private String descripcion;
   private  List<ICriterioDePertenencia> criteriosDePertenencia;
+  private List<FuenteNombre> fuentes;
 
   public void agregarHecho(Hecho hecho) {
     if (criteriosDePertenencia.stream().allMatch(criterio -> criterio.cumple(hecho))) {
@@ -48,7 +51,14 @@ public class Coleccion {
   public List<Hecho> getHechos() {
     return hechos.stream()
             .filter(hecho -> !hecho.isEliminado())
-            .toList(); // O bien .collect(Collectors.toUnmodifiableList()) si quieres que sea inmodificable
+            .toList(); // O Collectors.toUnmodifiableList()
+  }
+
+  public List<Hecho> getHechosFiltradosPorConsenso() {
+    return hechos.stream()
+            .filter(hecho -> !hecho.isEliminado())
+            .filter(hecho -> hecho.getConsensoNivel().getPrioridad() >= consensoNivel.getPrioridad())
+            .toList();
   }
 
   public void agregarHechos(List<Hecho> hechos) {

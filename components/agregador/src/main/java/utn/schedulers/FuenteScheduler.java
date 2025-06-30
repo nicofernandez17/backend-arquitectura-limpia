@@ -21,8 +21,8 @@ public class FuenteScheduler {
     @Async
     @Scheduled(cron = "0 * * * * *")
     public void actualizarColecciones() {
-        agregadorService.obtenerYGuardarHechos();
-        coleccionService.actualizarColecciones();
+        agregadorService.cargarHechosYAsignar();
+
 
         System.out.println("Actualizando colecciones");
 

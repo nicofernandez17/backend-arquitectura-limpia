@@ -33,6 +33,7 @@ public class HechoRepository {
             ids.add(save(hecho));
         }
         System.out.println(ids.size());
+        System.out.println(hechos.size());
         return ids;
     }
 
@@ -56,4 +57,17 @@ public class HechoRepository {
         hechos.clear();
         idGenerator.set(1);
     }
+
+    public Optional<Hecho> findIgual(Hecho hecho) {
+        return hechos.values().stream()
+                .filter(h ->
+                        Objects.equals(h.getTitulo(), hecho.getTitulo()) &&
+                                Objects.equals(h.getDescripcion(), hecho.getDescripcion()) &&
+                                Objects.equals(h.getCategoria(), hecho.getCategoria()) &&
+                                Objects.equals(h.getUbicacion(), hecho.getUbicacion()) &&
+                                Objects.equals(h.getFecha(), hecho.getFecha())
+                )
+                .findFirst();
+    }
+
 }

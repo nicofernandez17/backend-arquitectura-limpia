@@ -1,10 +1,10 @@
 package utn.models.algoritmos;
 
 import utn.models.domain.Hecho;
+import utn.models.helpers.ConsensoNivel;
 
 import java.util.List;
 
 public interface IAlgoritmoConsenso {
-    boolean esConsensuado(Hecho hecho);
-    List<Hecho> filtrarHechosConsensuados(List<Hecho> hechos);
+    ConsensoNivel aplicar(Hecho hecho);
 }
