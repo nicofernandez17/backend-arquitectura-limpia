@@ -43,8 +43,18 @@ public class ColeccionController {
     }
 
     @GetMapping("/{identificador}/hechos")
-    public List<HechoDTO> obtenerHechosPorColeccion(@PathVariable String identificador) {
-        List<Hecho> hechos = coleccionService.obtenerHechosPorColeccion(identificador);
+    public List<HechoDTO> obtenerHechosPorColeccion(
+            @PathVariable String identificador,
+            @RequestParam(defaultValue = "curado") String modo) {
+
+        List<Hecho> hechos;
+
+        if ("irrestricto".equalsIgnoreCase(modo)) {
+            hechos = coleccionService.obtenerHechosIrrestricto(identificador);
+        } else {
+            hechos = coleccionService.obtenerHechosCurado(identificador);
+        }
+
         return hechos.stream()
                 .map(HechoMapper::aDTO)
                 .toList();

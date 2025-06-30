@@ -2,10 +2,12 @@ package utn.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 import utn.models.domain.Coleccion;
 import utn.models.domain.Hecho;
 import utn.models.dtos.HechoDTO;
@@ -54,6 +56,18 @@ public class ColeccionService {
         return coleccionRepository.findById(idColeccion)
                 .map(Coleccion::getHechos)
                 .orElse(Collections.emptyList());
+    }
+
+    public List<Hecho> obtenerHechosIrrestricto(String id) {
+        Coleccion coleccion = coleccionRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Colección no encontrada"));
+        return coleccion.getHechos();
+    }
+
+    public List<Hecho> obtenerHechosCurado(String id) {
+        Coleccion coleccion = coleccionRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Colección no encontrada"));
+        return coleccion.getHechosFiltradosPorConsenso();
     }
 
     // ===== ACTUALIZAR =====
