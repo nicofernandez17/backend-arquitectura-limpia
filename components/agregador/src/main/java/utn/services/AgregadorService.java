@@ -61,8 +61,9 @@ public class AgregadorService {
                 Optional<Hecho> existente = hechoRepo.findIgual(hecho);
 
                 if (existente.isPresent()) {
-                    existente.get().agregarFuente(fuente);
-                    hechoRepo.save(existente.get());
+                    Hecho existenteHecho = existente.get();
+                    existenteHecho.agregarFuente(fuente);
+                    hechoRepo.save(existenteHecho);
                 } else {
                     hecho.setId(UUID.randomUUID().toString());
                     hecho.agregarFuente(fuente);

@@ -16,7 +16,7 @@ public class HechoMapper {
         return HechoDTO.builder()
                 .titulo(hecho.getTitulo())
                 .descripcion(hecho.getDescripcion())
-                .categoria(Optional.ofNullable(hecho.getCategoria())
+                .categoria(Optional.ofNullable(hecho.getCategoria().getNombre())
                         .map(Object::toString)
                         .orElse(null))
                 .latitud(Optional.ofNullable(hecho.getUbicacion())

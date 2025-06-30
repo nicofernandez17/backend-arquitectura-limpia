@@ -10,65 +10,57 @@ import java.util.concurrent.atomic.AtomicLong;
 @Repository
 public class HechoRepository {
 
-    private final Map<String, Hecho> hechos = new HashMap<>();
-    private final Map<String, Hecho> indicePorClave = new HashMap<>();
+    private final Map<String, Hecho> hechosPorClave = new HashMap<>();
     private final AtomicLong idGenerator = new AtomicLong(1);
 
-    // Guarda un hecho individual (nuevo o actualizado)
     public String save(Hecho hecho) {
-        String id = hecho.getId();
-        boolean esNuevo = (id == null || id.isBlank());
+        String clave = HechoClaveUtils.generarClaveLogica(hecho);
 
-        if (esNuevo) {
-            id = String.valueOf(idGenerator.getAndIncrement());
-            hecho.setId(id);
+        Hecho existente = hechosPorClave.get(clave);
+
+        if (existente != null) {
+            existente.agregarFuentes(hecho.getFuentes());
+            return existente.getId();
         }
 
-        hechos.put(id, hecho);
-        indicePorClave.put(HechoClaveUtils.generarClaveLogica(hecho), hecho);
+        String id = String.valueOf(idGenerator.getAndIncrement());
+        hecho.setId(id);
+        hechosPorClave.put(clave, hecho);
 
         return id;
     }
 
-    // Guarda múltiples hechos
     public List<String> saveAll(List<Hecho> hechosLista) {
         List<String> ids = new ArrayList<>();
         for (Hecho hecho : hechosLista) {
             ids.add(save(hecho));
         }
-
-        System.out.println(hechos.size() + " " + indicePorClave.size());
-
+        System.out.println("Hechos únicos: " + hechosPorClave.size());
         return ids;
     }
 
-    // Buscar por ID
     public Optional<Hecho> findById(String id) {
-        return Optional.ofNullable(hechos.get(id));
+        return hechosPorClave.values().stream()
+                .filter(h -> h.getId().equals(id))
+                .findFirst();
     }
 
-    // Retorna todos los hechos
     public List<Hecho> findAll() {
-        return new ArrayList<>(hechos.values());
+        return new ArrayList<>(hechosPorClave.values());
     }
 
-    // Elimina un hecho por ID
     public void delete(String id) {
-        Hecho eliminado = hechos.remove(id);
-        if (eliminado != null) {
-            indicePorClave.remove(HechoClaveUtils.generarClaveLogica(eliminado));
-        }
+        hechosPorClave.entrySet().removeIf(entry -> entry.getValue().getId().equals(id));
     }
 
-    // Limpia todos los hechos (por ejemplo para pruebas)
     public void clear() {
-        hechos.clear();
-        indicePorClave.clear();
+        hechosPorClave.clear();
         idGenerator.set(1);
     }
 
-    // Verifica si ya existe un hecho igual en base a su clave lógica
     public Optional<Hecho> findIgual(Hecho hecho) {
-        return Optional.ofNullable(indicePorClave.get(HechoClaveUtils.generarClaveLogica(hecho)));
+        return Optional.ofNullable(
+                hechosPorClave.get(HechoClaveUtils.generarClaveLogica(hecho))
+        );
     }
 }

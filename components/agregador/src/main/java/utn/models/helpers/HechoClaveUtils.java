@@ -12,7 +12,7 @@ public class HechoClaveUtils {
                 normalizar(h.getTitulo()),
                 normalizar(h.getDescripcion()),
                 //normalizar(h.getCategoria() != null ? h.getCategoria().toString() : ""),
-                normalizar(h.getUbicacion() != null ? h.getUbicacion().clave() : ""),
+                //normalizar(h.getUbicacion() != null ? h.getUbicacion().clave() : ""),
                 h.getFecha() != null ? h.getFecha().toString() : ""
         ).collect(Collectors.joining("|"));
     }
