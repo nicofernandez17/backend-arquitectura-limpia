@@ -2,6 +2,7 @@ package utn.repositories;
 
 import org.springframework.stereotype.Repository;
 import utn.models.domain.Hecho;
+import utn.models.helpers.HechoClaveUtils;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
@@ -10,6 +11,7 @@ import java.util.concurrent.atomic.AtomicLong;
 public class HechoRepository {
 
     private final Map<String, Hecho> hechos = new HashMap<>();
+    private final Map<String, Hecho> indicePorClave = new HashMap<>();
     private final AtomicLong idGenerator = new AtomicLong(1);
 
     // Guarda un hecho individual (nuevo o actualizado)
@@ -23,6 +25,8 @@ public class HechoRepository {
         }
 
         hechos.put(id, hecho);
+        indicePorClave.put(HechoClaveUtils.generarClaveLogica(hecho), hecho);
+
         return id;
     }
 
@@ -32,8 +36,9 @@ public class HechoRepository {
         for (Hecho hecho : hechosLista) {
             ids.add(save(hecho));
         }
-        System.out.println(ids.size());
-        System.out.println(hechos.size());
+
+        System.out.println(hechos.size() + " " + indicePorClave.size());
+
         return ids;
     }
 
@@ -49,25 +54,21 @@ public class HechoRepository {
 
     // Elimina un hecho por ID
     public void delete(String id) {
-        hechos.remove(id);
+        Hecho eliminado = hechos.remove(id);
+        if (eliminado != null) {
+            indicePorClave.remove(HechoClaveUtils.generarClaveLogica(eliminado));
+        }
     }
 
     // Limpia todos los hechos (por ejemplo para pruebas)
     public void clear() {
         hechos.clear();
+        indicePorClave.clear();
         idGenerator.set(1);
     }
 
+    // Verifica si ya existe un hecho igual en base a su clave lógica
     public Optional<Hecho> findIgual(Hecho hecho) {
-        return hechos.values().stream()
-                .filter(h ->
-                        Objects.equals(h.getTitulo(), hecho.getTitulo()) &&
-                                Objects.equals(h.getDescripcion(), hecho.getDescripcion()) &&
-                                Objects.equals(h.getCategoria(), hecho.getCategoria()) &&
-                                Objects.equals(h.getUbicacion(), hecho.getUbicacion()) &&
-                                Objects.equals(h.getFecha(), hecho.getFecha())
-                )
-                .findFirst();
+        return Optional.ofNullable(indicePorClave.get(HechoClaveUtils.generarClaveLogica(hecho)));
     }
-
 }

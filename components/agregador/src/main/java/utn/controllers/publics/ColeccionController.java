@@ -42,6 +42,7 @@ public class ColeccionController {
                 .collect(Collectors.toList());
     }
 
+    //GET /colecciones/123/hechos?modo=curado
     @GetMapping("/{identificador}/hechos")
     public List<HechoDTO> obtenerHechosPorColeccion(
             @PathVariable String identificador,

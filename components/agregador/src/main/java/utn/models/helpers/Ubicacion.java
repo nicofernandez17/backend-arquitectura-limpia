@@ -12,6 +12,10 @@ public class Ubicacion {
     this.longitud = longitud;
   }
 
+  public String clave() {
+    return latitud + "," + longitud;
+  }
+
   public Double getLongitud() {
     return longitud;
   }
