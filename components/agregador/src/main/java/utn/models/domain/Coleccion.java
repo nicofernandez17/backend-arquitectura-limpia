@@ -17,14 +17,18 @@ public class Coleccion {
 
   private String id;
 
-  private List<Hecho> hechos;
+  @Builder.Default
+  private List<Hecho> hechos = new ArrayList<>();
+
   private ConsensoNivel consensoNivel = ConsensoNivel.NINGUNO;
 
   private String titulo;
 
   private String descripcion;
-  private  List<ICriterioDePertenencia> criteriosDePertenencia;
-  private List<FuenteNombre> fuentes;
+  private List<ICriterioDePertenencia> criteriosDePertenencia;
+
+  @Builder.Default
+  private List<FuenteNombre> fuentes = new ArrayList<>();
 
   public void agregarHecho(Hecho hecho) {
     if (criteriosDePertenencia.stream().allMatch(criterio -> criterio.cumple(hecho))) {
@@ -39,7 +43,7 @@ public class Coleccion {
     }
 
     if (criteriosDePertenencia == null || criteriosDePertenencia.isEmpty()) {
-      this.hechos = new ArrayList<>(hechos); // Todos los hechos se agregan
+      this.hechos = new ArrayList<>(hechos);
     } else {
       this.hechos = hechos.stream()
               .filter(hecho -> criteriosDePertenencia.stream()
@@ -51,7 +55,7 @@ public class Coleccion {
   public List<Hecho> getHechos() {
     return hechos.stream()
             .filter(hecho -> !hecho.isEliminado())
-            .toList(); // O Collectors.toUnmodifiableList()
+            .toList();
   }
 
   public List<Hecho> getHechosFiltradosPorConsenso() {

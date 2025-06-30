@@ -38,7 +38,7 @@ public class AgregadorService {
 
     public void cargarHechosYAsignar() {
         consolidarHechosDesdeFuentes();
-        //asignarHechosAColecciones();
+        asignarHechosAColecciones();
     }
 
     private void consolidarHechosDesdeFuentes() {
@@ -83,7 +83,7 @@ public class AgregadorService {
             for (Hecho hecho : hechos) {
                 for (FuenteNombre fuente : hecho.getFuentes()) {
                     if (coleccion.getFuentes().contains(fuente)) {
-                        coleccion.getHechos().add(hecho);
+                        coleccion.agregarHecho(hecho);
                         break;
                     }
                 }

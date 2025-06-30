@@ -6,6 +6,7 @@ import utn.models.helpers.FuenteNombre;
 import utn.repositories.ColeccionRepository;
 import utn.services.AgregadorService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -27,19 +28,19 @@ public class ColeccionSeeder {
         Coleccion coleccion1 = Coleccion.builder()
                 .titulo("Actualidad Económica")
                 .descripcion("Últimos hechos relevantes en economía")
-                .fuentes(List.of(FuenteNombre.ESTATICA))
+                .fuentes(new ArrayList<>(List.of(FuenteNombre.ESTATICA)))
                 .build();
 
         Coleccion coleccion2 = Coleccion.builder()
                 .titulo("Innovación Tecnológica")
                 .descripcion("Novedades y avances tecnológicos")
-                .fuentes(List.of(FuenteNombre.ESTATICA))
+                .fuentes(new ArrayList<>(List.of(FuenteNombre.ESTATICA)))
                 .build();
 
         Coleccion coleccion3 = Coleccion.builder()
                 .titulo("Tecnología y Sociedad")
                 .descripcion("Impacto de la tecnología en la sociedad actual")
-                .fuentes(List.of(FuenteNombre.ESTATICA))
+                .fuentes(new ArrayList<>(List.of(FuenteNombre.ESTATICA)))
                 .build();
 
         coleccionRepository.save(coleccion1);
