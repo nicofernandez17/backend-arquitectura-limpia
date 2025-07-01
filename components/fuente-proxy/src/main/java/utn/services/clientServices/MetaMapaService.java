@@ -1,6 +1,8 @@
 package utn.services.clientServices;
 
 import org.reactivestreams.Publisher;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
@@ -37,4 +39,10 @@ public class MetaMapaService implements IFuenteService {
             hechosRepository.save(hecho);  // Guardar cada HechoDTO en el repositorio
         }
     }
+
+    @RabbitListener(queues = "#{miCola.name}")
+    public void recibirMensaje(String mensaje) {
+        System.out.println("Mensaje recibido: " + mensaje);
+    }
+
 }

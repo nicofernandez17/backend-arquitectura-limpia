@@ -1,9 +1,11 @@
 package utn.model;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+@NoArgsConstructor
 @Data
 public class HechoDTO {
     private Long id;
