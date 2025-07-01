@@ -30,13 +30,12 @@ public class ConsensoService {
         List<Coleccion> colecciones = coleccionRepo.findAll();
 
         for (Coleccion coleccion : colecciones) {
-            IAlgoritmoConsenso algoritmo = coleccion.getAlgoritmo(); // suponer que lo tiene configurado
+            IAlgoritmoConsenso algoritmo = coleccion.getAlgoritmo();
             if (algoritmo == null) continue;
 
             for (Hecho hecho : coleccion.getHechos()) {
                 ConsensoNivel nuevoNivel = algoritmo.aplicar(hecho, totalFuentes);
 
-                // Mantener el valor más alto entre el actual y el nuevo
                 if (nuevoNivel != null) {
                     hecho.setConsensoNivel(
                             ConsensoNivel.max(hecho.getConsensoNivel(), nuevoNivel)
@@ -44,10 +43,7 @@ public class ConsensoService {
                 }
             }
 
-            // Ajustar el consenso mínimo requerido de la colección si es más bajo
-            if (coleccion.getConsensoNivel().getPrioridad() < algoritmo.getNivelQueAplica().getPrioridad()) {
-                coleccion.setConsensoNivel(algoritmo.getNivelQueAplica());
-            }
+
         }
     }
 }

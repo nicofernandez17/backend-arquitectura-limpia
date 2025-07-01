@@ -21,7 +21,6 @@ public class Coleccion {
   @Builder.Default
   private List<Hecho> hechos = new ArrayList<>();
 
-  private ConsensoNivel consensoNivel = ConsensoNivel.NINGUNO;
   private IAlgoritmoConsenso algoritmo;
   private String titulo;
 
@@ -61,9 +60,15 @@ public class Coleccion {
   }
 
   public List<Hecho> getHechosFiltradosPorConsenso() {
+    // Si no hay algoritmo, no se puede filtrar por consenso → devolver todos los hechos válidos
+    if (algoritmo == null) {
+      return getHechos(); // ya filtra los eliminados
+    }
+
+    // Si hay algoritmo, aplicar filtro por nivel mínimo de consenso
     return hechos.stream()
             .filter(hecho -> !hecho.isEliminado())
-            .filter(hecho -> hecho.getConsensoNivel().getPrioridad() >= consensoNivel.getPrioridad())
+            .filter(hecho -> hecho.getConsensoNivel().getPrioridad() >= algoritmo.getNivelQueAplica().getPrioridad())
             .toList();
   }
 

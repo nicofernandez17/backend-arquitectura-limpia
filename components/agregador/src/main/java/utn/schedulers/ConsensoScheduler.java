@@ -14,8 +14,9 @@ public class ConsensoScheduler {
     }
 
 
-    @Scheduled(cron = "0 0 * * * * " )
+    @Scheduled(cron = "30 * * * * * " )
     public void ejecutarConsensoProgramado() {
+        System.out.println("Ejecutando consenso programado");
         consensoService.aplicarConsensoPorColeccion();
     }
 }
