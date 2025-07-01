@@ -17,4 +17,8 @@ public class FuenteConfig {
     public void setUrls(List<String> urls) {
         this.urls = urls;
     }
+
+    public int getCantidadDeFuentes() {
+        return urls != null ? urls.size() : 0;
+    }
 }

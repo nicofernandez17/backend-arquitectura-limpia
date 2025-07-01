@@ -3,6 +3,7 @@ package utn.models.domain;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
+import utn.models.algoritmos.IAlgoritmoConsenso;
 import utn.models.criterios.ICriterioDePertenencia;
 import utn.models.helpers.ConsensoNivel;
 import utn.models.helpers.FuenteNombre;
@@ -21,7 +22,7 @@ public class Coleccion {
   private List<Hecho> hechos = new ArrayList<>();
 
   private ConsensoNivel consensoNivel = ConsensoNivel.NINGUNO;
-
+  private IAlgoritmoConsenso algoritmo;
   private String titulo;
 
   private String descripcion;
