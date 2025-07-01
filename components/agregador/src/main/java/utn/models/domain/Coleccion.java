@@ -31,6 +31,8 @@ public class Coleccion {
   private List<FuenteNombre> fuentes = new ArrayList<>();
 
   public void agregarHecho(Hecho hecho) {
+    if (hecho == null || hechos.contains(hecho)) return;
+
     if (criteriosDePertenencia == null || criteriosDePertenencia.isEmpty() ||
             criteriosDePertenencia.stream().allMatch(criterio -> criterio.cumple(hecho))) {
       this.hechos.add(hecho);

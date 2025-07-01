@@ -35,7 +35,10 @@ public class ConsensoService {
 
             for (Hecho hecho : coleccion.getHechos()) {
                 ConsensoNivel nuevoNivel = algoritmo.aplicar(hecho, totalFuentes);
-
+                if (nuevoNivel == ConsensoNivel.MULTIPLES_MENCIONES) {
+                    System.out.println(nuevoNivel);
+                    System.out.println(coleccion.getId());
+                }
                 if (nuevoNivel != null) {
                     hecho.setConsensoNivel(
                             ConsensoNivel.max(hecho.getConsensoNivel(), nuevoNivel)

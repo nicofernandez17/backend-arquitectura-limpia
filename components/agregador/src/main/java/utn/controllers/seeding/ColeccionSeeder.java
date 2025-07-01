@@ -44,8 +44,8 @@ public class ColeccionSeeder {
         Coleccion coleccion3 = Coleccion.builder()
                 .titulo("Tecnología y Sociedad")
                 .descripcion("Impacto de la tecnología en la sociedad actual")
-                .fuentes(new ArrayList<>(List.of(FuenteNombre.ESTATICA)))
-                .algoritmo(new AlgoritmoMayoriaAbsoluta())
+                .fuentes(new ArrayList<>(List.of(FuenteNombre.ESTATICA,FuenteNombre.DINAMICA)))
+                .algoritmo(new AlgoritmoMultiplesMenciones())
                 .build();
 
         coleccionRepository.save(coleccion1);
