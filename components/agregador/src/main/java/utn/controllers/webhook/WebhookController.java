@@ -17,7 +17,7 @@ public class WebhookController {
 		this.registryService = registryService;
 	}
 
-	@PostMapping("/webhooks/registrar")
+	@PostMapping("/registrar")
 	public ResponseEntity<Void> registrar(@RequestBody RegistroSuscriber suscriber) {
 		registryService.registrar(suscriber);
 		return ResponseEntity.ok().build();

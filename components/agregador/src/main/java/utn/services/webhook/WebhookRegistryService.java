@@ -12,6 +12,7 @@ public class WebhookRegistryService {
 
 	public void registrar(RegistroSuscriber suscriber) {
 		suscriptores.add(suscriber);
+		System.out.println("Se registro suscriber: " + suscriber.getInstanciaId());
 	}
 
 	public Set<RegistroSuscriber> obtenerSuscriptores() {
