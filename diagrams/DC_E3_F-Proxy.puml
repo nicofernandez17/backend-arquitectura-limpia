@@ -62,6 +62,8 @@ ProxyService --> MetaMapaService
 ProxyService --> IHechoRepository
 DDSService --> IHechoRepository
 MetaMapaService --> IHechoRepository
+IFuenteService ..> HechosResponseDTO
+HechosResponseDTO  --> "*" HechoDTO
 
 interface IFuenteService {
   + getHechos() : Mono<List<HechoDTO>>

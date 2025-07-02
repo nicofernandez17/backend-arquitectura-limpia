@@ -1,23 +1,49 @@
 @startuml
 ' ==== AGREGADOR SIN CONTROLLERS ====
+
 package Agregador {
 
-class Coleccion {
-  - id : String
-  - hechos : List<Hecho>
-  - algoritmo : IAlgoritmoConsenso
-  - titulo : String
-  - descripcion : String
-  - criteriosDePertenencia : List<ICriterioDePertenencia>
-  - fuentes : List<FuenteNombre>
-
-  + agregarHecho(hecho : Hecho) : void
-  + actualizarHechos(hechos : List<Hecho>) : void
-  + getHechos() : List<Hecho>
-  + getHechosFiltradosPorConsenso() : List<Hecho>
-  + agregarHechos(hechos : List<Hecho>) : void
+' ==== ENUMS ====
+enum ConsensoNivel {
+  NINGUNO
+  MULTIPLES_MENCIONES
+  MAYORIA_SIMPLE
+  MAYORIA_ABSOLUTA
 }
 
+enum EstadoSolicitud {
+  ACEPTADA
+  RECHAZADA
+  PENDIENTE
+}
+
+enum FuenteNombre {
+  ESTATICA
+  DINAMICA
+  PROXY
+}
+
+enum Origen {
+  CARGA_MANUAL
+  DATASET
+  CONTRIBUYENTE
+  API
+}
+
+' ==== VALUE OBJECTS ====
+class Categoria {
+  - nombre : String
+  + getNombre() : String
+}
+
+class Ubicacion {
+  - latitud : Double
+  - longitud : Double
+  + getLatitud() : Double
+  + getLongitud() : Double
+}
+
+' ==== ENTIDADES ====
 class Hecho {
   - id : String
   - consensoNivel : ConsensoNivel = ConsensoNivel.NINGUNO
@@ -43,34 +69,20 @@ class Hecho {
   + getFuentes() : Set<FuenteNombre>
 }
 
-class ColeccionDTO {
+class Coleccion {
   - id : String
+  - hechos : List<Hecho>
+  - algoritmo : IAlgoritmoConsenso
   - titulo : String
   - descripcion : String
-  - hechos : List<HechoDTO>
-}
+  - criteriosDePertenencia : List<ICriterioDePertenencia>
+  - fuentes : List<FuenteNombre>
 
-class HechoDTO {
-  - id : String
-  - titulo : String
-  - descripcion : String
-  - categoria : String
-  - latitud : double
-  - longitud : double
-  - fecha_hecho : LocalDateTime
-  - created_at : LocalDateTime
-  - updated_at : LocalDateTime
-  - archivoContenido : byte[]
-  - archivoNombre : String
-}
-
-class ColeccionMapper {
-  + toDTO(coleccion : Coleccion) : ColeccionDTO
-}
-
-class HechoMapper {
-  + aDTO(hecho : Hecho) : HechoDTO
-  + aDominio(dto : HechoDTO) : Hecho
+  + agregarHecho(hecho : Hecho) : void
+  + actualizarHechos(hechos : List<Hecho>) : void
+  + getHechos() : List<Hecho>
+  + getHechosFiltradosPorConsenso() : List<Hecho>
+  + agregarHechos(hechos : List<Hecho>) : void
 }
 
 class SolicitudEliminacion {
@@ -85,11 +97,18 @@ class SolicitudEliminacion {
   + rechazar() : void
 }
 
-class SolicitudDTO {
-  - fechaCreacion : LocalDateTime
-  - estado : String
-  - hecho : String
-  - motivo : String
+' ==== REPOSITORIOS ====
+class HechoRepository {
+  - hechosPorClave : Map<String, Hecho>
+  - idGenerator : AtomicLong
+
+  + save(hecho : Hecho) : String
+  + saveAll(hechosLista : List<Hecho>) : List<String>
+  + findById(id : String) : Optional<Hecho>
+  + findAll() : List<Hecho>
+  + delete(id : String) : void
+  + clear() : void
+  + findIgual(hecho : Hecho) : Optional<Hecho>
 }
 
 class ColeccionRepository {
@@ -107,19 +126,6 @@ class ColeccionRepository {
   + update(id : String, nuevaColeccion : Coleccion) : void
 }
 
-class HechoRepository {
-  - hechosPorClave : Map<String, Hecho>
-  - idGenerator : AtomicLong
-
-  + save(hecho : Hecho) : String
-  + saveAll(hechosLista : List<Hecho>) : List<String>
-  + findById(id : String) : Optional<Hecho>
-  + findAll() : List<Hecho>
-  + delete(id : String) : void
-  + clear() : void
-  + findIgual(hecho : Hecho) : Optional<Hecho>
-}
-
 class SolicitudRepository {
   - solicitudes : List<SolicitudEliminacion>
 
@@ -130,17 +136,7 @@ class SolicitudRepository {
   + delete(solicitud : SolicitudEliminacion) : void
 }
 
-class ConsensoScheduler {
-  - consensoService : ConsensoService
-  + ejecutarConsensoProgramado() : void
-}
-
-class FuenteScheduler {
-  - coleccionService : ColeccionService
-  - agregadorService : AgregadorService
-  + actualizarColecciones() : void
-}
-
+' ==== SERVICIOS ====
 class AgregadorService {
   - restTemplate : RestTemplate
   - hechoRepo : HechoRepository
@@ -170,32 +166,42 @@ class ColeccionService {
 class ConsensoService {
   - coleccionRepo : ColeccionRepository
   - fuenteConfig : FuenteConfig
-  + aplicarConsensoPorColeccion() : void
-}
 
-class FuenteProvider {
-  - urls : Map<FuenteNombre, String>
-  + getUrl(fuente : FuenteNombre) : String
-  + getTodasLasFuentes() : Set<FuenteNombre>
+  + aplicarConsensoPorColeccion() : void
 }
 
 class SolicitudService {
   - solicitudRepository : SolicitudRepository
   - spamDetector : ISpamDetector
+
   + crearSolicitud(solicitud : SolicitudEliminacion) : SolicitudEliminacion
   + procesarSolicitud(id : Long, accion : String) : SolicitudEliminacion
 }
 
-interface ISpamDetector {
-  + esSpam(message : String) : boolean
+class FuenteProvider {
+  - urls : Map<FuenteNombre, String>
+
+  + getUrl(fuente : FuenteNombre) : String
+  + getTodasLasFuentes() : Set<FuenteNombre>
 }
 
-class SpamDetector {
-  - vaguePhrases : List<String>
-  - emotionalWords : List<String>
-  + esSpam(message : String) : boolean
+' ==== CONSENSO ====
+interface IAlgoritmoConsenso {
+  + aplicar(hecho : Hecho, totalFuentes : int) : ConsensoNivel
+  + getNivelQueAplica() : ConsensoNivel
 }
 
+class AlgoritmoMayoriaSimple {
+  + aplicar(hecho : Hecho, totalFuentes : int) : ConsensoNivel
+  + getNivelQueAplica() : ConsensoNivel
+}
+
+class AlgoritmoMayoriaAbsoluta {
+  + aplicar(hecho : Hecho, totalFuentes : int) : ConsensoNivel
+  + getNivelQueAplica() : ConsensoNivel
+}
+
+' ==== FILTRADO ====
 interface ICriterioDePertenencia {
   + cumple(hecho : Hecho) : boolean
 }
@@ -221,77 +227,57 @@ class CriterioPorUbicacion {
   + cumple(hecho : Hecho) : boolean
 }
 
-interface IAlgoritmoConsenso {
-  + aplicar(hecho : Hecho, totalFuentes : int) : ConsensoNivel
-  + getNivelQueAplica() : ConsensoNivel
+' ==== SPAM DETECTOR ====
+interface ISpamDetector {
+  + esSpam(message : String) : boolean
 }
 
-class AlgoritmoMayoriaSimple {
-  + aplicar(hecho : Hecho, totalFuentes : int) : ConsensoNivel
-  + getNivelQueAplica() : ConsensoNivel
+class SpamDetector {
+  - vaguePhrases : List<String>
+  - emotionalWords : List<String>
+  + esSpam(message : String) : boolean
 }
 
-class AlgoritmoMayoriaAbsoluta {
-  + aplicar(hecho : Hecho, totalFuentes : int) : ConsensoNivel
-  + getNivelQueAplica() : ConsensoNivel
-}
+' ==== RELACIONES ====
 
-enum ConsensoNivel {
-  NINGUNO
-  MULTIPLES_MENCIONES
-  MAYORIA_SIMPLE
-  MAYORIA_ABSOLUTA
-}
+Coleccion --> "*" Hecho
+Coleccion --> "*" ICriterioDePertenencia
+Coleccion --> "*" FuenteNombre
+Coleccion --> IAlgoritmoConsenso
 
-enum EstadoSolicitud {
-  ACEPTADA
-  RECHAZADA
-  PENDIENTE
-}
-
-enum FuenteNombre {
-  ESTATICA
-  DINAMICA
-  PROXY
-}
-
-enum Origen {
-  CARGA_MANUAL
-  DATASET
-  CONTRIBUYENTE
-  API
-}
-
-class Categoria {
-  - nombre : String
-  + getNombre() : String
-}
-
-class Ubicacion {
-  - latitud : Double
-  - longitud : Double
-  + getLatitud() : Double
-  + getLongitud() : Double
-}
-
-Coleccion --> "*" ICriterioDePertenencia : criteriosDePertenencia
-Coleccion --> "*" FuenteNombre : fuentes
-Coleccion --> "*" Hecho : hechos
-Coleccion --> IAlgoritmoConsenso : algoritmo
 Hecho --> Categoria
 Hecho --> Ubicacion
+Hecho --> Origen
+Hecho --> ConsensoNivel
+
 SolicitudEliminacion --> Hecho
-HechoMapper --> Hecho
-HechoMapper --> HechoDTO
-ColeccionMapper --> Coleccion
-ColeccionMapper --> ColeccionDTO
+SolicitudEliminacion --> EstadoSolicitud
+
+SolicitudService --> SolicitudRepository
+SolicitudService --> ISpamDetector
 SpamDetector ..|> ISpamDetector
+
 CriterioFiltroTitulo ..|> ICriterioDePertenencia
 CriterioPorCategoria ..|> ICriterioDePertenencia
 CriterioPorFecha ..|> ICriterioDePertenencia
 CriterioPorUbicacion ..|> ICriterioDePertenencia
+
 AlgoritmoMayoriaSimple ..|> IAlgoritmoConsenso
 AlgoritmoMayoriaAbsoluta ..|> IAlgoritmoConsenso
 
+HechoRepository --> "*" Hecho
+ColeccionRepository --> "*" Coleccion
+SolicitudRepository --> "*" SolicitudEliminacion
+
+AgregadorService --> HechoRepository
+AgregadorService --> ColeccionRepository
+AgregadorService --> FuenteProvider
+
+ColeccionService --> ColeccionRepository
+ColeccionService --> HechoRepository
+
+ConsensoService --> ColeccionRepository
+
 }
+
 @enduml
