@@ -10,6 +10,7 @@ import org.springframework.web.client.RestTemplate;
 import utn.configs.FuenteConfig;
 import utn.models.domain.Coleccion;
 import utn.models.domain.Hecho;
+import utn.models.dtos.ColeccionMapper;
 import utn.models.dtos.HechoDTO;
 import utn.models.dtos.HechoMapper;
 import utn.models.helpers.FuenteNombre;
@@ -80,6 +81,9 @@ public class AgregadorService {
         }
 
         hechoRepo.saveAll(nuevosHechos);
+
+        // le paso al publisher los nuevos hechos en formato DTO
+        publisherService.enviarHechos(nuevosHechos.stream().map(HechoMapper::aDTO).toList());
     }
 
     private void asignarHechosAColecciones() {

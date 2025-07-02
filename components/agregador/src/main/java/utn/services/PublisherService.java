@@ -1,6 +1,7 @@
 package utn.services;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import utn.models.dtos.HechoDTO;
 
@@ -8,6 +9,7 @@ import java.util.List;
 
 @Service
 public class PublisherService {
+	@Autowired
 	private final RabbitTemplate rabbitTemplate;
 
 	public PublisherService(RabbitTemplate rabbitTemplate) {

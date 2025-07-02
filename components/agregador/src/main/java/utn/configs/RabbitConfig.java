@@ -1,8 +1,11 @@
 package utn.configs;
 
 
+import jakarta.annotation.PostConstruct;
 import org.springframework.amqp.core.*;
+import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +18,27 @@ public class RabbitConfig {
 
 	@Value("${app.instancia-id}")
 	private String instanciaId;
+
+	@Autowired
+	private RabbitAdmin rabbitAdmin;
+
+	@Autowired
+	private Queue miCola;
+
+	@Autowired
+	private FanoutExchange miExchange;
+
+	@Autowired
+	private Binding binding;
+
+	@PostConstruct
+	public void init() {
+		System.out.println("Declarando cola y exchange desde @PostConstruct...");
+		rabbitAdmin.declareQueue(miCola);
+		rabbitAdmin.declareExchange(miExchange);
+		rabbitAdmin.declareBinding(binding);
+	}
+
 
 	@Bean
 	public Jackson2JsonMessageConverter jsonMessageConverter() {
@@ -42,4 +66,18 @@ public class RabbitConfig {
 	public Binding binding(Queue miCola, FanoutExchange miExchange) {
 		return BindingBuilder.bind(miCola).to(miExchange);
 	}
+
+	@Bean
+	public RabbitAdmin rabbitAdmin(ConnectionFactory connectionFactory) {
+		RabbitAdmin admin = new RabbitAdmin(connectionFactory);
+		admin.setAutoStartup(true);  // Asegura que declare los beans declarables
+		return admin;
+	}
+
+	@PostConstruct
+	public void checkAdmin() {
+		System.out.println(">> RabbitAdmin registrado");
+	}
+
+
 }
