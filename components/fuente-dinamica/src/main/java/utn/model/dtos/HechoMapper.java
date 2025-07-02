@@ -7,11 +7,12 @@ import utn.model.helpers.Origen;
 import utn.model.helpers.Ubicacion;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 public class HechoMapper {
 
-    // Dominio → DTO (para API)
+    // Dominio → DTO
     public static HechoDTO aDTO(Hecho hecho) {
         return HechoDTO.builder()
                 .titulo(hecho.getTitulo())
@@ -26,12 +27,10 @@ public class HechoMapper {
                         .map(Ubicacion::getLongitud)
                         .orElse(0.0))
                 .fecha_hecho(Optional.ofNullable(hecho.getFecha())
-                        .map(fecha -> fecha.atStartOfDay())  // LocalDate → LocalDateTime a inicio de día
+                        .map(LocalDate::atStartOfDay)
                         .orElse(null))
-                .created_at(Optional.ofNullable(hecho.getFechaDeCarga())
-                        .map(fecha -> fecha.atStartOfDay())
-                        .orElse(null))
-                .updated_at(null) // No está en dominio, asignar si se tiene info
+                .created_at(hecho.getFechaDeCarga()) // ya es LocalDateTime
+                .updated_at(null) // actualizar si fuera necesario
                 .archivoContenido(hecho.getMultimediaArchivo())
                 .archivoNombre(hecho.getMultimediaNombre())
                 .build();
@@ -48,9 +47,12 @@ public class HechoMapper {
 
         Ubicacion ubicacion = new Ubicacion(dto.getLatitud(), dto.getLongitud());
 
-        // Convertir LocalDateTime a LocalDate (tomamos sólo la fecha)
         LocalDate fecha = dto.getFecha_hecho() != null ? dto.getFecha_hecho().toLocalDate() : null;
-        LocalDate fechaDeCarga = dto.getCreated_at() != null ? dto.getCreated_at().toLocalDate() : LocalDate.now();
+
+        // Usar la fecha de creación si viene, o asignar fecha actual con hora
+        LocalDateTime fechaDeCarga = dto.getCreated_at() != null
+                ? dto.getCreated_at()
+                : LocalDateTime.now();
 
         Hecho hecho = new Hecho(dto.getTitulo(),
                 dto.getDescripcion(),
@@ -59,9 +61,11 @@ public class HechoMapper {
                 fecha,
                 fechaDeCarga,
                 Origen.API);
+
         hecho.setMultimediaArchivo(dto.getArchivoContenido());
         hecho.setMultimediaNombre(dto.getArchivoNombre());
         hecho.setUsuarioId(dto.getUsuarioId());
+
         return hecho;
     }
 }

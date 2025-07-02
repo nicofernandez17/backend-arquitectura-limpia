@@ -8,10 +8,11 @@ import utn.model.HechoDTO;
 import utn.model.HechosResponseDTO;
 import utn.repositories.IHechoRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-public class MetaMapaService implements IFuenteService {
+public class MetaMapaService  {
     //TODO
     private final WebClient webClient;
     private final IHechoRepository hechosRepository;
@@ -33,8 +34,10 @@ public class MetaMapaService implements IFuenteService {
     }
 
     public void guardarHechosEnRepositorio(List<HechoDTO> hechos) {
+        LocalDateTime ahora = LocalDateTime.now();
         for (HechoDTO hecho : hechos) {
-            hechosRepository.save(hecho);  // Guardar cada HechoDTO en el repositorio
+            hecho.setCreated_at(ahora);  // Setea la fecha actual
+            hechosRepository.save(hecho);  // Guarda el hecho en el repositorio
         }
     }
 }

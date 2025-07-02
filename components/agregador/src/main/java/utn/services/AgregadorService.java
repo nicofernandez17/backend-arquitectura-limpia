@@ -71,7 +71,7 @@ public class AgregadorService {
                 }
             }
         }
-
+        System.out.println(nuevosHechos.size());
         hechoRepo.saveAll(nuevosHechos);
     }
 
@@ -109,5 +109,5 @@ public class AgregadorService {
     }
 
 
-    
+
 }
