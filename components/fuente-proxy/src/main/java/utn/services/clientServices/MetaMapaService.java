@@ -37,4 +37,10 @@ public class MetaMapaService implements IFuenteService {
             hechosRepository.save(hecho);  // Guardar cada HechoDTO en el repositorio
         }
     }
+
+    // Funcion que procesa los hechos que llegan del webhook (agregador externo los pushea)
+    public void procesarHechos(List<HechoDTO> hechos) {
+        //TODO
+
+    }
 }
