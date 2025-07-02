@@ -16,6 +16,7 @@ import utn.models.dtos.HechoMapper;
 import utn.models.helpers.FuenteNombre;
 import utn.repositories.ColeccionRepository;
 import utn.repositories.HechoRepository;
+import utn.services.webhook.WebhookPublisher;
 
 import java.util.*;
 
@@ -30,13 +31,13 @@ public class AgregadorService {
     /* Esto hay que usarlo cuando entre nuevos hechos para que los publique a
     la cola a la que suscriben las fuentes proxys conectadas a esta instancia.
     Se usa con publisherService.enviarHechos(List<HechoDTO>)*/
-    private final PublisherService publisherService;
+    private final WebhookPublisher publisherService;
 
     public AgregadorService(RestTemplateBuilder builder,
                             HechoRepository hechoRepo,
                             ColeccionRepository coleccionRepo,
                             FuenteProvider fuenteProvider,
-                            PublisherService publisherService) {
+                            WebhookPublisher publisherService) {
         this.restTemplate = builder.build();
         this.hechoRepo = hechoRepo;
         this.coleccionRepo = coleccionRepo;
