@@ -20,6 +20,7 @@ public class WebhookPublisher {
 		for (String url : registryService.obtenerUrls()) {
 			try {
 				restTemplate.postForEntity(url, hechos, Void.class);
+				System.out.println("Hechos enviados a fuente: "+ url);
 			} catch (Exception e) {
 				System.err.println("Error enviando a " + url + ": " + e.getMessage());
 			}

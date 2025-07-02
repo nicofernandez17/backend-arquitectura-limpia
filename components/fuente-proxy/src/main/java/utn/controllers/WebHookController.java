@@ -22,6 +22,7 @@ public class WebHookController {
 	@PostMapping("/hechos")
 	public ResponseEntity<Void> recibirHechos(@RequestBody List<HechoDTO> hechos) {
 		metaMapaService.procesarHechos(hechos);
+		System.out.println("Hechos recibidos desde instancia de metamapa");
 		return ResponseEntity.ok().build();
 	}
 }
