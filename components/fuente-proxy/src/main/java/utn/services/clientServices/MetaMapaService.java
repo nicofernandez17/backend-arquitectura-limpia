@@ -1,6 +1,7 @@
 package utn.services.clientServices;
 
 import org.reactivestreams.Publisher;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
@@ -38,9 +39,13 @@ public class MetaMapaService implements IFuenteService {
         }
     }
 
+<<<<<<< HEAD
     // Funcion que procesa los hechos que llegan del webhook (agregador externo los pushea)
     public void procesarHechos(List<HechoDTO> hechos) {
         //TODO
 
     }
+=======
+
+>>>>>>> 10ee9b801149335f35485c38ff75a74902588ac7
 }

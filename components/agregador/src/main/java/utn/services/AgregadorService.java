@@ -10,6 +10,7 @@ import org.springframework.web.client.RestTemplate;
 import utn.configs.FuenteConfig;
 import utn.models.domain.Coleccion;
 import utn.models.domain.Hecho;
+import utn.models.dtos.ColeccionMapper;
 import utn.models.dtos.HechoDTO;
 import utn.models.dtos.HechoMapper;
 import utn.models.helpers.FuenteNombre;
@@ -26,14 +27,21 @@ public class AgregadorService {
     private final ColeccionRepository coleccionRepo;
     private final FuenteProvider fuenteProvider;
 
+    /* Esto hay que usarlo cuando entre nuevos hechos para que los publique a
+    la cola a la que suscriben las fuentes proxys conectadas a esta instancia.
+    Se usa con publisherService.enviarHechos(List<HechoDTO>)*/
+    private final PublisherService publisherService;
+
     public AgregadorService(RestTemplateBuilder builder,
                             HechoRepository hechoRepo,
                             ColeccionRepository coleccionRepo,
-                            FuenteProvider fuenteProvider) {
+                            FuenteProvider fuenteProvider,
+                            PublisherService publisherService) {
         this.restTemplate = builder.build();
         this.hechoRepo = hechoRepo;
         this.coleccionRepo = coleccionRepo;
         this.fuenteProvider = fuenteProvider;
+        this.publisherService = publisherService;
     }
 
     public void cargarHechosYAsignar() {
@@ -73,6 +81,9 @@ public class AgregadorService {
         }
 
         hechoRepo.saveAll(nuevosHechos);
+
+        // le paso al publisher los nuevos hechos en formato DTO
+        publisherService.enviarHechos(nuevosHechos.stream().map(HechoMapper::aDTO).toList());
     }
 
     private void asignarHechosAColecciones() {

@@ -20,6 +20,8 @@ public class ProxyService {
     private final DDSService ddsService;
     private final MetaMapaService metaMapaService;
     private final IHechoRepository hechosRepository;
+
+    // De momento sin implementar, se sigue usando lo de arriba
     private final List<IFuenteService> apisExternas;
 
     public ProxyService(DDSService ddsService,
