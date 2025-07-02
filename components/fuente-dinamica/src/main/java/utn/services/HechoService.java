@@ -9,6 +9,7 @@ import utn.model.dtos.HechoMapper;
 import utn.repositories.HechoRepository;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,6 +33,15 @@ public class HechoService {
     // Obtiene un hecho por id
     public Optional<Hecho> obtenerPorId(String id) {
         return hechosRepository.findById(id);
+    }
+
+    public List<HechoDTO> obtenerDesdeFecha(LocalDateTime desde) {
+        LocalDateTime fecha = desde != null ? desde : LocalDateTime.of(2000, 1, 1, 0, 0);
+
+        return hechosRepository.findAll().stream()
+                .filter(h -> h.getFechaDeCarga() != null && h.getFechaDeCarga().isAfter(fecha))
+                .map(HechoMapper::aDTO)
+                .toList();
     }
 
     // Registra un nuevo hecho en el repositorio

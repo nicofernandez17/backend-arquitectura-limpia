@@ -1,0 +1,736 @@
+@startuml
+' ==== FUENTE DINAMICA ====
+Package "FUENTE DINAMICA"{
+class HechoUIController {
+    - hechosUIService: HechoService
+    - revisionService: RevisionService
+
+    + HechoUIController(hechosUIService: HechoService)
+    + registrarHecho(titulo: String, descripcion: String, categoria: String, latitud: double, longitud: double, fechaHecho: LocalDateTime, archivo: MultipartFile): ResponseEntity<String>
+    + actualizarHecho(id: String, titulo: String, descripcion: String, categoria: String, latitud: double, longitud: double, fechaHecho: LocalDateTime, archivo: MultipartFile): ResponseEntity<Revision>
+    + descargarArchivo(id: String): ResponseEntity<byte[]>
+}
+
+class HechoDTO {
+    - titulo: String
+    - descripcion: String
+    - categoria: String
+    - latitud: double
+    - longitud: double
+    - fecha_hecho: LocalDateTime
+    - created_at: LocalDateTime
+    - updated_at: LocalDateTime
+    - archivo: MultipartFile
+    - archivoContenido: byte[]
+    - archivoNombre: String
+    - usuarioId: String
+
+    + builder(): HechoDTOBuilder
+}
+class Hecho{
+    -id: String
+    -titulo: String
+    -categoria: Categoria
+    -ubicacion: Ubicacion
+    -fecha: LocalDate
+    -fechaDeCarga: LocalDate
+    -multimediaArchivo: byte[]
+    -multimediaNombre: String
+    -origen: Origen
+    -etiquetas: List<String>
+    -eliminados: boolean
+    -usuarioId: String
+
+    +agregarEtiqueta(etiqueta: String):void
+    +getEtiquetas():List<String>
+    +marcarComoEliminado():void
+    +puedeAgregarseacoleccion():boolean
+}
+class Revision{
+    -id: Long;
+    -idHecho: String;
+    -contenidoPropuesto: HechoDTO;
+    -comentarioModerador: String;
+    -estado: EstadoRevision;
+    -fechaRevision: LocalDateTime;
+}
+
+class HechoService {
+    - hechosRepository: HechoRepository
+
+    + HechoService(hechosRepository: HechoRepository)
+    + obtenerTodos(): List<Hecho>
+    + obtenerPorId(id: String): Optional<Hecho>
+    + registrarHecho(hechoDTO: HechoDTO): String
+    + actualizarHecho(id: String, hechoDTO: HechoDTO): String
+}
+class RevisionRepository <<Repository>> {
+    -Map<Long, Revision> revisiones
+    -AtomicLong idGenerator
+
+    +save(revision: Revision): Revision
+    +findById(id: Long): Revision
+    +findByEstado(estado: EstadoRevision): List<Revision>
+    +findAll(): List<Revision>
+    +deleteById(id: Long): void
+    +clear(): void
+}
+
+class HechoRepository <<Repository>> {
+    -Map<String, Hecho> hechos
+    -AtomicLong idGenerator
+
+    +save(hecho: Hecho): String
+    +saveAll(hechosLista: List<Hecho>): List<String>
+    +update(id: String, hechoActualizado: Hecho): String
+    +findById(id: String): Optional<Hecho>
+    +findAll(): List<Hecho>
+    +delete(id: String): void
+    +clear(): void
+}
+
+class RevisionService <<Service>> {
+    -hechoService: HechoService
+    -revisionRepository: RevisionRepository
+
+    +crearRevision(hechoDTO: HechoDTO, id: String): Revision
+    +procesarRevision(revisionId: Long, request: RevisionProcesarDTO): void
+    +aceptarRevision(revisionId: Long): void
+    +rechazarRevision(revisionId: Long, comentario: String): void
+}
+
+class HechoMapper {
+    +aDTO(hecho: Hecho): HechoDTO
+    +aDominio(dto: HechoDTO): Hecho
+}
+
+enum EstadoRevision {
+    ACEPTADA
+    PENDIENTE
+    RECHAZADA
+}
+
+enum EstadoSolicitud {
+    ACEPTADA
+    RECHAZADA
+    PENDIENTE
+}
+
+enum Origen {
+    CARGA_MANUAL
+    DATASET
+    CONTRIBUYENTE
+    API
+}
+
+class Categoria {
+    -String nombre
+    +Categoria(nombre: String)
+    +getNombre(): String
+}
+
+class Ubicacion {
+    -Double latitud
+    -Double longitud
+    +Ubicacion(latitud: Double, longitud: Double)
+    +getLatitud(): Double
+    +getLongitud(): Double
+}
+class RevisionProcesarDTO {
+  - aceptado : boolean
+  - comentario : String
+}
+
+class SolicitudDTO{
+}
+' ==== Relaciones ====
+
+' ==== REVISION ====
+RevisionService --> HechoService
+RevisionService --> RevisionRepository
+RevisionService --> HechoDTO
+RevisionService --> RevisionProcesarDTO
+RevisionRepository --> Revision : utiliza
+RevisionRepository --> EstadoRevision : filtra por
+RevisionRepository --> Revision : utiliza
+RevisionRepository --> EstadoRevision : utiliza
+Revision --> HechoDTO
+Revision --> EstadoRevision
+
+' ==== HECHOS ====
+HechoUIController --> HechoService : usa
+HechoUIController --> RevisionService : usa
+HechoUIController --> HechoDTO : construye
+HechoUIController --> Revision : retorna
+HechoUIController --> Hecho : accede
+HechoRepository --> Hecho : utiliza
+HechoService --> HechoRepository : usa
+HechoService --> HechoDTO : usa
+HechoService --> Hecho : retorna/guarda
+HechoService --> HechoMapper : transforma
+HechoMapper --> Hecho
+HechoMapper --> HechoDTO
+HechoMapper --> Categoria
+HechoMapper --> Ubicacion
+HechoMapper --> Origen
+
+Hecho --> Categoria
+Hecho --> Ubicacion
+Hecho --> Origen
+Hecho --> LocalDate
+Hecho --> LocalDate
+}
+
+
+' ==== AGREGADOR ====
+package Agregador{
+  class Coleccion {
+    - id : String
+    - hechos : List<Hecho>
+    - algoritmo : IAlgoritmoConsenso
+    - titulo : String
+    - descripcion : String
+    - criteriosDePertenencia : List<ICriterioDePertenencia>
+    - fuentes : List<FuenteNombre>
+
+    + agregarHecho(hecho : Hecho) : void
+    + actualizarHechos(hechos : List<Hecho>) : void
+    + getHechos() : List<Hecho>
+    + getHechosFiltradosPorConsenso() : List<Hecho>
+    + agregarHechos(hechos : List<Hecho>) : void
+  }
+  class Hecho {
+    - id : String
+    - consensoNivel : ConsensoNivel = ConsensoNivel.NINGUNO
+    - descripcion : String {readOnly}
+    - titulo : String
+    - categoria : Categoria
+    - ubicacion : Ubicacion
+    - fecha : LocalDate
+    - fechaDeCarga : LocalDate
+    - multimediaArchivo : byte[]
+    - multimediaNombre : String
+    - origen : Origen
+    - etiquetas : List<String> {readOnly}
+    - eliminado : boolean
+    - fuentes : Set<FuenteNombre> {readOnly}
+
+    + Hecho(descripcionDelHecho : String)
+    + Hecho(titulo : String, descripcion : String, categoria : Categoria, ubicacion : Ubicacion,
+            fecha : LocalDate, fechaDeCarga : LocalDate, origen : Origen)
+    + Hecho(titulo : String, descripcion : String, categoria : Categoria, ubicacion : Ubicacion,
+            fecha : LocalDate, fechaDeCarga : LocalDate, origen : Origen, etiquetas : List<String>)
+    + agregarEtiqueta(etiqueta : String) : void
+    + getEtiquetas() : List<String>
+    + marcarComoEliminado() : void
+    + puedeAgregarseAColeccion() : boolean
+    + agregarFuente(fuente : FuenteNombre) : void
+    + agregarFuentes(nuevasFuentes : Set<FuenteNombre>) : void
+    + getFuentes() : Set<FuenteNombre>
+  }
+  class SolicitudEliminacion {
+    - id : Long
+    - fechaCreacion : LocalDateTime {readOnly}
+    - estado : EstadoSolicitud
+    - hecho : Hecho {readOnly}
+    - motivo : String {readOnly}
+
+    + SolicitudEliminacion(hecho : Hecho, motivo : String)
+    + aceptar() : void
+    + rechazar() : void
+  }
+  class ColeccionDTO {
+    - id : String
+    - titulo : String
+    - descripcion : String
+    - hechos : List<HechoDTO>
+  }
+  class ColeccionMapper {
+      + toDTO(coleccion : Coleccion) : ColeccionDTO
+  }
+
+  class HechoDTO {
+    - id : String
+    - titulo : String
+    - descripcion : String
+    - categoria : String
+    - latitud : double
+    - longitud : double
+    - fecha_hecho : LocalDateTime
+    - created_at : LocalDateTime
+    - updated_at : LocalDateTime
+    - archivoContenido : byte[]
+    - archivoNombre : String
+  }
+  class HechoMapper {
+    + aDTO(hecho : Hecho) : HechoDTO
+    + aDominio(dto : HechoDTO) : Hecho
+  }
+  class SolicitudDTO {
+    - fechaCreacion : LocalDateTime
+    - estado : String
+    - hecho : String
+    - motivo : String {readOnly}
+  }
+  class Categoria {
+    - nombre : String {readOnly}
+    + Categoria(categoriaNombre : String)
+    + getNombre() : String
+  }
+  enum ConsensoNivel {
+      NINGUNO = 0
+      MULTIPLES_MENCIONES = 1
+      MAYORIA_SIMPLE = 2
+      MAYORIA_ABSOLUTA = 3
+
+      - prioridad : int
+      + getPrioridad() : int
+      + max(a : ConsensoNivel, b : ConsensoNivel) : ConsensoNivel
+   }
+   enum EstadoSolicitud {
+       ACEPTADA
+       RECHAZADA
+       PENDIENTE
+   }
+  enum FuenteNombre {
+    ESTATICA
+    DINAMICA
+    PROXY
+  }
+  class HechoClaveUtils {
+      + generarClaveLogica(h : Hecho) : String
+      - normalizar(s : String) : String
+  }
+  enum Origen {
+    CARGA_MANUAL
+    DATASET
+    CONTRIBUYENTE
+    API
+}
+  class Ubicacion {
+    - latitud : Double {readOnly}
+    - longitud : Double {readOnly}
+
+    + Ubicacion(latitud : Double, longitud : Double)
+    + clave() : String
+    + getLongitud() : Double
+    + getLatitud() : Double
+  }
+    class ColeccionRepository {
+      - colecciones : Map<String, Coleccion>
+      - idGenerator : AtomicLong
+
+      + save(coleccion : Coleccion) : String
+      + saveAll(coleccionesNuevas : List<Coleccion>) : List<String>
+      + findById(id : String) : Optional<Coleccion>
+      + findAll() : List<Coleccion>
+      + existsById(id : String) : boolean
+      + delete(id : String) : void
+      + deleteAll() : void
+      + count() : long
+      + update(id : String, nuevaColeccion : Coleccion) : void
+    }
+  class HechoRepository {
+    - hechosPorClave : Map<String, Hecho>
+    - idGenerator : AtomicLong
+
+    + save(hecho : Hecho) : String
+    + saveAll(hechosLista : List<Hecho>) : List<String>
+    + findById(id : String) : Optional<Hecho>
+    + findAll() : List<Hecho>
+    + delete(id : String) : void
+    + clear() : void
+    + findIgual(hecho : Hecho) : Optional<Hecho>
+  }
+  class SolicitudRepository {
+    - solicitudes : List<SolicitudEliminacion>
+
+    + save(solicitud : SolicitudEliminacion) : void
+    + findAll() : List<SolicitudEliminacion>
+    + findByFact(hecho : Hecho) : Optional<SolicitudEliminacion>
+    + findById(id : Long) : Optional<SolicitudEliminacion>
+    + delete(solicitud : SolicitudEliminacion) : void
+  }
+  class ConsensoScheduler {
+    - consensoService : ConsensoService
+
+    + ConsensoScheduler(consensoService : ConsensoService)
+    + ejecutarConsensoProgramado() : void
+  }
+  class FuenteScheduler {
+    - coleccionService : ColeccionService
+    - agregadorService : AgregadorService
+
+    + FuenteScheduler(coleccionService : ColeccionService, agregadorService : AgregadorService)
+    + actualizarColecciones() : void
+  }
+  class SpamDetector {
+    - vaguePhrases : List<String>
+    - emotionalWords : List<String>
+
+    + esSpam(message : String) : boolean
+  }
+
+  interface ISpamDetector {
+    + esSpam(message : String) : boolean
+  }
+
+  class AgregadorService {
+    - restTemplate : RestTemplate
+    - hechoRepo : HechoRepository
+    - coleccionRepo : ColeccionRepository
+    - fuenteProvider : FuenteProvider
+
+    + AgregadorService(builder : RestTemplateBuilder, hechoRepo : HechoRepository, coleccionRepo : ColeccionRepository, fuenteProvider : FuenteProvider)
+    + cargarHechosYAsignar() : void
+    - consolidarHechosDesdeFuentes() : void
+    - asignarHechosAColecciones() : void
+    - obtenerHechosDesdeUrl(url : String) : List<HechoDTO>
+  }
+  class ColeccionService {
+    - coleccionRepository : ColeccionRepository
+    - hechoRepository : HechoRepository
+
+    + ColeccionService(coleccionRepository : ColeccionRepository, hechoRepository : HechoRepository)
+    + crearColeccion(titulo : String, descripcion : String) : void
+    + obtenerColecciones() : List<Coleccion>
+    + obtenerColeccionPorId(id : String) : Optional<Coleccion>
+    + obtenerHechosPorColeccion(idColeccion : String) : List<Hecho>
+    + obtenerHechosIrrestricto(id : String) : List<Hecho>
+    + obtenerHechosCurado(id : String) : List<Hecho>
+    + actualizarColecciones() : void
+    + actualizarColeccion(id : String, nuevoTitulo : String, nuevaDescripcion : String) : void
+    + agregarHechos(hechosDTO : List<HechoDTO>) : void
+    + eliminarColeccion(id : String) : void
+    + eliminarTodos() : void
+  }
+  class ConsensoService {
+    - coleccionRepo : ColeccionRepository
+    - fuenteConfig : FuenteConfig
+
+    + ConsensoService(coleccionRepo : ColeccionRepository, fuenteConfig : FuenteConfig)
+    + aplicarConsensoPorColeccion() : void
+  }
+  class FuenteProvider {
+    - urls : Map<FuenteNombre, String>
+
+    + FuenteProvider()
+    + getUrl(fuente : FuenteNombre) : String
+    + getTodasLasFuentes() : Set<FuenteNombre>
+  }
+  class SolicitudService {
+    - solicitudRepository : SolicitudRepository
+    - spamDetector : ISpamDetector
+
+    + SolicitudService(solicitudRepository : SolicitudRepository, spamDetector : ISpamDetector)
+    + crearSolicitud(solicitud : SolicitudEliminacion) : SolicitudEliminacion
+    + procesarSolicitud(id : Long, accion : String) : SolicitudEliminacion
+  }
+
+  interface ISpamDetector {
+    + esSpam(message : String) : boolean
+  }
+
+  class SolicitudRepository {
+    + save(solicitud : SolicitudEliminacion) : void
+    + findById(id : Long) : Optional<SolicitudEliminacion>
+  }
+
+  SolicitudService --> SolicitudRepository
+  SolicitudService ..|> ISpamDetector
+  interface ICriterioDePertenencia {
+    + cumple(hecho : utn.models.domain.Hecho) : boolean
+  }
+
+  class CriterioFiltroTitulo {
+    - texto : String
+    + CriterioFiltroTitulo(texto : String)
+    + cumple(hecho : utn.models.domain.Hecho) : boolean
+    + getTexto() : String
+    + setTexto(texto : String) : void
+  }
+
+
+
+  class CriterioPorCategoria {
+    - categoria : utn.models.helpers.Categoria
+    + CriterioPorCategoria(categoria : utn.models.helpers.Categoria)
+    + cumple(hecho : utn.models.domain.Hecho) : boolean
+  }
+  CriterioPorCategoria ..|> ICriterioDePertenencia
+  class CriterioPorFecha {
+    - desde : LocalDate
+    - hasta : LocalDate
+    + CriterioPorFecha(desde : LocalDate, hasta : LocalDate)
+    + cumple(hecho : utn.models.domain.Hecho) : boolean
+  }
+
+  class CriterioPorUbicacion {
+    - ubicacion : utn.models.helpers.Ubicacion
+    + CriterioPorUbicacion(ubicacion : utn.models.helpers.Ubicacion)
+    + cumple(hecho : utn.models.domain.Hecho) : boolean
+  }
+
+  class AlgoritmoMayoriaAbsoluta {
+    + aplicar(hecho : utn.models.domain.Hecho, totalFuentes : int) : utn.models.helpers.ConsensoNivel
+    + getNivelQueAplica() : utn.models.helpers.ConsensoNivel
+  }
+  interface IAlgoritmoConsenso {
+      + aplicar(hecho : utn.models.domain.Hecho, totalFuentes : int) : utn.models.helpers.ConsensoNivel
+      + getNivelQueAplica() : utn.models.helpers.ConsensoNivel
+    }
+
+  class AlgoritmoMayoriaSimple {
+     + aplicar(hecho : utn.models.domain.Hecho, totalFuentes : int) : utn.models.helpers.ConsensoNivel
+     + getNivelQueAplica() : utn.models.helpers.ConsensoNivel
+      }
+
+  class AlgoritmoMayoriaAbsoluta {
+    + aplicar(hecho : utn.models.domain.Hecho, totalFuentes : int) : utn.models.helpers.ConsensoNivel
+    + getNivelQueAplica() : utn.models.helpers.ConsensoNivel
+    }
+class ColeccionController {
+  + obtenerColecciones() : List<ColeccionDTO>
+  + obtenerHechosPorColeccion(identificador : String, modo : String) : List<HechoDTO>
+  + inicializarColecciones() : ResponseEntity<Void>
+  + recibirHechosDesdeProxy(hechos : List<HechoDTO>) : ResponseEntity<String>
+  + crearColeccion(coleccion : ColeccionDTO) : ResponseEntity<String>
+}
+class HechosController {
+  + obtenerTodosLosHechos(...) : List<HechoDTO>
+}
+class SolicitudController {
+  + crearSolicitud(solicitud : SolicitudEliminacion) : ResponseEntity<SolicitudEliminacion>
+}
+class ColeccionAdminController {
+  + crear(titulo : String, descripcion : String) : ResponseEntity<String>
+  + obtenerTodas() : ResponseEntity<List<Coleccion>>
+  + obtenerPorId(id : String) : ResponseEntity<Coleccion>
+  + obtenerHechosPorColeccion(id : String) : ResponseEntity<List<Hecho>>
+  + actualizar(id : String, nuevoTitulo : String, nuevaDescripcion : String) : ResponseEntity<String>
+  + eliminarPorId(id : String) : ResponseEntity<String>
+  + eliminarTodas() : ResponseEntity<String>
+  + modificarFuente(id : String, fuente : FuenteNombre, operacion : String) : ResponseEntity<String>
+}
+class HechoAdminController {
+  + obtenerTodos() : List<HechoDTO>
+  - coincideTitulo(tituloHecho : String, filtro : String) : boolean
+}
+class SolicitudAdminController {
+  + procesarSolicitud(id : Long, accion : String) : ResponseEntity<SolicitudEliminacion>
+}
+class ColeccionController {
+  + obtenerColecciones() : List<ColeccionDTO>
+  + obtenerHechosPorColeccion(identificador : String, modo : String) : List<HechoDTO>
+  + inicializarColecciones() : ResponseEntity<Void>
+  + recibirHechosDesdeProxy(hechos : List<HechoDTO>) : ResponseEntity<String>
+  + crearColeccion(coleccion : ColeccionDTO) : ResponseEntity<String>
+}
+class HechosController {
+  + obtenerTodosLosHechos(
+      categoria : String,
+      fecha_acontecimiento_desde : LocalDate,
+      fecha_acontecimiento_hasta : LocalDate,
+      latitud : Double,
+      longitud : Double,
+      titulo : String
+    ) : List<HechoDTO>
+}
+class SolicitudController {
+  + crearSolicitud(solicitud : SolicitudEliminacion) : ResponseEntity<SolicitudEliminacion>
+}
+
+   ' ==== RELACIONES ====
+
+  AlgoritmoMayoriaSimple ..|> IAlgoritmoConsenso
+  AlgoritmoMayoriaAbsoluta ..|> IAlgoritmoConsenso
+  CriterioPorUbicacion ..|> ICriterioDePertenencia
+  CriterioFiltroTitulo ..|> ICriterioDePertenencia
+  CriterioPorFecha ..|> ICriterioDePertenencia
+  SpamDetector ..|> ISpamDetector
+  Coleccion --> "*" ICriterioDePertenencia : criteriosDePertenencia
+  Coleccion --> "*" FuenteNombre : fuentes
+  Coleccion --> "*" Hecho : hechos
+  Coleccion --> IAlgoritmoConsenso : algoritmo
+  Hecho --> Categoria : categoria
+  Hecho --> Ubicacion : ubicacion
+  SolicitudEliminacion --> Hecho : hecho
+  HechoMapper --> Hecho
+  HechoMapper --> HechoDTO
+  ColeccionMapper --> Coleccion
+  ColeccionMapper --> ColeccionDTO
+  AgregadorService --> FuenteProvider
+  ConsensoService --> FuenteConfig
+  SolicitudService ..> Hecho
+  ColeccionController --> ColeccionService
+  ColeccionController --> ColeccionSeeder
+  ColeccionController ..> ColeccionMapper
+  ColeccionController ..> HechoMapper
+  HechosController --> ColeccionService
+  HechosController ..> ICriterioDePertenencia
+  HechosController ..> CriterioPorCategoria
+  HechosController ..> CriterioPorFecha
+  HechosController ..> CriterioPorUbicacion
+  HechosController ..> CriterioFiltroTitulo
+  HechosController ..> Categoria
+  HechosController ..> Ubicacion
+  HechosController ..> HechoMapper
+  SolicitudController --> SolicitudService
+  SolicitudController ..> SolicitudEliminacion
+  ColeccionAdminController --> ColeccionService
+  ColeccionAdminController ..> Coleccion
+  ColeccionAdminController ..> Hecho
+  ColeccionAdminController ..> FuenteNombre
+  HechoAdminController --> HechoRepository
+  HechoAdminController ..> HechoDTO
+  HechoAdminController ..> HechoMapper
+  SolicitudAdminController --> SolicitudService
+  SolicitudAdminController ..> SolicitudEliminacion
+  ColeccionController --> ColeccionService
+  ColeccionController --> ColeccionSeeder
+  ColeccionController ..> ColeccionDTO
+  ColeccionController ..> Coleccion
+  ColeccionController ..> HechoDTO
+  ColeccionController ..> Hecho
+  ColeccionController ..> ColeccionMapper
+  ColeccionController ..> HechoMapper
+  HechosController --> ColeccionService
+  HechosController ..> ICriterioDePertenencia
+  HechosController ..> CriterioPorCategoria
+  HechosController ..> CriterioPorFecha
+  HechosController ..> CriterioPorUbicacion
+  HechosController ..> CriterioFiltroTitulo
+  HechosController ..> Categoria
+  HechosController ..> Ubicacion
+  HechosController ..> HechoDTO
+  HechosController ..> HechoMapper
+  SolicitudController --> SolicitudService
+  SolicitudController ..> SolicitudEliminacion
+  SolicitudController ..> ResponseEntity
+  }
+' ==== FUENTE ESTATICA ====
+Package Fuente_Estatica{
+    class HechosController {
+      + obtenerTodosLosHechos() : List<HechoDTO>
+    }
+    class AdapterLectorCsv {
+      - reader : CSVReader
+      + leer(rutaArchivo : String) : List<HechoDTO>
+      - crearHechoDesdeLinea(linea : String[]) : HechoDTO
+      - buscarHechoPorTitulo(hechos : List<HechoDTO>, titulo : String) : int
+    }
+    interface Lector {
+      + leer(ruta : String) : List<HechoDTO>
+    }
+    class HechoDTO {
+      - titulo : String
+      - descripcion : String
+      - categoria : String
+      - latitud : double
+      - longitud : double
+      - fecha_hecho : LocalDateTime
+      - created_at : LocalDateTime
+      - updated_at : LocalDateTime
+      - archivoContenido : byte[]
+      - archivoNombre : String
+    }
+    interface IHechoRepository {
+      + findByTitulo(titulo : String) : Optional<HechoDTO>
+      + save(hecho : HechoDTO) : void
+      + findAll() : List<HechoDTO>
+    }
+
+    class HechosRepository {
+      - hechos : List<HechoDTO>
+      + findByTitulo(titulo : String) : Optional<HechoDTO>
+      + save(hecho : HechoDTO) : void
+      + findAll() : List<HechoDTO>
+    }
+    class HechosService {
+      - hechosRepository : IHechoRepository
+      - lectorCsv : Lector
+      + cargarDesdeCsv() : List<HechoDTO>
+      + obtenerTodos() : List<HechoDTO>
+    }
+    ' ==== RELACIONES ====
+    HechosController --> HechosService
+    HechosController ..> HechoDTO
+    AdapterLectorCsv ..|> Lector
+    AdapterLectorCsv ..> CSVReader
+    AdapterLectorCsv ..> HechoDTO
+    HechosRepository ..|> IHechoRepository
+    HechosRepository ..> HechoDTO
+    HechosService ..> IHechoRepository
+    HechosService ..> Lector
+}
+' ==== FUENTE PROXY ====
+Package Fuente_Proxy{
+class HechosController {
+  - proxyService : ProxyService
+  + getHechos() : Mono<List<HechoDTO>>
+}
+class HechoDTO {
+  - id : Long
+  - titulo : String
+  - descripcion : String
+  - categoria : String
+  - latitud : Double
+  - longitud : Double
+  - fecha_hecho : LocalDateTime
+  - created_at : LocalDateTime
+  - updated_at : LocalDateTime
+}
+class HechosResponseDTO {
+  - current_page : int
+  - data : List<HechoDTO>
+  + getHechos() : List<HechoDTO>
+}
+class HechosRepository {
+  - hechos : List<HechoDTO>
+  + findByTitulo(titulo : String) : Optional<HechoDTO>
+  + save(hecho : HechoDTO) : void
+  + findAll() : List<HechoDTO>
+}
+interface IHechoRepository {
+  + findByTitulo(titulo : String) : Optional<HechoDTO>
+  + save(hecho : HechoDTO) : void
+  + findAll() : List<HechoDTO>
+}
+class DDSService {
+  - webClient : WebClient
+  - hechosRepository : IHechoRepository
+  + getHechos() : Mono<List<HechoDTO>>
+  + guardarHechosEnRepositorio(hechos : List<HechoDTO>) : void
+}
+interface IFuenteService {
+  + getHechos() : Mono<List<HechoDTO>>
+  + guardarHechosEnRepositorio(hechos : List<HechoDTO>) : void
+}
+class MetaMapaService {
+  - webClient : WebClient
+  - hechosRepository : IHechoRepository
+  + getHechos() : Mono<List<HechoDTO>>
+  + guardarHechosEnRepositorio(hechos : List<HechoDTO>) : void
+}
+class ProxyService {
+  - ddsService : DDSService
+  - metaMapaService : MetaMapaService
+  - hechosRepository : IHechoRepository
+  + cargarYObtenerHechos() : Mono<List<HechoDTO>>
+}
+' ==== RELACIONES ====
+HechosController ..> ProxyService
+HechosController ..> HechoDTO
+HechosResponseDTO --> "0..*" HechoDTO : data
+HechosRepository "1" --> "*" HechoDTO : contiene
+HechosRepository ..|> IHechoRepository
+DDSService ..|> IFuenteService
+DDSService --> IHechoRepository : usa
+MetaMapaService ..|> IFuenteService
+MetaMapaService --> IHechoRepository : usa
+ProxyService --> DDSService : usa
+ProxyService --> MetaMapaService : usa
+ProxyService --> IHechoRepository : usa
+}
+
+@enduml

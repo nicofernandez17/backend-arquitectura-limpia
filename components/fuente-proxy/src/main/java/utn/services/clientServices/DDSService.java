@@ -8,6 +8,7 @@ import utn.model.HechosResponseDTO;
 import utn.model.HechoDTO;
 import utn.repositories.IHechoRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -36,8 +37,10 @@ public class DDSService implements IFuenteService {
     }
 
     public void guardarHechosEnRepositorio(List<HechoDTO> hechos) {
+        LocalDateTime ahora = LocalDateTime.now();
         for (HechoDTO hecho : hechos) {
-            hechosRepository.save(hecho);  // Guardar cada HechoDTO en el repositorio
+            hecho.setCreated_at(ahora);  // Setea la fecha actual
+            hechosRepository.save(hecho);  // Guarda el hecho en el repositorio
         }
     }
 

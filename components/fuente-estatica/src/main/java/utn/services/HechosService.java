@@ -8,6 +8,7 @@ import utn.model.lectores.AdapterLectorCsv;
 import utn.model.lectores.Lector;
 import utn.repositories.IHechoRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -38,4 +39,11 @@ public class HechosService {
     }
 
 
+    public List<HechoDTO> obtenerDesdeFecha(LocalDateTime desde) {
+        LocalDateTime fecha = desde != null ? desde : LocalDateTime.of(2000, 1, 1, 0, 0);
+
+        return hechosRepository.findAll().stream()
+                .filter(h -> h.getCreated_at() != null && h.getCreated_at().isAfter(fecha))
+                .toList();
+    }
 }

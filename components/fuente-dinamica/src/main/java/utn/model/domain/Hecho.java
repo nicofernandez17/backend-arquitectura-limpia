@@ -9,6 +9,7 @@ import utn.model.helpers.Ubicacion;
 
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -33,7 +34,7 @@ public class Hecho {
   @Getter
   private LocalDate fecha;
   @Getter
-  private LocalDate fechaDeCarga;
+  private LocalDateTime fechaDeCarga;
   @Getter
   @Setter
   private byte[] multimediaArchivo;
@@ -49,7 +50,7 @@ public class Hecho {
   private String usuarioId;
 
   public Hecho(String titulo, String descripcion, Categoria categoria, Ubicacion ubicacion,
-               LocalDate fecha, LocalDate fechaDeCarga, Origen origen) {
+               LocalDate fecha, LocalDateTime fechaDeCarga, Origen origen) {
     this.titulo = titulo;
     this.descripcion = descripcion;
     this.categoria = categoria;
@@ -62,7 +63,7 @@ public class Hecho {
   }
 
   public Hecho(String titulo, String descripcion, Categoria categoria, Ubicacion ubicacion,
-               LocalDate fecha, LocalDate fechaDeCarga, Origen origen, List<String> etiquetas) {
+               LocalDate fecha, LocalDateTime fechaDeCarga, Origen origen, List<String> etiquetas) {
     this.titulo = titulo;
     this.descripcion = descripcion;
     this.categoria = categoria;

@@ -80,7 +80,7 @@ public class AgregadorService {
                 }
             }
         }
-
+        System.out.println("Hechos ingresando: " + nuevosHechos.size());
         hechoRepo.saveAll(nuevosHechos);
 
         // le paso al publisher los nuevos hechos en formato DTO
@@ -121,5 +121,5 @@ public class AgregadorService {
     }
 
 
-    
+
 }

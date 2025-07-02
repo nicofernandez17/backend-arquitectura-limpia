@@ -1,0 +1,283 @@
+@startuml
+' ==== AGREGADOR SIN CONTROLLERS ====
+
+package Agregador {
+
+' ==== ENUMS ====
+enum ConsensoNivel {
+  NINGUNO
+  MULTIPLES_MENCIONES
+  MAYORIA_SIMPLE
+  MAYORIA_ABSOLUTA
+}
+
+enum EstadoSolicitud {
+  ACEPTADA
+  RECHAZADA
+  PENDIENTE
+}
+
+enum FuenteNombre {
+  ESTATICA
+  DINAMICA
+  PROXY
+}
+
+enum Origen {
+  CARGA_MANUAL
+  DATASET
+  CONTRIBUYENTE
+  API
+}
+
+' ==== VALUE OBJECTS ====
+class Categoria {
+  - nombre : String
+  + getNombre() : String
+}
+
+class Ubicacion {
+  - latitud : Double
+  - longitud : Double
+  + getLatitud() : Double
+  + getLongitud() : Double
+}
+
+' ==== ENTIDADES ====
+class Hecho {
+  - id : String
+  - consensoNivel : ConsensoNivel = ConsensoNivel.NINGUNO
+  - descripcion : String
+  - titulo : String
+  - categoria : Categoria
+  - ubicacion : Ubicacion
+  - fecha : LocalDate
+  - fechaDeCarga : LocalDate
+  - multimediaArchivo : byte[]
+  - multimediaNombre : String
+  - origen : Origen
+  - etiquetas : List<String>
+  - eliminado : boolean
+  - fuentes : Set<FuenteNombre>
+
+  + agregarEtiqueta(etiqueta : String) : void
+  + getEtiquetas() : List<String>
+  + marcarComoEliminado() : void
+  + puedeAgregarseAColeccion() : boolean
+  + agregarFuente(fuente : FuenteNombre) : void
+  + agregarFuentes(nuevasFuentes : Set<FuenteNombre>) : void
+  + getFuentes() : Set<FuenteNombre>
+}
+
+class Coleccion {
+  - id : String
+  - hechos : List<Hecho>
+  - algoritmo : IAlgoritmoConsenso
+  - titulo : String
+  - descripcion : String
+  - criteriosDePertenencia : List<ICriterioDePertenencia>
+  - fuentes : List<FuenteNombre>
+
+  + agregarHecho(hecho : Hecho) : void
+  + actualizarHechos(hechos : List<Hecho>) : void
+  + getHechos() : List<Hecho>
+  + getHechosFiltradosPorConsenso() : List<Hecho>
+  + agregarHechos(hechos : List<Hecho>) : void
+}
+
+class SolicitudEliminacion {
+  - id : Long
+  - fechaCreacion : LocalDateTime
+  - estado : EstadoSolicitud
+  - hecho : Hecho
+  - motivo : String
+
+  + SolicitudEliminacion(hecho : Hecho, motivo : String)
+  + aceptar() : void
+  + rechazar() : void
+}
+
+' ==== REPOSITORIOS ====
+class HechoRepository {
+  - hechosPorClave : Map<String, Hecho>
+  - idGenerator : AtomicLong
+
+  + save(hecho : Hecho) : String
+  + saveAll(hechosLista : List<Hecho>) : List<String>
+  + findById(id : String) : Optional<Hecho>
+  + findAll() : List<Hecho>
+  + delete(id : String) : void
+  + clear() : void
+  + findIgual(hecho : Hecho) : Optional<Hecho>
+}
+
+class ColeccionRepository {
+  - colecciones : Map<String, Coleccion>
+  - idGenerator : AtomicLong
+
+  + save(coleccion : Coleccion) : String
+  + saveAll(coleccionesNuevas : List<Coleccion>) : List<String>
+  + findById(id : String) : Optional<Coleccion>
+  + findAll() : List<Coleccion>
+  + existsById(id : String) : boolean
+  + delete(id : String) : void
+  + deleteAll() : void
+  + count() : long
+  + update(id : String, nuevaColeccion : Coleccion) : void
+}
+
+class SolicitudRepository {
+  - solicitudes : List<SolicitudEliminacion>
+
+  + save(solicitud : SolicitudEliminacion) : void
+  + findAll() : List<SolicitudEliminacion>
+  + findByFact(hecho : Hecho) : Optional<SolicitudEliminacion>
+  + findById(id : Long) : Optional<SolicitudEliminacion>
+  + delete(solicitud : SolicitudEliminacion) : void
+}
+
+' ==== SERVICIOS ====
+class AgregadorService {
+  - restTemplate : RestTemplate
+  - hechoRepo : HechoRepository
+  - coleccionRepo : ColeccionRepository
+  - fuenteProvider : FuenteProvider
+
+  + cargarHechosYAsignar() : void
+}
+
+class ColeccionService {
+  - coleccionRepository : ColeccionRepository
+  - hechoRepository : HechoRepository
+
+  + crearColeccion(titulo : String, descripcion : String) : void
+  + obtenerColecciones() : List<Coleccion>
+  + obtenerColeccionPorId(id : String) : Optional<Coleccion>
+  + obtenerHechosPorColeccion(idColeccion : String) : List<Hecho>
+  + obtenerHechosIrrestricto(id : String) : List<Hecho>
+  + obtenerHechosCurado(id : String) : List<Hecho>
+  + actualizarColecciones() : void
+  + actualizarColeccion(id : String, nuevoTitulo : String, nuevaDescripcion : String) : void
+  + agregarHechos(hechosDTO : List<HechoDTO>) : void
+  + eliminarColeccion(id : String) : void
+  + eliminarTodos() : void
+}
+
+class ConsensoService {
+  - coleccionRepo : ColeccionRepository
+  - fuenteConfig : FuenteConfig
+
+  + aplicarConsensoPorColeccion() : void
+}
+
+class SolicitudService {
+  - solicitudRepository : SolicitudRepository
+  - spamDetector : ISpamDetector
+
+  + crearSolicitud(solicitud : SolicitudEliminacion) : SolicitudEliminacion
+  + procesarSolicitud(id : Long, accion : String) : SolicitudEliminacion
+}
+
+class FuenteProvider {
+  - urls : Map<FuenteNombre, String>
+
+  + getUrl(fuente : FuenteNombre) : String
+  + getTodasLasFuentes() : Set<FuenteNombre>
+}
+
+' ==== CONSENSO ====
+interface IAlgoritmoConsenso {
+  + aplicar(hecho : Hecho, totalFuentes : int) : ConsensoNivel
+  + getNivelQueAplica() : ConsensoNivel
+}
+
+class AlgoritmoMayoriaSimple {
+  + aplicar(hecho : Hecho, totalFuentes : int) : ConsensoNivel
+  + getNivelQueAplica() : ConsensoNivel
+}
+
+class AlgoritmoMayoriaAbsoluta {
+  + aplicar(hecho : Hecho, totalFuentes : int) : ConsensoNivel
+  + getNivelQueAplica() : ConsensoNivel
+}
+
+' ==== FILTRADO ====
+interface ICriterioDePertenencia {
+  + cumple(hecho : Hecho) : boolean
+}
+
+class CriterioFiltroTitulo {
+  - texto : String
+  + cumple(hecho : Hecho) : boolean
+}
+
+class CriterioPorCategoria {
+  - categoria : Categoria
+  + cumple(hecho : Hecho) : boolean
+}
+
+class CriterioPorFecha {
+  - desde : LocalDate
+  - hasta : LocalDate
+  + cumple(hecho : Hecho) : boolean
+}
+
+class CriterioPorUbicacion {
+  - ubicacion : Ubicacion
+  + cumple(hecho : Hecho) : boolean
+}
+
+' ==== SPAM DETECTOR ====
+interface ISpamDetector {
+  + esSpam(message : String) : boolean
+}
+
+class SpamDetector {
+  - vaguePhrases : List<String>
+  - emotionalWords : List<String>
+  + esSpam(message : String) : boolean
+}
+
+' ==== RELACIONES ====
+
+Coleccion --> "*" Hecho
+Coleccion --> "*" ICriterioDePertenencia
+Coleccion --> "*" FuenteNombre
+Coleccion --> IAlgoritmoConsenso
+
+Hecho --> Categoria
+Hecho --> Ubicacion
+Hecho --> Origen
+Hecho --> ConsensoNivel
+
+SolicitudEliminacion --> Hecho
+SolicitudEliminacion --> EstadoSolicitud
+
+SolicitudService --> SolicitudRepository
+SolicitudService --> ISpamDetector
+SpamDetector ..|> ISpamDetector
+
+CriterioFiltroTitulo ..|> ICriterioDePertenencia
+CriterioPorCategoria ..|> ICriterioDePertenencia
+CriterioPorFecha ..|> ICriterioDePertenencia
+CriterioPorUbicacion ..|> ICriterioDePertenencia
+
+AlgoritmoMayoriaSimple ..|> IAlgoritmoConsenso
+AlgoritmoMayoriaAbsoluta ..|> IAlgoritmoConsenso
+
+HechoRepository --> "*" Hecho
+ColeccionRepository --> "*" Coleccion
+SolicitudRepository --> "*" SolicitudEliminacion
+
+AgregadorService --> HechoRepository
+AgregadorService --> ColeccionRepository
+AgregadorService --> FuenteProvider
+
+ColeccionService --> ColeccionRepository
+ColeccionService --> HechoRepository
+
+ConsensoService --> ColeccionRepository
+
+}
+
+@enduml

@@ -1,50 +1,40 @@
 package utn.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import utn.model.HechoDTO;
 import utn.repositories.IHechoRepository;
-import utn.services.clientServices.DDSService;
 import utn.services.clientServices.IFuenteService;
-import utn.services.clientServices.MetaMapaService;
-
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 public class ProxyService {
 
-
-    private final DDSService ddsService;
-    private final MetaMapaService metaMapaService;
+    private final List<IFuenteService> fuentes;
     private final IHechoRepository hechosRepository;
 
-    // De momento sin implementar, se sigue usando lo de arriba
-    private final List<IFuenteService> apisExternas;
 
-    public ProxyService(DDSService ddsService,
-                        MetaMapaService metaMapaService,
-                        IHechoRepository hechosRepository) {
-        this.ddsService = ddsService;
-        this.metaMapaService = metaMapaService;
+    public ProxyService(IHechoRepository hechosRepository,
+                        List<IFuenteService> fuentes) {
+        this.fuentes = fuentes;
         this.hechosRepository = hechosRepository;
-        this.apisExternas = new ArrayList<>();
     }
 
     public Mono<List<HechoDTO>> cargarYObtenerHechos() {
-        return Mono.when(
-                ddsService.getHechos()
-                //metaMapaService.getHechos()
-        ).then(Mono.fromCallable(() -> hechosRepository.findAll()));
-    }
 
-    /* Lo mismo que la de arriba pero agarra los hechos de la lista de apis externas,
-     que debería tener las otras fuentes dentro */
-    public Mono<List<HechoDTO>> cargarYObtenerHechosV2() {
-        return Flux.fromIterable(apisExternas)
-                .flatMap(IFuenteService::getHechos) // ejecuta getHechos() para cada fuente
+        return Flux.fromIterable(fuentes)
+                .flatMap(IFuenteService::getHechos)
                 .then(Mono.fromCallable(() -> hechosRepository.findAll()));
     }
+
+    public List<HechoDTO> obtenerDesdeFecha(LocalDateTime desde) {
+        LocalDateTime fecha = desde != null ? desde : LocalDateTime.of(2000, 1, 1, 0, 0);
+
+        return hechosRepository.findAll().stream()
+                .filter(h -> h.getCreated_at() != null && h.getCreated_at().isAfter(fecha))
+                .toList();
+    }
+
 }

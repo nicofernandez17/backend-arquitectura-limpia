@@ -38,6 +38,7 @@ public class ConsensoService {
                 if (nuevoNivel == ConsensoNivel.MULTIPLES_MENCIONES) {
                     System.out.println(nuevoNivel);
                     System.out.println(coleccion.getId());
+                    System.out.println(hecho.getTitulo());
                 }
                 if (nuevoNivel != null) {
                     hecho.setConsensoNivel(
