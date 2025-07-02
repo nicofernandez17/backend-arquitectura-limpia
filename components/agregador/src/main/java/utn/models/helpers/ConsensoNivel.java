@@ -2,9 +2,9 @@ package utn.models.helpers;
 
 public enum ConsensoNivel {
     NINGUNO(0),
-    NIVEL_1(1),
-    NIVEL_2(2),
-    NIVEL_3(3);
+    MULTIPLES_MENCIONES(1),
+    MAYORIA_SIMPLE(2),
+    MAYORIA_ABSOLUTA(3);
 
     private final int prioridad;
 

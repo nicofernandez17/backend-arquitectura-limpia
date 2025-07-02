@@ -6,5 +6,6 @@ import utn.models.helpers.ConsensoNivel;
 import java.util.List;
 
 public interface IAlgoritmoConsenso {
-    ConsensoNivel aplicar(Hecho hecho);
+    ConsensoNivel aplicar(Hecho hecho, int totalFuentes);
+    ConsensoNivel getNivelQueAplica(); // nuevo
 }

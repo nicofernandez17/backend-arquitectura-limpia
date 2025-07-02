@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import utn.models.algoritmos.IAlgoritmoConsenso;
 import utn.models.domain.Coleccion;
 import utn.models.domain.Hecho;
 import utn.models.helpers.FuenteNombre;
@@ -70,6 +71,26 @@ public class ColeccionAdminController {
         return ResponseEntity.ok("Todas las colecciones eliminadas");
     }
 
+    /*
+    @PatchMapping("/{id}/algoritmo")
+    public ResponseEntity<String> modificarAlgoritmo(
+            @PathVariable String id,
+            @RequestParam String algoritmoNombre) {
+
+        return coleccionService.obtenerColeccionPorId(id).map(coleccion -> {
+            IAlgoritmoConsenso algoritmo = coleccionService.obtenerAlgoritmoPorNombre(algoritmoNombre);
+
+            if (algoritmo == null) {
+                return ResponseEntity.badRequest().body("Algoritmo no válido");
+            }
+
+            coleccion.setAlgoritmo(algoritmo);
+            coleccionService.guardarColeccion(coleccion);
+
+            return ResponseEntity.ok("Algoritmo modificado correctamente");
+        }).orElse(ResponseEntity.notFound().build());
+    }
+    */
     @PatchMapping("/{id}/fuentes")
     public ResponseEntity<String> modificarFuente(
             @PathVariable String id,
