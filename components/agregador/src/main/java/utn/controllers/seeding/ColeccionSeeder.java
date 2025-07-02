@@ -30,7 +30,7 @@ public class ColeccionSeeder {
         Coleccion coleccion1 = Coleccion.builder()
                 .titulo("Actualidad Económica")
                 .descripcion("Últimos hechos relevantes en economía")
-                .fuentes(new ArrayList<>(List.of(FuenteNombre.DINAMICA)))
+                .fuentes(new ArrayList<>(List.of(FuenteNombre.DINAMICA, FuenteNombre.PROXY)))
                 .algoritmo(new AlgoritmoMultiplesMenciones())
                 .build();
 

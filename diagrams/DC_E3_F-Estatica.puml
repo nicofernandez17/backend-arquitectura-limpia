@@ -1,0 +1,57 @@
+@startuml
+
+package Fuente_Estatica {
+
+class AdapterLectorCsv {
+  - reader : CSVReader
+  + leer(rutaArchivo : String) : List<HechoDTO>
+  - crearHechoDesdeLinea(linea : String[]) : HechoDTO
+  - buscarHechoPorTitulo(hechos : List<HechoDTO>, titulo : String) : int
+}
+
+interface Lector {
+  + leer(ruta : String) : List<HechoDTO>
+}
+
+class HechoDTO {
+  - titulo : String
+  - descripcion : String
+  - categoria : String
+  - latitud : double
+  - longitud : double
+  - fecha_hecho : LocalDateTime
+  - created_at : LocalDateTime
+  - updated_at : LocalDateTime
+  - archivoContenido : byte[]
+  - archivoNombre : String
+}
+
+interface IHechoRepository {
+  + findByTitulo(titulo : String) : Optional<HechoDTO>
+  + save(hecho : HechoDTO) : void
+  + findAll() : List<HechoDTO>
+}
+
+class HechosRepository {
+  - hechos : List<HechoDTO>
+  + findByTitulo(titulo : String) : Optional<HechoDTO>
+  + save(hecho : HechoDTO) : void
+  + findAll() : List<HechoDTO>
+}
+
+class HechosService {
+  - hechosRepository : IHechoRepository
+  - lectorCsv : Lector
+  + cargarDesdeCsv() : List<HechoDTO>
+  + obtenerTodos() : List<HechoDTO>
+}
+
+AdapterLectorCsv ..|> Lector
+HechosRepository ..|> IHechoRepository
+HechosService --> IHechoRepository
+HechosService --> Lector
+AdapterLectorCsv --> HechoDTO
+AdapterLectorCsv --> CSVReader
+
+}
+@enduml

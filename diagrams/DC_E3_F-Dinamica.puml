@@ -1,0 +1,151 @@
+@startuml
+' ==== FUENTE DINAMICA SIN CONTROLLERS ====
+package "FUENTE DINAMICA" {
+
+class HechoDTO {
+    - titulo: String
+    - descripcion: String
+    - categoria: String
+    - latitud: double
+    - longitud: double
+    - fecha_hecho: LocalDateTime
+    - created_at: LocalDateTime
+    - updated_at: LocalDateTime
+    - archivo: MultipartFile
+    - archivoContenido: byte[]
+    - archivoNombre: String
+    - usuarioId: String
+
+    + builder(): HechoDTOBuilder
+}
+
+class Hecho{
+    - id: String
+    - titulo: String
+    - categoria: Categoria
+    - ubicacion: Ubicacion
+    - fecha: LocalDate
+    - fechaDeCarga: LocalDate
+    - multimediaArchivo: byte[]
+    - multimediaNombre: String
+    - origen: Origen
+    - etiquetas: List<String>
+    - eliminados: boolean
+    - usuarioId: String
+
+    + agregarEtiqueta(etiqueta: String): void
+    + getEtiquetas(): List<String>
+    + marcarComoEliminado(): void
+    + puedeAgregarseacoleccion(): boolean
+}
+
+class Revision{
+    - id: Long
+    - idHecho: String
+    - contenidoPropuesto: HechoDTO
+    - comentarioModerador: String
+    - estado: EstadoRevision
+    - fechaRevision: LocalDateTime
+}
+
+class HechoService {
+    - hechosRepository: HechoRepository
+
+    + obtenerTodos(): List<Hecho>
+    + obtenerPorId(id: String): Optional<Hecho>
+    + registrarHecho(hechoDTO: HechoDTO): String
+    + actualizarHecho(id: String, hechoDTO: HechoDTO): String
+}
+
+class RevisionService {
+    - hechoService: HechoService
+    - revisionRepository: RevisionRepository
+
+    + crearRevision(hechoDTO: HechoDTO, id: String): Revision
+    + procesarRevision(revisionId: Long, request: RevisionProcesarDTO): void
+    + aceptarRevision(revisionId: Long): void
+    + rechazarRevision(revisionId: Long, comentario: String): void
+}
+
+class HechoMapper {
+    + aDTO(hecho: Hecho): HechoDTO
+    + aDominio(dto: HechoDTO): Hecho
+}
+
+class RevisionProcesarDTO {
+    - aceptado: boolean
+    - comentario: String
+}
+
+class Categoria {
+    - nombre: String
+    + Categoria(nombre: String)
+    + getNombre(): String
+}
+
+class Ubicacion {
+    - latitud: Double
+    - longitud: Double
+    + Ubicacion(latitud: Double, longitud: Double)
+    + getLatitud(): Double
+    + getLongitud(): Double
+}
+
+class RevisionRepository {
+    - revisiones: Map<Long, Revision>
+    - idGenerator: AtomicLong
+
+    + save(revision: Revision): Revision
+    + findById(id: Long): Revision
+    + findByEstado(estado: EstadoRevision): List<Revision>
+    + findAll(): List<Revision>
+    + deleteById(id: Long): void
+    + clear(): void
+}
+
+class HechoRepository {
+    - hechos: Map<String, Hecho>
+    - idGenerator: AtomicLong
+
+    + save(hecho: Hecho): String
+    + saveAll(hechosLista: List<Hecho>): List<String>
+    + update(id: String, hechoActualizado: Hecho): String
+    + findById(id: String): Optional<Hecho>
+    + findAll(): List<Hecho>
+    + delete(id: String): void
+    + clear(): void
+}
+
+enum EstadoRevision {
+    ACEPTADA
+    PENDIENTE
+    RECHAZADA
+}
+
+enum Origen {
+    CARGA_MANUAL
+    DATASET
+    CONTRIBUYENTE
+    API
+}
+
+RevisionService --> HechoService
+RevisionService --> RevisionRepository
+RevisionService --> HechoDTO
+RevisionService --> RevisionProcesarDTO
+Revision --> HechoDTO
+Revision --> EstadoRevision
+HechoService --> HechoRepository
+HechoService --> HechoDTO
+HechoService --> HechoMapper
+HechoMapper --> Hecho
+HechoMapper --> HechoDTO
+HechoMapper --> Categoria
+HechoMapper --> Ubicacion
+HechoMapper --> Origen
+Hecho --> Categoria
+Hecho --> Ubicacion
+Hecho --> Origen
+
+}
+@enduml
