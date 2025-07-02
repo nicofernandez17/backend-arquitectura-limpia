@@ -19,26 +19,6 @@ public class RabbitConfig {
 	@Value("${app.instancia-id}")
 	private String instanciaId;
 
-	@Autowired
-	private RabbitAdmin rabbitAdmin;
-
-	@Autowired
-	private Queue miCola;
-
-	@Autowired
-	private FanoutExchange miExchange;
-
-	@Autowired
-	private Binding binding;
-
-	@PostConstruct
-	public void init() {
-		System.out.println("Declarando cola y exchange desde @PostConstruct...");
-		rabbitAdmin.declareQueue(miCola);
-		rabbitAdmin.declareExchange(miExchange);
-		rabbitAdmin.declareBinding(binding);
-	}
-
 
 	@Bean
 	public Jackson2JsonMessageConverter jsonMessageConverter() {
@@ -70,13 +50,8 @@ public class RabbitConfig {
 	@Bean
 	public RabbitAdmin rabbitAdmin(ConnectionFactory connectionFactory) {
 		RabbitAdmin admin = new RabbitAdmin(connectionFactory);
-		admin.setAutoStartup(true);  // Asegura que declare los beans declarables
+		admin.setAutoStartup(true);
 		return admin;
-	}
-
-	@PostConstruct
-	public void checkAdmin() {
-		System.out.println(">> RabbitAdmin registrado");
 	}
 
 
