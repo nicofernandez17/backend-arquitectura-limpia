@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import utn.controllers.seeding.ColeccionSeeder;
 import utn.models.domain.Coleccion;
 import utn.models.domain.Hecho;
@@ -11,6 +12,8 @@ import utn.models.dtos.ColeccionDTO;
 import utn.models.dtos.ColeccionMapper;
 import utn.models.dtos.HechoDTO;
 import utn.models.dtos.HechoMapper;
+import utn.models.modosDeNavegacion.IModoDeNavegacion;
+import utn.models.modosDeNavegacion.ModoDeNavegacionFactory;
 import utn.services.ColeccionService;
 
 
@@ -23,38 +26,35 @@ public class ColeccionController {
 
     private final ColeccionService coleccionService;
     private final ColeccionSeeder coleccionSeeder;
+    private final ModoDeNavegacionFactory modoDeNavegacionFactory;
 
     @Autowired
-    public ColeccionController(ColeccionService coleccionService, ColeccionSeeder coleccionSeeder) {
+    public ColeccionController(ColeccionService coleccionService,
+                               ColeccionSeeder coleccionSeeder,
+                               ModoDeNavegacionFactory modoDeNavegacionFactory) {
         this.coleccionService = coleccionService;
         this.coleccionSeeder = coleccionSeeder;
+        this.modoDeNavegacionFactory = modoDeNavegacionFactory;
     }
-
 
     @GetMapping
     public List<ColeccionDTO> obtenerColecciones() {
-        // Obtener colecciones desde el servicio
         List<Coleccion> colecciones = coleccionService.obtenerColecciones();
-
-        // Convertir cada Coleccion a ColeccionDTO usando el ColeccionMapper
         return colecciones.stream()
-                .map(ColeccionMapper::toDTO)  // Usamos el mapper para convertir a DTO
+                .map(ColeccionMapper::toDTO)
                 .collect(Collectors.toList());
     }
 
-    //GET /colecciones/123/hechos?modo=curado
     @GetMapping("/{identificador}/hechos")
     public List<HechoDTO> obtenerHechosPorColeccion(
             @PathVariable String identificador,
             @RequestParam(defaultValue = "curado") String modo) {
 
-        List<Hecho> hechos;
+        Coleccion coleccion = coleccionService.obtenerColeccionPorId(identificador)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Colección no encontrada"));
 
-        if ("irrestricto".equalsIgnoreCase(modo)) {
-            hechos = coleccionService.obtenerHechosIrrestricto(identificador);
-        } else {
-            hechos = coleccionService.obtenerHechosCurado(identificador);
-        }
+        IModoDeNavegacion estrategia = modoDeNavegacionFactory.obtener(modo);
+        List<Hecho> hechos = estrategia.obtenerHechos(coleccion);
 
         return hechos.stream()
                 .map(HechoMapper::aDTO)
@@ -63,7 +63,6 @@ public class ColeccionController {
 
     @PostMapping("/inicializar")
     public ResponseEntity<Void> inicializarColecciones() {
-
         coleccionSeeder.seed();
         return ResponseEntity.ok().build();
     }
@@ -77,8 +76,7 @@ public class ColeccionController {
     @PostMapping
     public ResponseEntity<String> crearColeccion(@RequestBody ColeccionDTO coleccion) {
         coleccionService.crearColeccion(coleccion.getTitulo(), coleccion.getDescripcion());
-
-        return ResponseEntity.status(HttpStatus.CREATED).body("Coleccion creada con exito");
+        return ResponseEntity.status(HttpStatus.CREATED).body("Colección creada con éxito");
     }
-
 }
+
