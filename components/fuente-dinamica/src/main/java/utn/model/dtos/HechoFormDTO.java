@@ -1,23 +1,18 @@
 package utn.model.dtos;
 
-import lombok.Builder;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 
 @Data
-@Builder
-public class HechoDTO {
+public class HechoFormDTO {
+
     private String titulo;
     private String descripcion;
     private String categoria;
     private double latitud;
     private double longitud;
-    private LocalDateTime fecha_hecho;
-    private LocalDateTime created_at;
-    private byte[] archivoContenido;
-    private String archivoNombre;
-    private String usuarioId;
-
+    private LocalDateTime fecha;
+    private MultipartFile archivo;
 }

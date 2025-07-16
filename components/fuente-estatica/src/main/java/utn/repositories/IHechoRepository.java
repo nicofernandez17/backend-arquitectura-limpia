@@ -1,12 +1,12 @@
 package utn.repositories;
 
-import utn.model.dto.HechoDTO;
+import utn.model.domain.Hecho;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface IHechoRepository {
-    Optional<HechoDTO> findByTitulo(String titulo);
-    void save(HechoDTO hecho);
-    List<HechoDTO> findAll();
+    Optional<Hecho> findByTitulo(String titulo);
+    void save(Hecho hecho);
+    List<Hecho> findAll();
 }

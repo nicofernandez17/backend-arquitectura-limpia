@@ -3,6 +3,7 @@ package utn.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import utn.model.domain.Hecho;
 import utn.model.dto.HechoDTO;
 import utn.model.lectores.AdapterLectorCsv;
 import utn.model.lectores.Lector;
@@ -26,20 +27,20 @@ public class HechosService {
         this.lectorCsv = new AdapterLectorCsv();
     }
 
-    public List<HechoDTO> cargarDesdeCsv() {
-        List<HechoDTO> nuevosHechos = lectorCsv.leer(archivoRuta);
+    public List<Hecho> cargarDesdeCsv() {
+        List<Hecho> nuevosHechos = lectorCsv.leer(archivoRuta);
 
         nuevosHechos.forEach(hechosRepository::save);
 
         return hechosRepository.findAll();
     }
 
-    public List<HechoDTO> obtenerTodos() {
+    public List<Hecho> obtenerTodos() {
         return hechosRepository.findAll();
     }
 
 
-    public List<HechoDTO> obtenerDesdeFecha(LocalDateTime desde) {
+    public List<Hecho> obtenerDesdeFecha(LocalDateTime desde) {
         LocalDateTime fecha = desde != null ? desde : LocalDateTime.of(2000, 1, 1, 0, 0);
 
         return hechosRepository.findAll().stream()

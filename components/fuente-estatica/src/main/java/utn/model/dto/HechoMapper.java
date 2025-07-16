@@ -24,13 +24,8 @@ public class HechoMapper {
                 .longitud(Optional.ofNullable(hecho.getUbicacion())
                         .map(Ubicacion::getLongitud)
                         .orElse(0.0))
-                .fecha_hecho(Optional.ofNullable(hecho.getFecha())
-                        .map(fecha -> fecha.atStartOfDay())  // LocalDate → LocalDateTime a inicio de día
-                        .orElse(null))
-                .created_at(Optional.ofNullable(hecho.getFechaDeCarga())
-                        .map(fecha -> fecha.atStartOfDay())
-                        .orElse(null))
-                .updated_at(null) // No está en dominio, asignar si se tiene info
+                .fecha_hecho(hecho.getFecha())
+                .created_at(hecho.getFechaDeCarga())
                 .archivoContenido(null)
                 .archivoNombre(null)
                 .build();

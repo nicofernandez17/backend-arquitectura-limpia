@@ -31,7 +31,6 @@ public class HechoMapper {
                 .created_at(Optional.ofNullable(hecho.getFechaDeCarga())
                         .map(fecha -> fecha.atStartOfDay())
                         .orElse(null))
-                .updated_at(null) // No está en dominio, asignar si se tiene info
                 .archivoContenido(hecho.getMultimediaArchivo())
                 .archivoNombre(hecho.getMultimediaNombre())
                 .build();

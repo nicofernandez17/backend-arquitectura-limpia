@@ -1,10 +1,12 @@
 package utn.model.domain;
 
+import lombok.Builder;
 import lombok.Data;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
+@Builder
 public class Hecho {
 
     private String id;
@@ -13,6 +15,7 @@ public class Hecho {
     private final String descripcion;
     private Categoria categoria;
     private Ubicacion ubicacion;
-    private LocalDate fecha;
-    private LocalDate fechaDeCarga;
+    private LocalDateTime fecha;
+    private LocalDateTime fechaDeCarga;
+    private LocalDateTime created_at;
 }

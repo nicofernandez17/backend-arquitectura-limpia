@@ -1,11 +1,13 @@
 package utn.model.dtos;
 
 
+import org.springframework.web.multipart.MultipartFile;
 import utn.model.domain.Hecho;
 import utn.model.helpers.Categoria;
 import utn.model.helpers.Origen;
 import utn.model.helpers.Ubicacion;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -30,7 +32,6 @@ public class HechoMapper {
                         .map(LocalDate::atStartOfDay)
                         .orElse(null))
                 .created_at(hecho.getFechaDeCarga()) // ya es LocalDateTime
-                .updated_at(null) // actualizar si fuera necesario
                 .archivoContenido(hecho.getMultimediaArchivo())
                 .archivoNombre(hecho.getMultimediaNombre())
                 .build();
@@ -67,5 +68,33 @@ public class HechoMapper {
         hecho.setUsuarioId(dto.getUsuarioId());
 
         return hecho;
+    }
+
+    public static HechoDTO fromHechoForm (HechoFormDTO hechoFormDTO) {
+        MultipartFile archivo = hechoFormDTO.getArchivo();
+        byte[] archivoContenido = null;
+        String archivoNombre = null;
+        if (archivo != null && !archivo.isEmpty() )
+        {
+            try {
+                archivoContenido = archivo.getBytes();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            archivoNombre = archivo.getOriginalFilename();
+        }
+
+        return HechoDTO.builder()
+                .titulo(hechoFormDTO.getTitulo())
+                .descripcion(hechoFormDTO.getDescripcion())
+                .categoria(hechoFormDTO.getCategoria())
+                .latitud(hechoFormDTO.getLatitud())
+                .longitud(hechoFormDTO.getLongitud())
+                .fecha_hecho(hechoFormDTO.getFecha())
+                .created_at(null) // TODO verificar
+                .archivoContenido(archivoContenido)
+                .archivoNombre(archivoNombre)
+                .usuarioId(null/*TODO completar*/)
+                .build();
     }
 }
