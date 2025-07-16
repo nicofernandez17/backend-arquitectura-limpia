@@ -14,6 +14,5 @@ public class HechoDTO {
     private Double longitud;
     private LocalDateTime fecha_hecho;
     private LocalDateTime created_at;
-    private LocalDateTime updated_at;
     //TODO
 }

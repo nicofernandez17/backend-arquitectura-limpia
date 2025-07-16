@@ -43,9 +43,7 @@ public class HechoUIController {
     public ResponseEntity<Revision> actualizarHecho(
             @PathVariable String id,
             @ModelAttribute HechoFormDTO hechoFormDTO) {
-
-        // TODO: revisar porque cambie la forma de recibir desde el formulario con un nuevo HechoFormDTO
-
+        // aca cambiaron cosas, por si hay que buscar errores es un posible lugar
         Revision revision = revisionService.crearRevision(HechoMapper.fromHechoForm(hechoFormDTO), id);
         return ResponseEntity.ok(revision);
     }
