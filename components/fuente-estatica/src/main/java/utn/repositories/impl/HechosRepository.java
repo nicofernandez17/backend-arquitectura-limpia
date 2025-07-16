@@ -1,7 +1,7 @@
 package utn.repositories.impl;
 
 import org.springframework.stereotype.Repository;
-import utn.model.HechoDTO;
+import utn.model.dto.HechoDTO;
 import utn.repositories.IHechoRepository;
 
 import java.util.ArrayList;

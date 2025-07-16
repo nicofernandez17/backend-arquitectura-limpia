@@ -1,6 +1,6 @@
 package utn.repositories;
 
-import utn.model.HechoDTO;
+import utn.model.dto.HechoDTO;
 
 import java.util.List;
 import java.util.Optional;

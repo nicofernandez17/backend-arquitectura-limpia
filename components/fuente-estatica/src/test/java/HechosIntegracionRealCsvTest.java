@@ -2,7 +2,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 import utn.controllers.HechosController;
-import utn.model.HechoDTO;
+import utn.model.dto.HechoDTO;
 import utn.model.lectores.AdapterLectorCsv;
 import utn.repositories.impl.HechosRepository;
 import utn.services.HechosService;

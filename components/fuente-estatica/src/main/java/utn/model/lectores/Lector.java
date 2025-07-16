@@ -1,6 +1,6 @@
 package utn.model.lectores;
 
-import utn.model.HechoDTO;
+import utn.model.dto.HechoDTO;
 
 
 import java.util.List;

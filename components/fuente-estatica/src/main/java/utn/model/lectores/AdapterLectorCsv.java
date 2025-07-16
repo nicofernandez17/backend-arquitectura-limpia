@@ -2,7 +2,7 @@ package utn.model.lectores;
 
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
-import utn.model.HechoDTO;
+import utn.model.dto.HechoDTO;
 
 import java.io.FileInputStream;
 import java.io.IOException;

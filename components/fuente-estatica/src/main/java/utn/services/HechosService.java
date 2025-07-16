@@ -3,7 +3,7 @@ package utn.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import utn.model.HechoDTO;
+import utn.model.dto.HechoDTO;
 import utn.model.lectores.AdapterLectorCsv;
 import utn.model.lectores.Lector;
 import utn.repositories.IHechoRepository;
