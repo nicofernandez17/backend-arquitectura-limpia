@@ -18,6 +18,7 @@ public class HechoDTO {
     private double longitud;
     private LocalDateTime fecha_hecho;
     private LocalDateTime created_at;
+    private LocalDateTime updated_at;
     private byte[] archivoContenido;
     private String archivoNombre;
 }

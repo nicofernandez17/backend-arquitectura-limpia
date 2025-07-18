@@ -36,6 +36,8 @@ public class Hecho {
   @Getter
   private LocalDateTime fechaDeCarga;
   @Getter
+  private LocalDateTime updated_at;
+  @Getter
   @Setter
   private byte[] multimediaArchivo;
   @Getter

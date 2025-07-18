@@ -18,4 +18,5 @@ public class Hecho {
     private LocalDateTime fecha;
     private LocalDateTime fechaDeCarga;
     private LocalDateTime created_at;
+    private LocalDateTime updated_at;
 }

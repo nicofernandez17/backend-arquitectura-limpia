@@ -22,6 +22,7 @@ public class HechoMapper {
                         .orElse(0.0))
                 .fecha_hecho(hecho.getFecha())
                 .created_at(hecho.getFechaDeCarga())
+                .updated_at(hecho.getUpdated_at())
                 .archivoContenido(null)
                 .archivoNombre(null)
                 .build();

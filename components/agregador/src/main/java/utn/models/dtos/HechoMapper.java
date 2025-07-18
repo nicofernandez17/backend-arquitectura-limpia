@@ -26,10 +26,13 @@ public class HechoMapper {
                         .map(Ubicacion::getLongitud)
                         .orElse(0.0))
                 .fecha_hecho(Optional.ofNullable(hecho.getFecha())
-                        .map(fecha -> fecha.atStartOfDay())  // LocalDate → LocalDateTime a inicio de día
+                        .map(LocalDate::atStartOfDay)  // LocalDate → LocalDateTime a inicio de día
                         .orElse(null))
                 .created_at(Optional.ofNullable(hecho.getFechaDeCarga())
-                        .map(fecha -> fecha.atStartOfDay())
+                        .map(LocalDate::atStartOfDay)
+                        .orElse(null))
+                .updated_at(Optional.ofNullable(hecho.getUpdated_at())
+                        .map(LocalDate::atStartOfDay)
                         .orElse(null))
                 .archivoContenido(hecho.getMultimediaArchivo())
                 .archivoNombre(hecho.getMultimediaNombre())

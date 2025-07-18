@@ -16,6 +16,7 @@ public class HechoDTO {
     private double longitud;
     private LocalDateTime fecha_hecho;
     private LocalDateTime created_at;
+    private LocalDateTime updated_at;
     private byte[] archivoContenido;
     private String archivoNombre;
 // TODO revisar este dato porque no coincide con el HechoDTO que usamos en Agregador

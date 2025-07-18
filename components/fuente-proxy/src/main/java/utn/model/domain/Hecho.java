@@ -12,4 +12,5 @@ public class Hecho {
     private Ubicacion ubicacion;
     private LocalDateTime fecha;
     private LocalDateTime fechaDeCarga;
+    private LocalDateTime fechaUltimaActualizacion;
 }

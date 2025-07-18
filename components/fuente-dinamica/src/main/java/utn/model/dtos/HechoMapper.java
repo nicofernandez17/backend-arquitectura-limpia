@@ -32,6 +32,7 @@ public class HechoMapper {
                         .map(LocalDate::atStartOfDay)
                         .orElse(null))
                 .created_at(hecho.getFechaDeCarga()) // ya es LocalDateTime
+                .updated_at(hecho.getUpdated_at())
                 .archivoContenido(hecho.getMultimediaArchivo())
                 .archivoNombre(hecho.getMultimediaNombre())
                 .build();
