@@ -7,9 +7,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
-import utn.model.HechoDTO;
+import utn.model.dto.HechoDTO;
 import utn.services.ProxyService;
-import utn.services.clientServices.DDSService;
 
 import java.time.LocalDateTime;
 import java.util.List;

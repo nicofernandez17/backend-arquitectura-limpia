@@ -2,6 +2,10 @@ package utn.model.dto;
 
 import utn.model.domain.Hecho;
 import utn.model.domain.Ubicacion;
+import utn.model.domain.Categoria;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 public class HechoMapper {

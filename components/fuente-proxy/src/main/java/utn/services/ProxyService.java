@@ -1,14 +1,11 @@
 package utn.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import utn.model.HechoDTO;
+import utn.model.dto.HechoDTO;
 import utn.repositories.IHechoRepository;
-import utn.services.clientServices.DDSService;
 import utn.services.clientServices.IFuenteService;
-import utn.services.clientServices.MetaMapaService;
 
 import java.time.LocalDateTime;
 import java.util.List;

@@ -1,10 +1,12 @@
-package utn.model;
+package utn.model.dto;
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 
 @Data
+@Builder
 public class HechoDTO {
     private Long id;
     private String titulo;
@@ -14,5 +16,7 @@ public class HechoDTO {
     private Double longitud;
     private LocalDateTime fecha_hecho;
     private LocalDateTime created_at;
+    private byte[] archivoContenido;
+    private String archivoNombre;
     //TODO
 }
