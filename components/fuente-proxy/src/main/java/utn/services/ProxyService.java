@@ -3,7 +3,10 @@ package utn.services;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import utn.model.domain.Hecho;
 import utn.model.dto.HechoDTO;
+import utn.model.dto.HechoMapper;
+import utn.model.dto.HechosResponseDTO;
 import utn.repositories.IHechoRepository;
 import utn.services.clientServices.IFuenteService;
 
@@ -25,7 +28,8 @@ public class ProxyService {
 
         return Flux.fromIterable(fuentes)
                 .flatMap(IFuenteService::getHechos)
-                .then(Mono.fromCallable(() -> hechosRepository.findAll()));
+                .then(Mono.fromCallable(() -> hechosRepository.findAll()))
+                .map(hechos -> hechos.stream().map(HechoMapper::aDTO).toList());
     }
 
     public List<HechoDTO> obtenerDesdeFecha(LocalDateTime desde) {
@@ -33,6 +37,6 @@ public class ProxyService {
 
         return hechosRepository.findAll().stream()
                 .filter(h -> h.getCreated_at() != null && h.getCreated_at().isAfter(fecha))
-                .toList();
+                .map(HechoMapper::aDTO).toList();
     }
 }

@@ -3,6 +3,7 @@ package utn.services.clientServices;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
+import utn.model.domain.Hecho;
 import utn.model.dto.HechoDTO;
 import utn.model.dto.HechosResponseDTO;
 import utn.repositories.IHechoRepository;
@@ -23,18 +24,18 @@ public class MetaMapaService  {
     }
 
 
-    public Mono<List<HechoDTO>> getHechos() {
+    /*public Mono<List<HechoDTO>> getHechos() {
         return webClient.get()
                 .uri("/hechos")
                 .retrieve()
                 .bodyToMono(HechosResponseDTO.class)
                 .map(HechosResponseDTO::getHechos)
                 .doOnNext(this::guardarHechosEnRepositorio);  // Guardar los hechos en el repositorio
-    }
+    }*/
 
-    public void guardarHechosEnRepositorio(List<HechoDTO> hechos) {
+    public void guardarHechosEnRepositorio(List<Hecho> hechos) {
         LocalDateTime ahora = LocalDateTime.now();
-        for (HechoDTO hecho : hechos) {
+        for (Hecho hecho : hechos) {
             hecho.setCreated_at(ahora);  // Setea la fecha actual
             hechosRepository.save(hecho);  // Guarda el hecho en el repositorio
         }
