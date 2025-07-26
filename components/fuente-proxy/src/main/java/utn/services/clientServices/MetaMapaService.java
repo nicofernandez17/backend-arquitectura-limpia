@@ -44,7 +44,7 @@ public class MetaMapaService  {
 
     // Funcion que procesa los hechos que llegan del webhook (agregador externo los pushea)
     public void procesarHechos(List<HechoDTO> hechos) {
-        //TODO
+        //TODO: esta función debería filtrar los hechos recibidos, y si corresponde enviarlos al Agregador
 
     }
 
