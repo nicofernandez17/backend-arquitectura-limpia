@@ -23,7 +23,7 @@
     <module>components/app-main</module>
     <module>components/fuente-dinamica</module>
     <module>components/fuente-estatica</module>
-    <module>components/fuente-proxy</module>git
+    <module>components/fuente-proxy</module>
 
   </modules>
 

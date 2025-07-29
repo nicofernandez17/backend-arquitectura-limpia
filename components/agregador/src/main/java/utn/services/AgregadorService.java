@@ -7,16 +7,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
-import utn.configs.FuenteConfig;
 import utn.models.domain.Coleccion;
 import utn.models.domain.Hecho;
-import utn.models.dtos.ColeccionMapper;
 import utn.models.dtos.HechoDTO;
 import utn.models.dtos.HechoMapper;
 import utn.models.helpers.FuenteNombre;
 import utn.repositories.ColeccionRepository;
 import utn.repositories.HechoRepository;
-import utn.services.webhook.WebhookPublisher;
+import utn.services.rabbitMQ.RabbitPublisher;
 
 import java.util.*;
 
@@ -31,13 +29,13 @@ public class AgregadorService {
     /* Esto hay que usarlo cuando entre nuevos hechos para que los publique a
     la cola a la que suscriben las fuentes proxys conectadas a esta instancia.
     Se usa con publisherService.enviarHechos(List<HechoDTO>)*/
-    private final WebhookPublisher publisherService;
+    private final RabbitPublisher publisherService;
 
     public AgregadorService(RestTemplateBuilder builder,
                             HechoRepository hechoRepo,
                             ColeccionRepository coleccionRepo,
                             FuenteProvider fuenteProvider,
-                            WebhookPublisher publisherService) {
+                            RabbitPublisher publisherService) {
         this.restTemplate = builder.build();
         this.hechoRepo = hechoRepo;
         this.coleccionRepo = coleccionRepo;
@@ -84,7 +82,7 @@ public class AgregadorService {
         hechoRepo.saveAll(nuevosHechos);
 
         // le paso al publisher los nuevos hechos en formato DTO
-        publisherService.enviarHechos(nuevosHechos.stream().map(HechoMapper::aDTO).toList());
+        publisherService.publicarHechos(nuevosHechos.stream().map(HechoMapper::aDTO).toList());
     }
 
     private void asignarHechosAColecciones() {
