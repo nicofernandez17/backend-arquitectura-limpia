@@ -1,10 +1,8 @@
 package utn.configs;
 
-import lombok.Value;
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.BindingBuilder;
-import org.springframework.amqp.core.FanoutExchange;
-import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.*;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -15,17 +13,17 @@ public class RabbitConsumerConfig {
     private String instanciaId;
 
     @Bean
-    public FanoutExchange hechosExchange() {
-        return new FanoutExchange("hechos.exchange");
+    public TopicExchange hechosExchange() {
+        return new TopicExchange("hechos.exchange."+instanciaId,true, false);
     }
 
     @Bean
     public Queue hechosQueue() {
-        return new Queue("hechos." + instanciaId, true);
+        return new AnonymousQueue();
     }
 
     @Bean
-    public Binding hechosBinding(Queue hechosQueue, FanoutExchange hechosExchange) {
-        return BindingBuilder.bind(hechosQueue).to(hechosExchange);
+    public Binding hechosBinding(Queue hechosQueue, TopicExchange hechosExchange) {
+        return BindingBuilder.bind(hechosQueue).to(hechosExchange).with("#");
     }
 }
