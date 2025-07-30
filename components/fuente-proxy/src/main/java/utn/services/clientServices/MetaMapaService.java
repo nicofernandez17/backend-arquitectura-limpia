@@ -19,8 +19,8 @@ public class MetaMapaService  {
     private final IHechoRepository hechosRepository;
 
 
-    public MetaMapaService(WebClient.Builder webClientBuilder, IHechoRepository hechosRepository) {
-        this.webClient = webClientBuilder.baseUrl("").build();
+    public MetaMapaService(@Value("${app.url-agregador}") String agregadorUrl,WebClient.Builder webClientBuilder, IHechoRepository hechosRepository) {
+        this.webClient = webClientBuilder.baseUrl(agregadorUrl).build();
         this.hechosRepository = hechosRepository;
     }
 
@@ -42,9 +42,22 @@ public class MetaMapaService  {
         }
     }
 
-    // Funcion que procesa los hechos que llegan del webhook (agregador externo los pushea)
+    // Funcion que procesa los hechos que llegan del broker (agregador externo los publica)
     public void procesarHechos(List<HechoDTO> hechos) {
-        //TODO: esta función debería filtrar los hechos recibidos, y si corresponde enviarlos al Agregador
+
+        // TODO filtramos los hechos que son nuevos y los ponemos en esta variable
+        List<HechoDTO> hechosNuevos = hechos;
+
+        // Guardamos en el repository solo los hechos nuevos
+        hechosNuevos.forEach(hechosRepository::save);
+
+        // Enviamos al agregador los hechos que ingresaron
+        webClient.post()
+                .uri("/colecciones/consumirMetaMapa")
+                .bodyValue(hechosNuevos)
+                .retrieve()
+                .bodyToMono(Void.class)
+                .subscribe();
 
     }
 

@@ -19,6 +19,8 @@ public class RabbitConsumerConfig {
 
     @Bean
     public Queue hechosQueue() {
+        /* En esta parte puede cambiarse el AnonymousQueue por otro tipo al que le asignemos un id,
+        para que se sepa quien está suscrito al exchange desde la webApp de RabbitMQ */
         return new AnonymousQueue();
     }
 

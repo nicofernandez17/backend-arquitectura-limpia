@@ -18,6 +18,6 @@ public class RabbitMetamapaListener {
 
     @RabbitListener(queues = "#{hechosQueue.name}")
     public void recibirHecho(List<HechoDTO> hechos) {
-        hechoService.guardarHechosEnRepositorio(hechos); // guarda si no existe, etc.
+        hechoService.procesarHechos(hechos); // guarda si no existe, y envía al agregador.
     }
 }
