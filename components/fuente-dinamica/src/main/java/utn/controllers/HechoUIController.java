@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import utn.model.domain.Hecho;
 import utn.model.domain.Revision;
 import utn.model.dtos.HechoDTO;
+import utn.model.dtos.HechoFormDTO;
 import utn.model.dtos.HechoMapper;
 import utn.services.HechoService;
 import utn.services.RevisionService;
@@ -32,50 +33,18 @@ public class HechoUIController {
     }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<String> registrarHecho(
-            @RequestParam String titulo,
-            @RequestParam String descripcion,
-            @RequestParam String categoria,
-            @RequestParam double latitud,
-            @RequestParam double longitud,
-            @RequestParam("fecha_hecho") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fechaHecho,
-            @RequestParam(required= false) MultipartFile archivo) {
-        HechoDTO hechoDTO = HechoDTO.builder()
-                        .titulo(titulo)
-                        .descripcion(descripcion)
-                        .categoria(categoria)
-                        .latitud(latitud)
-                        .longitud(longitud)
-                        .fecha_hecho(fechaHecho)
-                        .archivo(archivo)
-                        .build();
+    public ResponseEntity<String> registrarHecho(@ModelAttribute HechoFormDTO hechoFormDTO) {
 
-        hechosUIService.registrarHecho(hechoDTO);
+        hechosUIService.registrarHecho(HechoMapper.fromHechoForm(hechoFormDTO));
         return ResponseEntity.status(HttpStatus.CREATED).body("Hecho registrado correctamente");
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Revision> actualizarHecho(
             @PathVariable String id,
-            @RequestParam String titulo,
-            @RequestParam String descripcion,
-            @RequestParam String categoria,
-            @RequestParam double latitud,
-            @RequestParam double longitud,
-            @RequestParam("fecha_hecho") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fechaHecho,
-            @RequestParam(required = false) MultipartFile archivo) {
-
-        HechoDTO hechoDTO = HechoDTO.builder()
-                .titulo(titulo)
-                .descripcion(descripcion)
-                .categoria(categoria)
-                .latitud(latitud)
-                .longitud(longitud)
-                .fecha_hecho(fechaHecho)
-                .archivo(archivo)
-                .build();
-
-        Revision revision = revisionService.crearRevision(hechoDTO, id);
+            @ModelAttribute HechoFormDTO hechoFormDTO) {
+        // aca cambiaron cosas, por si hay que buscar errores es un posible lugar
+        Revision revision = revisionService.crearRevision(HechoMapper.fromHechoForm(hechoFormDTO), id);
         return ResponseEntity.ok(revision);
     }
 

@@ -1,12 +1,12 @@
 package utn.model.lectores;
 
-import utn.model.HechoDTO;
+import utn.model.domain.Hecho;
 
 
 import java.util.List;
 
 public interface Lector {
 
-  List<HechoDTO> leer(String ruta);
+  List<Hecho> leer(String ruta);
 
 }

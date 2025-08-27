@@ -1,7 +1,7 @@
 package utn.repositories.impl;
 
 import org.springframework.stereotype.Repository;
-import utn.model.HechoDTO;
+import utn.model.domain.Hecho;
 import utn.repositories.IHechoRepository;
 
 import java.util.ArrayList;
@@ -11,15 +11,15 @@ import java.util.Optional;
 @Repository
 public class HechosRepository implements IHechoRepository {
 
-    private final List<HechoDTO> hechos = new ArrayList<>();
+    private final List<Hecho> hechos = new ArrayList<>();
 
-    public Optional<HechoDTO> findByTitulo(String titulo) {
+    public Optional<Hecho> findByTitulo(String titulo) {
         return hechos.stream()
                 .filter(h -> h.getTitulo().equalsIgnoreCase(titulo))
                 .findFirst();
     }
 
-    public void save(HechoDTO hecho) {
+    public void save(Hecho hecho) {
         // Reemplaza si ya existe con el mismo título
         findByTitulo(hecho.getTitulo()).ifPresentOrElse(
                 existente -> {
@@ -31,7 +31,7 @@ public class HechosRepository implements IHechoRepository {
     }
 
 
-    public List<HechoDTO> findAll() {
+    public List<Hecho> findAll() {
         return new ArrayList<>(hechos);
     }
 }

@@ -21,6 +21,7 @@ public class Hecho {
   private Ubicacion ubicacion;
   private LocalDate fecha;
   private LocalDate fechaDeCarga;
+  private LocalDate updated_at;
   private byte[] multimediaArchivo;
   private String multimediaNombre;
   private Origen origen;

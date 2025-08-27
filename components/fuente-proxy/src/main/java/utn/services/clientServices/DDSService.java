@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
-import utn.model.HechosResponseDTO;
-import utn.model.HechoDTO;
+import utn.model.domain.Hecho;
+import utn.model.dto.HechoMapper;
+import utn.model.dto.HechosResponseDTO;
+import utn.model.dto.HechoDTO;
 import utn.repositories.IHechoRepository;
 
 import java.time.LocalDateTime;
@@ -27,18 +29,21 @@ public class DDSService implements IFuenteService {
         this.hechosRepository = hechosRepository;
     }
 
-    public Mono<List<HechoDTO>> getHechos() {
+    // Aca cambié para que guarde los hechos con la clase Hecho, en lugar de guardar el DTO
+    public Mono<List<Hecho>> getHechos() {
         return webClient.get()
                 .uri("/api/desastres")
                 .retrieve()
                 .bodyToMono(HechosResponseDTO.class)
-                .map(HechosResponseDTO::getHechos)
+                .map(hechosResponseDTO -> {
+                    return hechosResponseDTO.getHechos().stream().map(HechoMapper::aDominio).toList();
+                })
                 .doOnNext(this::guardarHechosEnRepositorio);  // Guardar los hechos en el repositorio
     }
 
-    public void guardarHechosEnRepositorio(List<HechoDTO> hechos) {
+    public void guardarHechosEnRepositorio(List<Hecho> hechos) {
         LocalDateTime ahora = LocalDateTime.now();
-        for (HechoDTO hecho : hechos) {
+        for (Hecho hecho : hechos) {
             hecho.setCreated_at(ahora);  // Setea la fecha actual
             hechosRepository.save(hecho);  // Guarda el hecho en el repositorio
         }

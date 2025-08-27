@@ -67,20 +67,13 @@ component "Fuente Proxy" {
     ProxyAPI --> ProxyModel
 }
 
-' ==== metamapa ====
-component "Fuente MetaMapa" {
-    [ ] <<model>> as MetamapaModel
-    component " " <<API>> as MetamapaApi
-    AgregadorModel --> MetamapaApi
-    MetamapaApi --> MetamapaModel
-}
+
 
 ' ==== Servicio Externo (Nube Amarilla) ====
 cloud "API DDS" <<externo>> as ServicioExterno
 ProxyModel --> ServicioExterno : obtiene datos
 
-' ==== MetaMapa Externo (Rectangulo Morado) ====
-MetamapaModel --> MetamapaExterno : obtiene datos
+
 @enduml
 
 

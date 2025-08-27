@@ -4,7 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import utn.model.HechoDTO;
+import utn.model.dto.HechoDTO;
+import utn.model.dto.HechoMapper;
 import utn.services.HechosService;
 
 import java.time.LocalDateTime;
@@ -38,7 +39,7 @@ public class HechosController {
             LocalDateTime desde) {
 
 
-        return hechosService.obtenerDesdeFecha(desde);
+        return hechosService.obtenerDesdeFecha(desde).stream().map(HechoMapper :: aDTO).toList();
     }
 
 }

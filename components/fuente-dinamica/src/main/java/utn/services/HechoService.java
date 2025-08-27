@@ -46,16 +46,6 @@ public class HechoService {
 
     // Registra un nuevo hecho en el repositorio
     public String registrarHecho(HechoDTO hechoDTO) {
-        MultipartFile archivo = hechoDTO.getArchivo();
-
-        if(archivo != null && !archivo.isEmpty()) {
-            try {
-                hechoDTO.setArchivoContenido(archivo.getBytes());
-                hechoDTO.setArchivoNombre(archivo.getOriginalFilename());
-            } catch (IOException e) {
-                throw new RuntimeException("Error al leer el archivo", e);
-            }
-        }
 
         return hechosRepository.save(HechoMapper.aDominio(hechoDTO));
     }
