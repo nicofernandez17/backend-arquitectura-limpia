@@ -1,9 +1,23 @@
 package utn.models.helpers;
 
-public class Categoria {
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
+@Entity @Table (name = "categoria")
+public class Categoria {
+  //----------------------------------ATRIBUTOS-----------------------------------------------//
+  @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private String id; //TODO - Cambiar a long o Int; No se porque string
+
+  @Column(name = "nombre")
   private final String nombre;
 
+
+  //----------------------------------METODOS-----------------------------------------------//
   public Categoria(String categoriaNombre) {
     this.nombre = categoriaNombre;
   }

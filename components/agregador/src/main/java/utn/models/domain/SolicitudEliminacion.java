@@ -7,19 +7,40 @@ import utn.models.helpers.EstadoSolicitud;
 
 import java.time.LocalDateTime;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+
+@Entity @Table(name = "solicitud_eliminacion")
 @Data
 public class SolicitudEliminacion {
+  //----------------------------------ATRIBUTOS-----------------------------------------------//
 
+  @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @Column(name = "fecha_creacion", columnDefinition = "DATE")
   private final LocalDateTime fechaCreacion;
 
+  @Enumerated(EnumType.STRING)
+  @Column(name = "estado_solicitud")
   private EstadoSolicitud estado;
 
+  @ManyToOne
+  @JoinColumn(name = "hecho_id", referencedColumnName = "id")
   private final Hecho hecho;
 
-
+  @Column(name = "motivo", columnDefinition = "TEXT")
   private final String motivo;
+
+  //----------------------------------METODOS-----------------------------------------------//
 
   public SolicitudEliminacion(Hecho hecho, String motivo) {
 

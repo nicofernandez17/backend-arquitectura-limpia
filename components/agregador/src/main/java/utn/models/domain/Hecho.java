@@ -9,27 +9,74 @@ import utn.models.helpers.*;
 import java.time.LocalDate;
 import java.util.*;
 
-@Data
-public class Hecho {
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
-  private String id;
+@Data
+@Entity @Table(name = "hecho")
+public class Hecho {
+  //----------------------------------ATRIBUTOS-----------------------------------------------//
+  @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private String id; //TODO - Cambiar a long o Int; No se porque string
+
+  @Enumerated(EnumType.STRING)
+  @Column(name = "consenso_nivel", nullable = false)
   private ConsensoNivel consensoNivel = ConsensoNivel.NINGUNO;
 
+  @Column(name = "descripcion", columnDefinition = "TEXT")
   private final String descripcion;
+
+  @Column(name = "titulo")
   private String titulo;
+
+  @OneToOne
+  @JoinColumn(name = "categoria_id", referencedColumnName = "id")
   private Categoria categoria;
+
+  @OneToOne
+  @JoinColumn(name = "ubicacion_id", referencedColumnName = "id")
   private Ubicacion ubicacion;
+
+  @Column(name = "fecha", columnDefinition = "DATE")
   private LocalDate fecha;
+
+  @Column(name = "fecha_de_carga", columnDefinition = "DATE")
   private LocalDate fechaDeCarga;
+
+  @Column(name = "updated_at", columnDefinition = "DATE")
   private LocalDate updated_at;
+
+  @Transient // Actualizar a un string con el path al archivo. Como mucho la posibilidad de subir el archivo y guardar el path
+              // No vas a guardar un archivo en una base de datos relacional.
   private byte[] multimediaArchivo;
+
+  @Column(name = "multimedia_nombre")
   private String multimediaNombre;
+
+  @Enumerated(EnumType.STRING)
+  @Column(name = "origen", nullable = false)
   private Origen origen;
 
+  @Transient // TODO - Completar cuando veamos listas de datos simples
   private final List<String> etiquetas = new ArrayList<>();
+
+  @Column(name = "eliminado")
   private boolean eliminado = false;
 
+  @Transient //TODO - Completar cuando veamos sets
   private final Set<FuenteNombre> fuentes = new HashSet<>();
+
+  //----------------------------------METODOS-----------------------------------------------//
 
   // Constructor básico
   public Hecho(String descripcionDelHecho) {

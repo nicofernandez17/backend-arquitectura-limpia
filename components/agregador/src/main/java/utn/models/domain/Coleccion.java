@@ -12,24 +12,53 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
+
 @Data
 @Builder
+@Entity
+@Table(name = "colleccion")
 public class Coleccion {
-
-  private String id;
+  //----------------------------------ATRIBUTOS-----------------------------------------------//
+  @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private String id; //TODO - Cambiar a long o Int; No se porque string
 
   @Builder.Default
+  @OneToMany(mappedBy = "colleccion")
+  @JoinColumn(name = "hecho_id", referencedColumnName = "id")
   private List<Hecho> hechos = new ArrayList<>();
 
+  @Column(name = "algoritmo")
   private IAlgoritmoConsenso algoritmo;
+
+  @Column(name = "titulo")
   private String titulo;
 
+  @Column(name = "descripcion", columnDefinition = "TEXT")
   private String descripcion;
+
+  //@OneToMany(mappedBy = "colleccion")
+  //@JoinColumn(name = "criterio_id", referencedColumnName = "id")
+  @Transient //TODO - Actualizar cuando sepamos como vincular con Interfaces
   private List<ICriterioDePertenencia> criteriosDePertenencia;
 
   @Builder.Default
+  @Enumerated(EnumType.STRING)
+  @Column(name = "fuente")
   private List<FuenteNombre> fuentes = new ArrayList<>();
 
+
+  //----------------------------------METODOS-----------------------------------------------//
   public void agregarHecho(Hecho hecho) {
     if (hecho == null || hechos.contains(hecho)) return;
 
