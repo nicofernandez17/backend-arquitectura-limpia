@@ -24,6 +24,7 @@
     <module>components/fuente-dinamica</module>
     <module>components/fuente-estatica</module>
     <module>components/fuente-proxy</module>
+    <module>components/servicioEstadisticas</module>
 
   </modules>
 
