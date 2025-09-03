@@ -1,22 +1,34 @@
 package utn.model.domain;
 
-import lombok.Builder;
-import lombok.Data;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Data
 @Builder
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "hecho")
 public class Hecho {
 
+    @Id
     private String id;
+    @Column(name = "titulo")
 
     private String titulo;
-    private final String descripcion;
+    private String descripcion;
+    @Transient
     private Categoria categoria;
+    @Transient
     private Ubicacion ubicacion;
     private LocalDateTime fecha;
     private LocalDateTime fechaDeCarga;
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
+
+
 }
