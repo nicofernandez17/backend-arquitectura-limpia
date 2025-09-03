@@ -17,13 +17,16 @@ public class Hecho {
 
     @Id
     private String id;
-    @Column(name = "titulo")
 
+    @Column(name = "titulo")
     private String titulo;
+
     private String descripcion;
-    @Transient
+
+    @ManyToOne(fetch = FetchType.LAZY)
     private Categoria categoria;
-    @Transient
+
+    @OneToOne
     private Ubicacion ubicacion;
     private LocalDateTime fecha;
     private LocalDateTime fechaDeCarga;
