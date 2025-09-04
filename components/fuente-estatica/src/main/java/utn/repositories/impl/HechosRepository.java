@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class HechosRepository implements IHechoRepository {
+public class HechosRepository  {
 
     private final List<Hecho> hechos = new ArrayList<>();
 

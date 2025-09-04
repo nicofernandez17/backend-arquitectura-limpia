@@ -16,17 +16,19 @@ import java.time.LocalDateTime;
 public class Hecho {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(name = "titulo")
     private String titulo;
 
+    @Column(columnDefinition = "TEXT")
     private String descripcion;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Categoria categoria;
 
-    @OneToOne
+    @Embedded
     private Ubicacion ubicacion;
     private LocalDateTime fecha;
     private LocalDateTime fechaDeCarga;

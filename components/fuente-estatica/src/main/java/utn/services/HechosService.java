@@ -30,7 +30,7 @@ public class HechosService {
     public List<Hecho> cargarDesdeCsv() {
         List<Hecho> nuevosHechos = lectorCsv.leer(archivoRuta);
 
-        nuevosHechos.forEach(hechosRepository::save);
+        hechosRepository.saveAll(nuevosHechos);
 
         return hechosRepository.findAll();
     }

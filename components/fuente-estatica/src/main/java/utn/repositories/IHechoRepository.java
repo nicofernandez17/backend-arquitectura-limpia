@@ -5,8 +5,14 @@ import utn.model.domain.Hecho;
 import java.util.List;
 import java.util.Optional;
 
-public interface IHechoRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.Optional;
+
+
+public interface IHechoRepository extends JpaRepository<Hecho, Long> {
+
+    // Spring Data JPA genera la consulta automáticamente
     Optional<Hecho> findByTitulo(String titulo);
-    void save(Hecho hecho);
-    List<Hecho> findAll();
+
+
 }
