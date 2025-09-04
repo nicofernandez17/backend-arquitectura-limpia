@@ -48,8 +48,10 @@ public class HechoUIController {
         return ResponseEntity.ok(revision);
     }
 
+    /*
+
     @GetMapping("/{id}/archivo")
-    public ResponseEntity<byte[]> descargarArchivo(@PathVariable String id) {
+    public ResponseEntity<byte[]> descargarArchivo(@PathVariable Long id) {
         Optional<Hecho> hecho = hechosUIService.obtenerPorId(id);
 
         if (hecho.isEmpty() || hecho.get().getMultimediaArchivo() == null) {
@@ -60,6 +62,22 @@ public class HechoUIController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + hecho.get().getMultimediaNombre() + "\"")
                 .contentType(MediaType.APPLICATION_OCTET_STREAM)
                 .body(hecho.get().getMultimediaArchivo());
+    }
+    */
+
+    @GetMapping("/{id}/archivo")
+    public ResponseEntity<byte[]> descargarArchivo(@PathVariable Long id) {
+        Optional<HechoDTO> hechoDTO = hechosUIService.obtenerPorId(id);
+
+        if (hechoDTO.isEmpty() || hechoDTO.get().getArchivoContenido() == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment; filename=\"" + hechoDTO.get().getArchivoNombre() + "\"")
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .body(hechoDTO.get().getArchivoContenido());
     }
 
 }

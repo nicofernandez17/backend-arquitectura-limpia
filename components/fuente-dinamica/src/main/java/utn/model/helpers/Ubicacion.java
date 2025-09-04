@@ -1,22 +1,26 @@
 package utn.model.helpers;
 
+import jakarta.persistence.Embeddable;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@Embeddable
 public class Ubicacion {
 
-  private final Double latitud;
+  private Double latitud;
 
 
-  private final Double longitud;
+  private Double longitud;
 
   public Ubicacion(Double latitud, Double longitud) {
     this.latitud = latitud;
     this.longitud = longitud;
   }
 
-  public Double getLongitud() {
-    return longitud;
-  }
-
-  public Double getLatitud() {
-    return latitud;
-  }
 }

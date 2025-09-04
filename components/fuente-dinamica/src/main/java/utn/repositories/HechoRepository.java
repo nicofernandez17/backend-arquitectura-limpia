@@ -14,12 +14,12 @@ public class HechoRepository {
 
     // Guarda un hecho individual (nuevo o actualizado)
     public String save(Hecho hecho) {
-        String id = hecho.getId();
+        String id = String.valueOf(hecho.getId());
         boolean esNuevo = (id == null || id.isBlank());
 
         if (esNuevo) {
             id = String.valueOf(idGenerator.getAndIncrement());
-            hecho.setId(id);
+            hecho.setId(Long.valueOf(id));
         }
 
         hechos.put(id, hecho);
@@ -41,7 +41,7 @@ public class HechoRepository {
             throw new IllegalArgumentException("No existe un hecho con ID: " + id);
         }
 
-        hechoActualizado.setId(id); // Garantizar que mantiene el ID original
+        hechoActualizado.setId(Long.valueOf(id)); // Garantizar que mantiene el ID original
         hechos.put(id, hechoActualizado);
         return id;
     }

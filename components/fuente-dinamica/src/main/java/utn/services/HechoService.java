@@ -1,5 +1,6 @@
 package utn.services;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -7,6 +8,7 @@ import utn.model.domain.Hecho;
 import utn.model.dtos.HechoDTO;
 import utn.model.dtos.HechoMapper;
 import utn.repositories.HechoRepository;
+import utn.repositories.IHechoRepository;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -16,45 +18,58 @@ import java.util.Optional;
 @Service
 public class HechoService {
 
-
-    private final HechoRepository hechosRepository;
+    private final IHechoRepository hechosRepository;
 
     @Autowired
-    public HechoService(HechoRepository hechosRepository) {
+    public HechoService(IHechoRepository hechosRepository) {
         this.hechosRepository = hechosRepository;
     }
 
-
-    // Obtiene todos los hechos desde el repositorio
-    public List<Hecho> obtenerTodos() {
-        return hechosRepository.findAll();
-    }
-
-    // Obtiene un hecho por id
-    public Optional<Hecho> obtenerPorId(String id) {
-        return hechosRepository.findById(id);
-    }
-
-    public List<HechoDTO> obtenerDesdeFecha(LocalDateTime desde) {
-        LocalDateTime fecha = desde != null ? desde : LocalDateTime.of(2000, 1, 1, 0, 0);
-
+    // Obtiene todos los hechos
+    public List<HechoDTO> obtenerTodos() {
         return hechosRepository.findAll().stream()
-                .filter(h -> h.getFechaDeCarga() != null && h.getFechaDeCarga().isAfter(fecha))
                 .map(HechoMapper::aDTO)
                 .toList();
     }
 
-    // Registra un nuevo hecho en el repositorio
-    public String registrarHecho(HechoDTO hechoDTO) {
-
-        return hechosRepository.save(HechoMapper.aDominio(hechoDTO));
+    // Obtiene un hecho por id
+    public Optional<HechoDTO> obtenerPorId(Long id) {
+        return hechosRepository.findById(id)
+                .map(HechoMapper::aDTO);
     }
 
-    public String actualizarHecho(String id,HechoDTO hechoDTO) {
-
-        return hechosRepository.update(id,HechoMapper.aDominio(hechoDTO));
+    // Obtiene hechos desde una fecha determinada
+    public List<HechoDTO> obtenerDesdeFecha(LocalDateTime desde) {
+        LocalDateTime fecha = desde != null ? desde : LocalDateTime.of(2000, 1, 1, 0, 0);
+        return hechosRepository.findByFechaDeCargaAfter(fecha).stream()
+                .map(HechoMapper::aDTO)
+                .toList();
     }
 
+    // Registra un nuevo hecho
+    public HechoDTO registrarHecho(HechoDTO hechoDTO) {
+        Hecho hecho = HechoMapper.aDominio(hechoDTO);
+        Hecho guardado = hechosRepository.save(hecho);
+        return HechoMapper.aDTO(guardado);
+    }
 
+    // Actualiza un hecho existente
+    public HechoDTO actualizarHecho(Long id, HechoDTO hechoDTO) {
+        Hecho actualizado = hechosRepository.findById(id)
+                .map(h -> {
+                    HechoMapper.updateDominio(h, hechoDTO); // Copia los campos del DTO
+                    return hechosRepository.save(h);
+                })
+                .orElseThrow(() -> new EntityNotFoundException("Hecho no encontrado con id: " + id));
 
+        return HechoMapper.aDTO(actualizado);
+    }
+
+    // Eliminar un hecho
+    public void eliminarHecho(Long id) {
+        if (!hechosRepository.existsById(id)) {
+            throw new EntityNotFoundException("Hecho no encontrado con id: " + id);
+        }
+        hechosRepository.deleteById(id);
+    }
 }

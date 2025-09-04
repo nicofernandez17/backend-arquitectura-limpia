@@ -31,10 +31,11 @@ public class HechoMapper {
                 .fecha_hecho(Optional.ofNullable(hecho.getFecha())
                         .map(LocalDate::atStartOfDay)
                         .orElse(null))
-                .created_at(hecho.getFechaDeCarga()) // ya es LocalDateTime
+                .created_at(hecho.getFechaDeCarga())
                 .updated_at(hecho.getUpdated_at())
                 .archivoContenido(hecho.getMultimediaArchivo())
                 .archivoNombre(hecho.getMultimediaNombre())
+                .usuarioId(hecho.getUsuarioId())
                 .build();
     }
 
@@ -48,13 +49,8 @@ public class HechoMapper {
         }
 
         Ubicacion ubicacion = new Ubicacion(dto.getLatitud(), dto.getLongitud());
-
         LocalDate fecha = dto.getFecha_hecho() != null ? dto.getFecha_hecho().toLocalDate() : null;
-
-        // Usar la fecha de creación si viene, o asignar fecha actual con hora
-        LocalDateTime fechaDeCarga = dto.getCreated_at() != null
-                ? dto.getCreated_at()
-                : LocalDateTime.now();
+        LocalDateTime fechaDeCarga = dto.getCreated_at() != null ? dto.getCreated_at() : LocalDateTime.now();
 
         Hecho hecho = new Hecho(dto.getTitulo(),
                 dto.getDescripcion(),
@@ -71,18 +67,45 @@ public class HechoMapper {
         return hecho;
     }
 
-    public static HechoDTO fromHechoForm (HechoFormDTO hechoFormDTO) {
+    // Actualiza una entidad existente con datos del DTO
+    public static void updateDominio(Hecho hecho, HechoDTO dto) {
+        if (dto.getTitulo() != null) hecho.setTitulo(dto.getTitulo());
+        if (dto.getDescripcion() != null) hecho.setDescripcion(dto.getDescripcion());
+
+        if (dto.getCategoria() != null && !dto.getCategoria().isBlank()) {
+            hecho.setCategoria(new Categoria(dto.getCategoria()));
+        }
+
+        if (dto.getLatitud() != null && dto.getLongitud() != null) {
+            hecho.setUbicacion(new Ubicacion(dto.getLatitud(), dto.getLongitud()));
+        }
+
+        if (dto.getFecha_hecho() != null) {
+            hecho.setFecha(dto.getFecha_hecho().toLocalDate());
+        }
+
+        if (dto.getArchivoContenido() != null) {
+            hecho.setMultimediaArchivo(dto.getArchivoContenido());
+            hecho.setMultimediaNombre(dto.getArchivoNombre());
+        }
+
+        // Actualizar timestamp de actualización
+        hecho.setUpdated_at(LocalDateTime.now());
+    }
+
+    // Form DTO → DTO
+    public static HechoDTO fromHechoForm(HechoFormDTO hechoFormDTO) {
         MultipartFile archivo = hechoFormDTO.getArchivo();
         byte[] archivoContenido = null;
         String archivoNombre = null;
-        if (archivo != null && !archivo.isEmpty() )
-        {
+
+        if (archivo != null && !archivo.isEmpty()) {
             try {
                 archivoContenido = archivo.getBytes();
+                archivoNombre = archivo.getOriginalFilename();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            archivoNombre = archivo.getOriginalFilename();
         }
 
         return HechoDTO.builder()
@@ -92,10 +115,10 @@ public class HechoMapper {
                 .latitud(hechoFormDTO.getLatitud())
                 .longitud(hechoFormDTO.getLongitud())
                 .fecha_hecho(hechoFormDTO.getFecha())
-                .created_at(null) // TODO verificar
+                .created_at(null)
                 .archivoContenido(archivoContenido)
                 .archivoNombre(archivoNombre)
-                .usuarioId(null/*TODO completar*/)
+                .usuarioId(null)
                 .build();
     }
 }

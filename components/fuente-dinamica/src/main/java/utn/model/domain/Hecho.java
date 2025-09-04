@@ -1,8 +1,7 @@
 package utn.model.domain;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
 import utn.model.helpers.Categoria;
 import utn.model.helpers.Origen;
 import utn.model.helpers.Ubicacion;
@@ -15,38 +14,51 @@ import java.util.Collections;
 import java.util.List;
 
 @Data
+@Builder
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "hecho")
 public class Hecho {
 
   public Hecho(String descripcionDelHecho) {
     this.descripcion = descripcionDelHecho;
   }
 
-  private String id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-  @Getter
+
   private String titulo;
-  @Getter
-  private final String descripcion;
-  @Getter
+
+  @Column(columnDefinition = "TEXT")
+  private String descripcion;
+
+  @Embedded
   private Categoria categoria;
-  @Getter
+
+  @Embedded
   private Ubicacion ubicacion;
-  @Getter
+
   private LocalDate fecha;
-  @Getter
+
   private LocalDateTime fechaDeCarga;
-  @Getter
+
   private LocalDateTime updated_at;
-  @Getter
-  @Setter
+
   private byte[] multimediaArchivo;
-  @Getter
-  @Setter
+
   private String multimediaNombre;
-  @Getter
+
+  @Enumerated(EnumType.STRING)
   private Origen origen;
+
+  @ElementCollection
   private List<String> etiquetas;
-  @Getter
+
   private boolean eliminado;
 
   private String usuarioId;
@@ -95,4 +107,6 @@ public class Hecho {
   public boolean puedeAgregarseacoleccion() {
     return !eliminado;
   }
+
+
 }
