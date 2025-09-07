@@ -63,4 +63,22 @@ public class MetaMapaService  {
 
     }
 
+    public void procesarHecho(HechoDTO hecho) {
+
+        // TODO filtramos los hechos que son nuevos y los ponemos en esta variable
+        Hecho h = HechoMapper.aDominio(hecho);
+
+        // Guardamos en el repository solo los hechos nuevos
+        hechosRepository.save(h);
+
+        // Enviamos al agregador los hechos que ingresaron
+        webClient.post()
+                .uri("/colecciones/consumirMetaMapa")
+                .bodyValue(List.of(hecho))
+                .retrieve()
+                .bodyToMono(Void.class)
+                .subscribe();
+
+    }
+
 }

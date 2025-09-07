@@ -1,23 +1,21 @@
 package utn.services;
 
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 import utn.models.helpers.FuenteNombre;
 
 import java.util.Map;
 import java.util.Set;
 
+@Setter
+@Getter
 @Component
+@ConfigurationProperties(prefix = "fuentes")
 public class FuenteProvider {
 
-    private final Map<FuenteNombre, String> urls;
-
-    public FuenteProvider() {
-        urls = Map.of(
-            FuenteNombre.ESTATICA, "http://localhost:8083/hechos",
-            FuenteNombre.DINAMICA, "http://localhost:8082/hechos",
-            FuenteNombre.PROXY,    "http://localhost:8084/hechos"
-        );
-    }
+    private Map<FuenteNombre, String> urls;
 
     public String getUrl(FuenteNombre fuente) {
         return urls.get(fuente);
