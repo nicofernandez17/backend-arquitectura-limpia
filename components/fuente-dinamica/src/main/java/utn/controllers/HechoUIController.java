@@ -44,7 +44,10 @@ public class HechoUIController {
             @PathVariable String id,
             @ModelAttribute HechoFormDTO hechoFormDTO) {
         // aca cambiaron cosas, por si hay que buscar errores es un posible lugar
-        Revision revision = revisionService.crearRevision(HechoMapper.fromHechoForm(hechoFormDTO), id);
+        Revision revision = revisionService.crearRevision(
+                HechoMapper.aDominio(HechoMapper.fromHechoForm(hechoFormDTO)),
+                id
+        );
         return ResponseEntity.ok(revision);
     }
 

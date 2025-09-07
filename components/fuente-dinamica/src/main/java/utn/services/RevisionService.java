@@ -1,10 +1,14 @@
 package utn.services;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
+import utn.model.domain.Hecho;
 import utn.model.domain.Revision;
 import utn.model.dtos.HechoDTO;
+import utn.model.dtos.HechoMapper;
 import utn.model.dtos.RevisionProcesarDTO;
 import utn.model.helpers.EstadoRevision;
+import utn.repositories.IRevisionRepository;
 import utn.repositories.RevisionRepository;
 
 import java.time.LocalDateTime;
@@ -14,16 +18,16 @@ import java.util.Optional;
 public class RevisionService {
 
     private final HechoService hechoService;
-    private final RevisionRepository revisionRepository;
+    private final IRevisionRepository revisionRepository;
 
-    public RevisionService(HechoService hechoService, RevisionRepository revisionRepository) {
+    public RevisionService(HechoService hechoService, IRevisionRepository revisionRepository) {
         this.hechoService = hechoService;
         this.revisionRepository = revisionRepository;
     }
 
-    public Revision crearRevision(HechoDTO hechoDTO,String id) {
-
-        return revisionRepository.save(new Revision(hechoDTO,id));
+    // Crear revisión a partir de un Hecho
+    public Revision crearRevision(Hecho hechoPropuesto, String id) {
+        return revisionRepository.save(new Revision(hechoPropuesto,id));
     }
 
     public void procesarRevision(Long revisionId, RevisionProcesarDTO request) {
@@ -35,12 +39,13 @@ public class RevisionService {
     }
 
     public void aceptarRevision(Long revisionId) {
-        Revision revision = revisionRepository.findById(revisionId);
+        Revision revision = revisionRepository.findById(revisionId)
+                .orElseThrow(() -> new EntityNotFoundException("Revision no encontrada con id: " + revisionId));
 
-        HechoDTO dtoPropuesto = revision.getContenidoPropuesto();
+        Hecho hechoPropuesto = revision.getContenidoPropuesto();
 
         // Aplica los cambios usando el HechoService
-        hechoService.registrarHecho(dtoPropuesto);
+        hechoService.registrarHecho(HechoMapper.aDTO(hechoPropuesto));
 
         // Actualiza el estado de la revisión
         revision.setEstado(EstadoRevision.ACEPTADA);
@@ -50,7 +55,8 @@ public class RevisionService {
     }
 
     public void rechazarRevision(Long revisionId, String comentarioModerador) {
-        Revision revision = revisionRepository.findById(revisionId);
+        Revision revision = revisionRepository.findById(revisionId)
+                .orElseThrow(() -> new EntityNotFoundException("Revision no encontrada con id: " + revisionId));
 
         revision.setEstado(EstadoRevision.RECHAZADA);
         revision.setComentarioModerador(comentarioModerador);
