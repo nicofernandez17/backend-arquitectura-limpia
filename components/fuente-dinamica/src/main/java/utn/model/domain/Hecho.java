@@ -37,7 +37,7 @@ public class Hecho {
   @Column(columnDefinition = "TEXT")
   private String descripcion;
 
-  @Embedded
+  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
   private Categoria categoria;
 
   @Embedded

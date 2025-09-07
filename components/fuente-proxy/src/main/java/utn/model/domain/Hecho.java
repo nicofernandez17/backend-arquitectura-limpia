@@ -1,18 +1,37 @@
 package utn.model.domain;
 
-import lombok.Builder;
-import lombok.Data;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Data
 @Builder
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "hecho")
 public class Hecho {
+
+    @Id
+    private Long id;
+
     private String titulo;
+
+    @Column(columnDefinition = "TEXT")
     private String descripcion;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Categoria categoria;
+
+    @Embedded
     private Ubicacion ubicacion;
     private LocalDateTime fecha;
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
+
+
+
 }

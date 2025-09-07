@@ -7,15 +7,21 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@Embeddable
+@Entity
+@Table(name="categoria")
 public class Categoria {
 
 
   private String nombre;
 
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
+
   public Categoria(String categoriaNombre) {
     this.nombre = categoriaNombre;
   }
+
 
 
 }
