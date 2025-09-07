@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Hecho · MetaMapa</title>
+<link href="assets/styles.css" rel="stylesheet"/>
+<link href="assets/styles.css" rel="stylesheet"/><link crossorigin="" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="" rel="stylesheet"/></head>
+<body><header class="mm-header"><div class="mm-header-top"><a class="mm-brand" href="landing.html">MetaMapa</a><nav class="mm-nav"><span class="mm-page">Hecho</span><a class="mm-link" href="menu_Colecciones.html">Colecciones</a><a class="mm-link" href="login.html" id="nav-login">Login</a><a class="mm-link" href="register.html" id="nav-register">Registrarte</a><div class="mm-profile" hidden="" id="nav-profile"><button class="mm-btn">Mi Perfil</button><div class="mm-dropdown"><a class="mm-dd-item" href="mi_perfil.html">Ir a mi perfil</a><a class="mm-dd-item" href="panel_control.html" id="dd-panel">Ir a Panel de control</a></div></div></nav></div></header>
+<nav class="nav">
+<div class="brand">🗺️ Hechos<span class="badge">TP Diseño</span></div>
+<div class="actions">
+<a class="btn" href="landing.html">Landing</a>
+<a class="btn" href="menu_Colecciones.html">Colecciones</a>
+<a class="btn" href="panel_control.html">Panel de control</a>
+<a class="btn" href="login.html">Login</a>
+<a class="btn" href="register.html">Registrarte</a>
+</div>
+</nav>
+<main class="container">
+<div class="grid grid-2">
+<div class="card">
+<div class="content">
+<h2>Mapa</h2>
+<div class="map">[Mapa]</div>
+<div class="small">Ubicación: <span data-field="ubicacion">-</span></div>
+</div>
+</div>
+<div class="card">
+<div class="content">
+<h2>Información general</h2>
+<div class="grid">
+<div><strong>Título:</strong> <span data-field="titulo">-</span></div>
+<div><strong>Categoría:</strong> <span data-field="categoria">-</span></div>
+<div><strong>Fecha:</strong> <span data-field="fecha">-</span></div>
+<div><strong>Fuente:</strong> <span data-field="fuente">-</span></div>
+<div><strong>Multimedia:</strong> <span class="small">Archivo adjunto en carga</span></div>
+</div>
+</div>
+</div>
+</div>
+<div class="card" style="margin-top:16px">
+<div class="content">
+<h2>Descripción</h2>
+<p data-field="descripcion">-</p>
+<div class="actions">
+<a class="btn" href="menu_Colecciones.html">Volver a colección</a>
+<button class="btn danger">Eliminar hecho</button>
+</div>
+</div>
+</div>
+</main>
+
+<script src="assets/app.js"></script>
+<footer class="mm-footer"><div>© 2025 MetaMapa - Todos los derechos reservados</div><div><a href="https://www.argentina.gob.ar/">Información legal y privacidad</a></div></footer><script src="assets/app.js"></script><script crossorigin="" integrity="" src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script></body>
+</html>
