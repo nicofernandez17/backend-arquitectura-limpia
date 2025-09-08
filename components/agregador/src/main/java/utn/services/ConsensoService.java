@@ -16,17 +16,17 @@ import java.util.List;
 public class ConsensoService {
 
     private final ColeccionRepository coleccionRepo;
-    private final FuenteConfig fuenteConfig;
+    private final FuenteProvider fuenteConfig;
 
     @Autowired
     public ConsensoService(ColeccionRepository coleccionRepo,
-                           FuenteConfig fuenteConfig) {
+                           FuenteProvider fuenteConfig) {
         this.coleccionRepo = coleccionRepo;
         this.fuenteConfig = fuenteConfig;
     }
 
     public void aplicarConsensoPorColeccion() {
-        int totalFuentes = fuenteConfig.getUrls().size();
+        int totalFuentes = fuenteConfig.getTodasLasFuentes().size();
         List<Coleccion> colecciones = coleccionRepo.findAll();
 
         for (Coleccion coleccion : colecciones) {
