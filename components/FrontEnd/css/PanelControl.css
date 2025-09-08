@@ -9,3 +9,7 @@
   margin:0 auto;
   padding:16px
 }
+
+.grid-3 {
+  grid-template-columns: repeat(3, minmax(0,1fr));
+}
