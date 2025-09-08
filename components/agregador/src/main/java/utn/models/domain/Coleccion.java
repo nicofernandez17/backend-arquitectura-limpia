@@ -1,8 +1,6 @@
 package utn.models.domain;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.Getter;
+import lombok.*;
 import utn.models.algoritmos.IAlgoritmoConsenso;
 import utn.models.criterios.ICriterioDePertenencia;
 import utn.models.helpers.ConsensoNivel;
@@ -26,6 +24,10 @@ import jakarta.persistence.Transient;
 
 @Data
 @Builder
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "colleccion")
 public class Coleccion {

@@ -1,28 +1,19 @@
 package utn.models.domain;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
 import utn.models.helpers.*;
 
 
 import java.time.LocalDate;
 import java.util.*;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
-
 @Data
+@Builder
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity @Table(name = "hecho")
 public class Hecho {
   //----------------------------------ATRIBUTOS-----------------------------------------------//
@@ -34,7 +25,7 @@ public class Hecho {
   private ConsensoNivel consensoNivel = ConsensoNivel.NINGUNO;
 
   @Column(name = "descripcion", columnDefinition = "TEXT")
-  private final String descripcion;
+  private String descripcion;
 
   @Column(name = "titulo")
   private String titulo;
@@ -67,13 +58,16 @@ public class Hecho {
   @Column(name = "origen", nullable = false)
   private Origen origen;
 
-  @Transient // TODO - Completar cuando veamos listas de datos simples
+  @ElementCollection
   private final List<String> etiquetas = new ArrayList<>();
 
   @Column(name = "eliminado")
   private boolean eliminado = false;
 
-  @Transient //TODO - Completar cuando veamos sets
+  @ElementCollection(targetClass = FuenteNombre.class, fetch = FetchType.EAGER)
+  @CollectionTable(name = "hecho_fuentes", joinColumns = @JoinColumn(name = "hecho_id"))
+  @Enumerated(EnumType.STRING) // guarda el nombre del enum en la tabla
+  @Column(name = "fuente")
   private final Set<FuenteNombre> fuentes = new HashSet<>();
 
   //----------------------------------METODOS-----------------------------------------------//
