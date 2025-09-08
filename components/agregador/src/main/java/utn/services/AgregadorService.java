@@ -12,6 +12,7 @@ import utn.models.domain.Hecho;
 import utn.models.dtos.HechoDTO;
 import utn.models.dtos.HechoMapper;
 import utn.models.helpers.FuenteNombre;
+import utn.models.helpers.NormalizadorHechos;
 import utn.repositories.ColeccionRepository;
 import utn.repositories.HechoRepository;
 import utn.services.rabbitMQ.RabbitPublisher;
@@ -25,6 +26,7 @@ public class AgregadorService {
     private final HechoRepository hechoRepo;
     private final ColeccionRepository coleccionRepo;
     private final FuenteProvider fuenteProvider;
+    private final NormalizadorHechos normalizadorHechos;
 
     /* Esto hay que usarlo cuando entre nuevos hechos para que los publique a
     la cola a la que suscriben las fuentes proxys conectadas a esta instancia.
@@ -41,6 +43,7 @@ public class AgregadorService {
         this.coleccionRepo = coleccionRepo;
         this.fuenteProvider = fuenteProvider;
         this.publisherService = publisherService;
+        this.normalizadorHechos = new NormalizadorHechos();
     }
 
     public void cargarHechosYAsignar() {
@@ -79,7 +82,10 @@ public class AgregadorService {
             }
         }
         System.out.println("Hechos ingresando: " + nuevosHechos.size());
-        hechoRepo.saveAll(nuevosHechos);
+        // Normalizar nuevosHechos antes del saveAll
+        List<Hecho> nuevosHechosNormalizados = nuevosHechos.stream().map(normalizadorHechos::normalizar).toList();
+
+        hechoRepo.saveAll(nuevosHechosNormalizados);
 
         // le paso al publisher los nuevos hechos en formato DTO
         publisherService.publicarHechos(nuevosHechos.stream().map(HechoMapper::aDTO).toList());
