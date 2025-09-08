@@ -1,0 +1,12 @@
+.descripcion {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  white-space: normal;
+  max-width: 100%;
+}
+
+.container {
+  width: 80%;
+  margin:0 auto;
+  padding:16px
+}

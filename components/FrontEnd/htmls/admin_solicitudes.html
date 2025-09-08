@@ -1,67 +1,90 @@
 <!DOCTYPE html>
 
 <html lang="es">
+
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>Admin Solicitudes · MetaMapa</title>
-<link href="assets/styles.css" rel="stylesheet"/>
-<link href="assets/styles.css" rel="stylesheet"/><link href="assets/styles.css" rel="stylesheet"/></head>
-<body><header class="mm-header"><div class="mm-header-top"><a class="mm-brand" href="landing.html">MetaMapa</a><nav class="mm-nav"><span class="mm-page">Admin Solicitudes</span><a class="mm-link" href="menu_Colecciones.html">Colecciones</a><a class="mm-link" href="login.html" id="nav-login">Login</a><a class="mm-link" href="register.html" id="nav-register">Registrarte</a><div class="mm-profile" hidden="" id="nav-profile"><button class="mm-btn">Mi Perfil</button><div class="mm-dropdown"><a class="mm-dd-item" href="mi_perfil.html">Ir a mi perfil</a><a class="mm-dd-item" href="panel_control.html" id="dd-panel">Ir a Panel de control</a></div></div></nav></div></header><main class="container"><h1>Solicitudes de eliminación</h1><p class="muted">Revisa y gestiona las solicitudes. Haz clic en “Ampliar” para ver la descripción completa.</p><div class="cards"><article class="card"><div class="card-head"><strong>#1024</strong><span class="muted">Colección: Medioambiente · 2025-08-21</span></div><details><summary class="btn-link">Ampliar</summary><p>Se solicita eliminar el hecho 'Tala de árboles en Francia' debido a que fue mal cargado. La descripción incluye detalles y justificaciones con más de 500 caracteres para permitir evaluación adecuada. Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum </p></details><div class="row gap"><button class="mm-btn success">Aceptar</button><button class="mm-btn danger">Rechazar</button></div></article><article class="card"><div class="card-head"><strong>#1025</strong><span class="muted">Colección: Reportes Urbanos · 2025-08-22</span></div><details><summary class="btn-link">Ampliar</summary><p>Se solicita eliminar el hecho 'Incidente en Río Azul' por duplicado. El usuario adjunta enlaces y referencias para corroborar. Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum </p></details><div class="row gap"><button class="mm-btn success">Aceptar</button><button class="mm-btn danger">Rechazar</button></div></article><article class="card"><div class="card-head"><strong>#1026</strong><span class="muted">Colección: Infraestructura · 2025-08-23</span></div><details><summary class="btn-link">Ampliar</summary><p>Se solicita eliminar el hecho 'Corte de energía en Zona Norte' por falta de fuente verificable. Se adjunta explicación detallada y alternativas. Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum </p></details><div class="row gap"><button class="mm-btn success">Aceptar</button><button class="mm-btn danger">Rechazar</button></div></article></div></main>
-<nav class="nav">
-<div class="brand">🗺️ Hechos<span class="badge">TP Diseño</span></div>
-<div class="actions">
-<a class="btn" href="landing.html">Landing</a>
-<a class="btn" href="menu_Colecciones.html">Colecciones</a>
-<a class="btn" href="panel_control.html">Panel de control</a>
-<a class="btn" href="login.html">Login</a>
-<a class="btn" href="register.html">Registrarte</a>
-</div>
-</nav>
-<main class="container">
-<div class="card">
-<div class="headerbar">
-<h1>Solicitudes</h1>
-<div class="search">
-<input class="input" placeholder="Filtrar por nombre o estado"/>
-<button class="btn">Buscar</button>
-</div>
-</div>
-<div class="content">
-<table class="table">
-<thead><tr><th>Nombre</th><th>Filtro</th><th>Acciones</th></tr></thead>
-<tbody>
-<tr class="solicitud">
-<td>Solicitud #A-101</td>
-<td><span class="tag">eliminación</span></td>
-<td class="actions">
-<button class="btn toggle">Ampliar</button>
-<button class="btn success">Aceptar</button>
-<button class="btn danger">Rechazar</button>
-<button class="btn">Modificar</button>
-</td>
-</tr>
-<tr class="solicitud open">
-<td colspan="3">
-<div class="card" style="margin-top:8px">
-<div class="content">
-<div class="grid">
-<div><strong>Descripción:</strong> Eliminación de hecho por datos incorrectos.</div>
-<div class="actions">
-<button class="btn success">Aceptar</button>
-<button class="btn danger">Rechazar</button>
-<button class="btn">Modificar</button>
-</div>
-</div>
-</div>
-</div>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</main>
-<script src="assets/app.js"></script>
-<script src="assets/app.js"></script><footer class="mm-footer"><div>© 2025 MetaMapa - Todos los derechos reservados</div><div><a href="https://www.argentina.gob.ar/">Información legal y privacidad</a></div></footer><script src="assets/app.js"></script></body>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <title>Admin Solicitudes · MetaMapa</title>
+    <link href="../css/styles_Generales.css" rel="stylesheet" />
+    <link href="../css/styles_Admin_Solicitudes.css" rel="stylesheet" />
+    <script src="assets/app.js"></script>
+</head>
+
+<body>
+    <header class="mm-header">
+        <div class="mm-header-top"><a class="mm-brand" href="landing.html">MetaMapa</a>
+            <nav class="mm-nav"><span class="mm-page">Admin Solicitudes</span><a class="mm-link" href="menu_Colecciones.html">Colecciones</a><a class="mm-link" href="login.html" id="nav-login">Login</a><a class="mm-link" href="register.html" id="nav-register">Registrarte</a>
+                <div
+                class="mm-profile" hidden="" id="nav-profile">
+                    <button class="mm-btn">Mi Perfil</button>
+                    <div class="mm-dropdown"><a class="mm-dd-item" href="mi_perfil.html">Ir a mi perfil</a><a class="mm-dd-item" href="panel_control.html" id="dd-panel">Ir a Panel de control</a></div>
+        </div>
+        </nav>
+        </div>
+    </header>
+    <main class="container">
+        <h1>Solicitudes de eliminación</h1>
+        <p class="muted">Revisa y gestiona las solicitudes. Haz clic en “Ampliar” para ver la descripción completa.</p>
+        <div class="cards">
+            <article class="card">
+                <div class="card-head"><strong>#1024</strong><span class="muted">Colección: Medioambiente · 2025-08-21</span></div>
+                <details>
+                    <summary class="btn-link">Ampliar</summary>
+                    <p>Se solicita eliminar el hecho 'Tala de árboles en Francia' debido a que fue mal cargado. La descripción incluye detalles y justificaciones con más de 500 caracteres para permitir evaluación adecuada. Lorem ipsum Lorem ipsum Lorem ipsum
+                        Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
+                        Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
+                        Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
+                        Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
+                        Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
+                        Lorem ipsum Lorem ipsum </p>
+                </details>
+                <div class="row gap">
+                    <button class="mm-btn success">Aceptar</button>
+                    <button class="mm-btn danger">Rechazar</button>
+                </div>
+            </article>
+            <article class="card">
+                <div class="card-head"><strong>#1025</strong><span class="muted">Colección: Reportes Urbanos · 2025-08-22</span></div>
+                <details>
+                    <summary class="btn-link">Ampliar</summary>
+                    <p>Se solicita eliminar el hecho 'Incidente en Río Azul' por duplicado. El usuario adjunta enlaces y referencias para corroborar. Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
+                        Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
+                        Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
+                        Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
+                        Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
+                        Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum </p>
+                </details>
+                <div class="row gap">
+                    <button class="mm-btn success">Aceptar</button>
+                    <button class="mm-btn danger">Rechazar</button>
+                </div>
+            </article>
+            <article class="card">
+                <div class="card-head"><strong>#1026</strong><span class="muted">Colección: Infraestructura · 2025-08-23</span></div>
+                <details>
+                    <summary class="btn-link">Ampliar</summary>
+                    <p>Se solicita eliminar el hecho 'Corte de energía en Zona Norte' por falta de fuente verificable. Se adjunta explicación detallada y alternativas. Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem
+                        ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem
+                        ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem
+                        ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem
+                        ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem
+                        ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum </p>
+                </details>
+                <div class="row gap">
+                    <button class="mm-btn success">Aceptar</button>
+                    <button class="mm-btn danger">Rechazar</button>
+                </div>
+            </article>
+        </div>
+    </main>
+    
+    <script src="assets/app.js"></script>
+    <script src="assets/app.js"></script>
+    <footer class="mm-footer">
+        <div>© 2025 MetaMapa - Todos los derechos reservados</div>
+        <div><a href="https://www.argentina.gob.ar/">Información legal y privacidad</a></div>
+    </footer>
+</body>
+
 </html>
