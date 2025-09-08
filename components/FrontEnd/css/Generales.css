@@ -89,3 +89,11 @@ ul.meta{list-style:none;padding-left:0}
 .filter{display:flex;flex-direction:column;gap:6px}
 @media (hover:hover){ .mm-link:hover,.mm-btn:hover{filter:brightness(1.1)} }
 :focus{outline:2px solid var(--pri);outline-offset:2px}
+
+
+
+.container {
+  width: 80%;
+  margin:0 auto;
+  padding:16px
+}

@@ -1,83 +1,49 @@
 <!DOCTYPE html>
 
 <html lang="es">
+
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>Register · MetaMapa</title>
-<link href="assets/styles.css" rel="stylesheet"/>
-<link href="assets/styles.css" rel="stylesheet"/><link href="assets/styles.css" rel="stylesheet"/></head>
-<body><header class="mm-header"><div class="mm-header-top"><a class="mm-brand" href="landing.html">MetaMapa</a><nav class="mm-nav"><span class="mm-page">Register</span><a class="mm-link" href="menu_Colecciones.html">Colecciones</a><a class="mm-link" href="login.html" id="nav-login">Login</a><a class="mm-link" href="register.html" id="nav-register">Registrarte</a><div class="mm-profile" hidden="" id="nav-profile"><button class="mm-btn">Mi Perfil</button><div class="mm-dropdown"><a class="mm-dd-item" href="mi_perfil.html">Ir a mi perfil</a><a class="mm-dd-item" href="panel_control.html" id="dd-panel">Ir a Panel de control</a></div></div></nav></div></header><main class="container"><h1>Crear cuenta</h1><form class="form grid"><label>Mail<span class="req">*</span></label><input name="mail" required="True" type="email"/><label>Contraseña<span class="req">*</span></label><input name="password" required="True" type="password"/><label>Nombre</label><input name="nombre" type="text"/><label>Apellido</label><input name="apellido" type="text"/><label>Fecha de nacimiento<span class="req">*</span></label><input name="dob" required="True" type="date"/><button class="mm-btn primary" type="submit">Registrarme</button></form></main>
-<nav class="nav">
-<div class="brand">🗺️ Hechos<span class="badge">TP Diseño</span></div>
-<div class="actions">
-<a class="btn" href="landing.html">Landing</a>
-<a class="btn" href="menu_Colecciones.html">Colecciones</a>
-<a class="btn" href="panel_control.html">Panel de control</a>
-<a class="btn" href="login.html">Login</a>
-<a class="btn" href="register.html">Registrarte</a>
-</div>
-</nav>
-<main class="container">
-<div class="card">
-<div class="headerbar">
-<h1>Crear cuenta</h1>
-<span class="small">Completá tus datos para participar</span>
-</div>
-<div class="content">
-<form class="grid" id="formRegister" style="gap:14px">
-<div class="form-row">
-<div>
-<label>Usuario</label>
-<input class="input" name="usuario" required="" type="text"/>
-</div>
-<div>
-<label>Password</label>
-<input class="input" name="password" required="" type="password"/>
-</div>
-</div>
-<div class="form-row">
-<div>
-<label>Nombre</label>
-<input class="input" name="nombre" required="" type="text"/>
-</div>
-<div>
-<label>Apellido</label>
-<input class="input" name="apellido" required="" type="text"/>
-</div>
-</div>
-<div class="form-row">
-<div>
-<label>Email</label>
-<input class="input" name="email" required="" type="email"/>
-</div>
-<div>
-<label>Teléfono</label>
-<input class="input" name="telefono" placeholder="+54 9 ..." type="tel"/>
-</div>
-</div>
-<div class="form-row">
-<div>
-<label>Documento</label>
-<input class="input" name="documento" placeholder="DNI / Pasaporte" type="text"/>
-</div>
-<div>
-<label>Fecha de nacimiento</label>
-<input class="input" name="nacimiento" type="date"/>
-</div>
-</div>
-<div>
-<label>Dirección</label>
-<input class="input" name="direccion" placeholder="Calle 123, Ciudad, Provincia" type="text"/>
-</div>
-<div class="actions">
-<button class="btn success" type="submit">Registrarme</button>
-<a class="btn" href="login.html">Ya tengo cuenta</a>
-</div>
-</form>
-</div>
-</div>
-</main>
-<script src="assets/app.js"></script>
-<script src="assets/app.js"></script><footer class="mm-footer"><div>© 2025 MetaMapa - Todos los derechos reservados</div><div><a href="https://www.argentina.gob.ar/">Información legal y privacidad</a></div></footer><script src="assets/app.js"></script></body>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <title>Register · MetaMapa</title>
+    <link href="../css/Generales.css" rel="stylesheet" />
+    <link href="../css/register.css" rel="stylesheet" />
+    <script src="assets/app.js"></script>
+</head>
+
+<body>
+    <header class="mm-header">
+        <div class="mm-header-top"><a class="mm-brand" href="landing.html">MetaMapa</a>
+            <nav class="mm-nav"><span class="mm-page">Register</span><a class="mm-link" href="menu_Colecciones.html">Colecciones</a><a class="mm-link" href="login.html" id="nav-login">Login</a><a class="mm-link" href="register.html" id="nav-register">Registrarte</a>
+                <div
+                class="mm-profile" hidden="" id="nav-profile">
+                    <button class="mm-btn">Mi Perfil</button>
+                    <div class="mm-dropdown"><a class="mm-dd-item" href="mi_perfil.html">Ir a mi perfil</a><a class="mm-dd-item" href="panel_control.html" id="dd-panel">Ir a Panel de control</a></div>
+        </div>
+        </nav>
+        </div>
+    </header>
+    <main class="container">
+        <h1>Crear cuenta</h1>
+        <form class="form grid">
+            <label>Mail<span class="req">*</span></label>
+            <input name="mail" required="True" type="email" />
+            <label>Contraseña<span class="req">*</span></label>
+            <input name="password" required="True" type="password" />
+            <label>Nombre</label>
+            <input name="nombre" type="text" />
+            <label>Apellido</label>
+            <input name="apellido" type="text" />
+            <label>Fecha de nacimiento<span class="req">*</span></label>
+            <input name="dob" required="True" type="date" />
+            <button class="mm-btn primary" type="submit">Registrarme</button>
+        </form>
+    </main>
+
+    <footer class="mm-footer">
+        <div>© 2025 MetaMapa - Todos los derechos reservados</div>
+        <div><a href="https://www.argentina.gob.ar/">Información legal y privacidad</a></div>
+    </footer>
+</body>
+
 </html>
