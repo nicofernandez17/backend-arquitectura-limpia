@@ -45,6 +45,8 @@ public class DDSService implements IFuenteService {
         LocalDateTime ahora = LocalDateTime.now();
         for (Hecho hecho : hechos) {
             hecho.setCreated_at(ahora);  // Setea la fecha actual
+            // TODO Normalizar hecho antes de guardarlo
+
             hechosRepository.save(hecho);  // Guarda el hecho en el repositorio
         }
     }

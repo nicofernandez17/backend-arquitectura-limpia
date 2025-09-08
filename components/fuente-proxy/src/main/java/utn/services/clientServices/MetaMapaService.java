@@ -68,6 +68,8 @@ public class MetaMapaService  {
         // TODO filtramos los hechos que son nuevos y los ponemos en esta variable
         Hecho h = HechoMapper.aDominio(hecho);
 
+        // TODO Normalizar hecho antes de guardarlo
+
         // Guardamos en el repository solo los hechos nuevos
         hechosRepository.save(h);
 
