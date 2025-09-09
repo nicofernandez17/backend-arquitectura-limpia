@@ -2,6 +2,7 @@ package utn.models.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import utn.converters.AlgoritmoConsensoConverter;
 import utn.models.algoritmos.IAlgoritmoConsenso;
 import utn.models.criterios.ICriterioDePertenencia;
 import utn.models.helpers.ConsensoNivel;
@@ -29,7 +30,7 @@ public class Coleccion {
   @JoinColumn(name = "hecho_id", referencedColumnName = "id")
   private List<Hecho> hechos = new ArrayList<>();
 
-  @Transient
+  @Convert(converter = AlgoritmoConsensoConverter.class)
   private IAlgoritmoConsenso algoritmo;
 
   @Column(name = "titulo")
