@@ -1,7 +1,7 @@
-package utn.models.dtos;
+package utn.model.dto;
 
-import utn.models.domain.Coleccion;
-import utn.models.domain.Hecho;
+import utn.model.domain.Coleccion;
+import utn.model.domain.Hecho;
 
 import java.util.Collections;
 import java.util.List;

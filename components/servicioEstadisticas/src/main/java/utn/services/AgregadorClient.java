@@ -5,9 +5,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+import utn.model.domain.Coleccion;
+import utn.model.domain.Hecho;
+import utn.model.dto.ColeccionDTO;
+import utn.model.dto.ColeccionMapper;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AgregadorClient {
@@ -19,7 +24,30 @@ public class AgregadorClient {
         this.restTemplate = builder.build();
     }
 
-    public List<ColeccionDTO> obtenerColecciones() {
+    /**
+     * Obtiene todas las colecciones desde el agregador y las convierte a dominio.
+     */
+    public List<Coleccion> obtenerColecciones() {
+        List<ColeccionDTO> coleccionesDTO = obtenerColeccionesDTO();
+
+        return coleccionesDTO.stream()
+                .map(ColeccionMapper::toDomain)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Obtiene todos los hechos de todas las colecciones en dominio.
+     */
+    public List<Hecho> obtenerTodosLosHechos() {
+        return obtenerColecciones().stream()
+                .flatMap(coleccion -> coleccion.getHechos().stream())
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Méthod privado que solo obtiene los DTOs del agregador.
+     */
+    private List<ColeccionDTO> obtenerColeccionesDTO() {
         String url = baseUrl + "/admin/colecciones";
 
         try {
