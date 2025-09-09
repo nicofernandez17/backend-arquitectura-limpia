@@ -30,7 +30,6 @@ public class HechosService {
     public List<Hecho> cargarDesdeCsv() {
         List<Hecho> nuevosHechos = lectorCsv.leer(archivoRuta);
 
-        // TODO Normalizar nuevosHechos antes del saveAll
 
         hechosRepository.saveAll(nuevosHechos);
 

@@ -6,16 +6,24 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+
 
 @NoArgsConstructor
+@Getter
+@Setter
 @Entity @Table (name = "categoria")
 public class Categoria {
   //----------------------------------ATRIBUTOS-----------------------------------------------//
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private String id; //TODO - Cambiar a long o Int; No se porque string
+  private long id; //TODO - Cambiar a long o Int; No se porque string
 
-  @Column(name = "nombre")
+
+  @Column(name = "nombre", nullable = false, unique = true)
   private String nombre;
 
 
@@ -24,7 +32,4 @@ public class Categoria {
     this.nombre = categoriaNombre;
   }
 
-  public String getNombre() {
-    return nombre;
-  }
 }

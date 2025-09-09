@@ -49,7 +49,6 @@ public class HechoService {
     // Registra un nuevo hecho
     public HechoDTO registrarHecho(HechoDTO hechoDTO) {
         Hecho hecho = HechoMapper.aDominio(hechoDTO);
-        // TODO normalizar hecho antes de guardarlo
 
         Hecho guardado = hechosRepository.save(hecho);
         return HechoMapper.aDTO(guardado);
