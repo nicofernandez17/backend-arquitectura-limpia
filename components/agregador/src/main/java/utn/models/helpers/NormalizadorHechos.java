@@ -36,7 +36,14 @@ public class NormalizadorHechos {
     }
 
     private void normalizarCategoria(Hecho hecho) {
+        String categoriaNombre= categorias.get(hecho.getCategoria().getNombre());
 
+        // Tener en cuenta que la categoria no es un String, sino que es una clase con un String nombre adentro
+        // TODO Verificar si existe una categoria con ese nombre
+
+        // En caso de que exista, hecho.setCategoria(categoriaConEseNombre)
+
+        // En caso de que no exista, setearle al hecho CATEGORIA_DESCONOCIDA
     }
 
     private void normalizarProvincia(Hecho hecho) {
