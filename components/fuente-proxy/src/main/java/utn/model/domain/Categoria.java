@@ -1,9 +1,6 @@
 package utn.model.domain;
 
-import jakarta.persistence.Embeddable;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Data
@@ -18,6 +15,7 @@ public class Categoria {
 
     private String nombre;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     public Categoria(String categoriaNombre) {

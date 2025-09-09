@@ -15,6 +15,7 @@ import utn.models.helpers.FuenteNombre;
 import utn.models.helpers.NormalizadorHechos;
 import utn.repositories.ColeccionRepository;
 import utn.repositories.HechoRepository;
+import utn.repositories.IHechoRepository;
 import utn.services.rabbitMQ.RabbitPublisher;
 
 import java.util.*;
@@ -23,7 +24,7 @@ import java.util.*;
 public class AgregadorService {
 
     private final RestTemplate restTemplate;
-    private final HechoRepository hechoRepo;
+    private final IHechoRepository hechoRepo;
     private final ColeccionRepository coleccionRepo;
     private final FuenteProvider fuenteProvider;
     private final NormalizadorHechos normalizadorHechos;
@@ -34,7 +35,7 @@ public class AgregadorService {
     private final RabbitPublisher publisherService;
 
     public AgregadorService(RestTemplateBuilder builder,
-                            HechoRepository hechoRepo,
+                            IHechoRepository hechoRepo,
                             ColeccionRepository coleccionRepo,
                             FuenteProvider fuenteProvider,
                             RabbitPublisher publisherService) {

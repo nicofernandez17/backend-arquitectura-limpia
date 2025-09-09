@@ -1,25 +1,24 @@
 package utn.model.domain;
 
+import jakarta.persistence.Embeddable;
+import lombok.*;
+
+@Data
+@Builder
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Embeddable
 public class Ubicacion {
 
-    private final Double latitud;
+    private  Double latitud;
 
-    private final Double longitud;
-
-    public Ubicacion(Double latitud, Double longitud) {
-        this.latitud = latitud;
-        this.longitud = longitud;
-    }
+    private  Double longitud;
 
     public String clave() {
         return latitud + "," + longitud;
     }
 
-    public Double getLongitud() {
-        return longitud;
-    }
 
-    public Double getLatitud() {
-        return latitud;
-    }
 }
