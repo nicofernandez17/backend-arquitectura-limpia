@@ -1,75 +1,71 @@
 <!DOCTYPE html>
 
 <html lang="es">
+
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>Menu Colecciones · MetaMapa</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
-<style>
-    .card-collection {
-      transition: transform 0.2s;
-    }
-    .card-collection:hover {
-      transform: scale(1.03);
-    }
-  </style>
-<link href="assets/styles.css" rel="stylesheet"/></head>
-<body><header class="mm-header"><div class="mm-header-top"><a class="mm-brand" href="landing.html">MetaMapa</a><nav class="mm-nav"><span class="mm-page">Menu Colecciones</span><a class="mm-link" href="menu_Colecciones.html">Colecciones</a><a class="mm-link" href="login.html" id="nav-login">Login</a><a class="mm-link" href="register.html" id="nav-register">Registrarte</a><div class="mm-profile" hidden="" id="nav-profile"><button class="mm-btn">Mi Perfil</button><div class="mm-dropdown"><a class="mm-dd-item" href="mi_perfil.html">Ir a mi perfil</a><a class="mm-dd-item" href="panel_control.html" id="dd-panel">Ir a Panel de control</a></div></div></nav></div></header>
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-<div class="container">
-<a class="navbar-brand fw-bold" href="index.html">MetaMapa</a>
-<button class="navbar-toggler" data-bs-target="#navbarNav" data-bs-toggle="collapse" type="button">
-<span class="navbar-toggler-icon"></span>
-</button>
-<div class="collapse navbar-collapse" id="navbarNav">
-<ul class="navbar-nav ms-auto">
-<li class="nav-item"><a class="nav-link" href="index.html#objetivos">Objetivos</a></li>
-<li class="nav-item"><a class="nav-link" href="index.html#ejemplos">Ejemplos</a></li>
-<li class="nav-item"><a class="nav-link" href="index.html#mapa">Mapa</a></li>
-<li class="nav-item"><a class="nav-link" href="index.html#acceso">Acceso</a></li>
-</ul>
-</div>
-</div>
-</nav>
-<!-- Hero -->
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <title>Menu Colecciones · MetaMapa</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../css/Generales.css" rel="stylesheet" />
+    <link href="../css/MenuColecciones.css" rel="stylesheet" />
+</head>
 
-<!-- Grilla de colecciones -->
-<section class="py-5 bg-light">
-<div class="container">
-<div class="row" id="coleccionesGrid">
-<!-- Tarjetas generadas por JS -->
-</div>
-</div>
-</section>
-<!-- Footer -->
-
-<!-- Scripts -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    // Datos de ejemplo
-    const colecciones = [
-      {id:1, nombre:"Eventos Climáticos", descripcion:"Registro de tormentas, sequías y fenómenos meteorológicos."},
-      {id:2, nombre:"Actividad Social", descripcion:"Concentraciones, manifestaciones y eventos culturales."},
-      {id:3, nombre:"Infraestructura", descripcion:"Incidentes y reportes de obras, cortes y mantenimiento urbano."},
-      {id:4, nombre:"Salud Pública", descripcion:"Reportes de epidemias, vacunaciones y alertas sanitarias."}
-    ];
-
-    const grid = document.getElementById('coleccionesGrid');
-
-    colecciones.forEach(c => {
-      const col = document.createElement('div');
-      col.className = 'col-md-6 col-lg-4 mb-4';
-      col.innerHTML = `
-        <div class="card shadow-sm p-3 card-collection h-100">
-          <h5 class="card-title fw-bold">${c.nombre}</h5>
-          <p class="card-text">${c.descripcion}</p>
-          <a href="visualizar_coleccion.html?id=${c.id}" class="btn btn-primary">Ver hechos</a>
+<body>
+    <header class="mm-header">
+        <div class="mm-header-top"><a class="mm-brand" href="landing.html">MetaMapa</a>
+            <nav class="mm-nav"><span class="mm-page">Menu Colecciones</span><a class="mm-link" href="menu_Colecciones.html">Colecciones</a><a class="mm-link" href="login.html" id="nav-login">Login</a><a class="mm-link" href="register.html" id="nav-register">Registrarte</a>
+                <div
+                class="mm-profile" hidden="" id="nav-profile">
+                    <button class="mm-btn">Mi Perfil</button>
+                    <div class="mm-dropdown"><a class="mm-dd-item" href="mi_perfil.html">Ir a mi perfil</a><a class="mm-dd-item" href="panel_control.html" id="dd-panel">Ir a Panel de control</a></div>
         </div>
-      `;
-      grid.appendChild(col);
-    });
-  </script>
-<footer class="mm-footer"><div>© 2025 MetaMapa - Todos los derechos reservados</div><div><a href="https://www.argentina.gob.ar/">Información legal y privacidad</a></div></footer><script src="assets/app.js"></script></body>
+        </nav>
+        </div>
+    </header>
+    <!-- Hero -->
+
+    <!-- Grilla de colecciones -->
+    <main class="container">
+        <div class="card">
+            <div class="row" id="coleccionesGrid">
+                <!-- Tarjetas generadas por JS -->
+            </div>
+        </div>
+    </main>
+    <!-- Footer -->
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Datos de ejemplo
+        const colecciones = [
+          {id:1, nombre:"Eventos Climáticos", descripcion:"Registro de tormentas, sequías y fenómenos meteorológicos."},
+          {id:2, nombre:"Actividad Social", descripcion:"Concentraciones, manifestaciones y eventos culturales."},
+          {id:3, nombre:"Infraestructura", descripcion:"Incidentes y reportes de obras, cortes y mantenimiento urbano."},
+          {id:4, nombre:"Salud Pública", descripcion:"Reportes de epidemias, vacunaciones y alertas sanitarias."}
+        ];
+    
+        const grid = document.getElementById('coleccionesGrid');
+    
+        colecciones.forEach(c => {
+          const col = document.createElement('div');
+          col.className = 'col-md-6 col-lg-4 mb-4';
+          col.innerHTML = `
+            <div class="card shadow-sm p-3 h-100">
+              <h5 class="base_text">${c.nombre}</h5>
+              <p class="texto">${c.descripcion}</p>
+              <button class="btn primary">Ver hechos</button>
+            </div>
+          `;
+          grid.appendChild(col);
+        });
+    </script>
+    <footer class="mm-footer">
+        <div>© 2025 MetaMapa - Todos los derechos reservados</div>
+        <div><a href="https://www.argentina.gob.ar/">Información legal y privacidad</a></div>
+    </footer>
+    <script src="assets/app.js"></script>
+</body>
+
 </html>
