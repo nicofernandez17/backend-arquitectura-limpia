@@ -2,12 +2,12 @@ package utn.model.domain.estadisticas.impl;
 
 import utn.model.domain.Coleccion;
 import utn.model.domain.estadisticas.EstadisticasColeccion;
-import utn.model.domain.estadisticas.EstrategiaEstadistica;
+import utn.model.domain.estadisticas.IEstrategiaEstadistica;
 
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class CategoriaMasHechos implements EstrategiaEstadistica {
+public class CategoriaMasHechos implements IEstrategiaEstadistica {
 
     @Override
     public void calcular(Coleccion coleccion, EstadisticasColeccion resultado) {
