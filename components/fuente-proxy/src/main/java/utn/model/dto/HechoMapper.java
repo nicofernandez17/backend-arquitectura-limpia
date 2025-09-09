@@ -13,10 +13,11 @@ public class HechoMapper {
     // Dominio → DTO (para API)
     public static HechoDTO aDTO(Hecho hecho) {
         return HechoDTO.builder()
+                .id(hecho.getId())  // ID generado por MySQL
                 .titulo(hecho.getTitulo())
                 .descripcion(hecho.getDescripcion())
-                .categoria(Optional.ofNullable(hecho.getCategoria().getNombre())
-                        .map(Object::toString)
+                .categoria(Optional.ofNullable(hecho.getCategoria())
+                        .map(Categoria::getNombre)
                         .orElse(null))
                 .latitud(Optional.ofNullable(hecho.getUbicacion())
                         .map(Ubicacion::getLatitud)
@@ -35,15 +36,14 @@ public class HechoMapper {
     // DTO → Dominio
     public static Hecho aDominio(HechoDTO dto) {
         Categoria categoria = null;
-        String categoriaStr = dto.getCategoria();
-
-        if (categoriaStr != null && !categoriaStr.isBlank()) {
-            categoria = new Categoria(categoriaStr);
+        if (dto.getCategoria() != null && !dto.getCategoria().isBlank()) {
+            categoria = new Categoria(dto.getCategoria());
         }
 
         Ubicacion ubicacion = new Ubicacion(dto.getLatitud(), dto.getLongitud());
 
         return Hecho.builder()
+                // No seteamos ID aquí, Hibernate lo generará
                 .titulo(dto.getTitulo())
                 .descripcion(dto.getDescripcion())
                 .categoria(categoria)

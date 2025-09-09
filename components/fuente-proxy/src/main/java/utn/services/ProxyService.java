@@ -16,7 +16,6 @@ public class ProxyService {
     private final List<IFuenteService> fuentes;
     private final IHechoRepository hechosRepository;
 
-
     public ProxyService(IHechoRepository hechosRepository,
                         List<IFuenteService> fuentes) {
         this.fuentes = fuentes;
@@ -24,11 +23,12 @@ public class ProxyService {
     }
 
     public Mono<List<HechoDTO>> cargarYObtenerHechos() {
-
         return Flux.fromIterable(fuentes)
                 .flatMap(IFuenteService::getHechos)
                 .then(Mono.fromCallable(() -> hechosRepository.findAll()))
-                .map(hechos -> hechos.stream().map(HechoMapper::aDTO).toList());
+                .map(hechos -> hechos.stream()
+                        .map(HechoMapper::aDTO)
+                        .toList());
     }
 
     public List<HechoDTO> obtenerDesdeFecha(LocalDateTime desde) {
@@ -36,7 +36,8 @@ public class ProxyService {
 
         return hechosRepository.findAll().stream()
                 .filter(h -> h.getCreated_at() != null && h.getCreated_at().isAfter(fecha))
-                .map(HechoMapper::aDTO).toList();
+                .map(HechoMapper::aDTO)
+                .toList();
     }
-
 }
+

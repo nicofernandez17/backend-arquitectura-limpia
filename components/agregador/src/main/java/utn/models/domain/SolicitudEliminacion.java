@@ -2,6 +2,7 @@ package utn.models.domain;
 
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import utn.models.helpers.EstadoSolicitud;
 
@@ -18,6 +19,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+@NoArgsConstructor
 @Entity @Table(name = "solicitud_eliminacion")
 @Data
 public class SolicitudEliminacion {
@@ -27,7 +29,7 @@ public class SolicitudEliminacion {
   private Long id;
 
   @Column(name = "fecha_creacion", columnDefinition = "DATE")
-  private final LocalDateTime fechaCreacion;
+  private LocalDateTime fechaCreacion;
 
   @Enumerated(EnumType.STRING)
   @Column(name = "estado_solicitud")
@@ -35,10 +37,10 @@ public class SolicitudEliminacion {
 
   @ManyToOne
   @JoinColumn(name = "hecho_id", referencedColumnName = "id")
-  private final Hecho hecho;
+  private Hecho hecho;
 
   @Column(name = "motivo", columnDefinition = "TEXT")
-  private final String motivo;
+  private String motivo;
 
   //----------------------------------METODOS-----------------------------------------------//
 

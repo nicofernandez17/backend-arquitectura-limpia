@@ -1,23 +1,17 @@
 package utn.models.helpers;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import lombok.NoArgsConstructor;
 
-@Entity @Table(name = "ubicacion")
+@NoArgsConstructor
+@Embeddable
 public class Ubicacion {
   //----------------------------------ATRIBUTOS-----------------------------------------------//
-  @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
 
-  @Column(name = "latitud")
-  private final Double latitud;
+  private Double latitud;
 
-  @Column(name = "longitud")
-  private final Double longitud;
+  private Double longitud;
 
   //----------------------------------METODOS-----------------------------------------------//
   public Ubicacion(Double latitud, Double longitud) {
