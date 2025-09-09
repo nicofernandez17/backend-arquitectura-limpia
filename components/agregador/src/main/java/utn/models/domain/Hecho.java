@@ -34,8 +34,7 @@ public class Hecho {
   @JoinColumn(name = "categoria_id", referencedColumnName = "id")
   private Categoria categoria;
 
-  @OneToOne
-  @JoinColumn(name = "ubicacion_id", referencedColumnName = "id")
+  @Embedded
   private Ubicacion ubicacion;
 
   @Column(name = "fecha", columnDefinition = "DATE")

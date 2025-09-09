@@ -1,10 +1,19 @@
 package utn.models.criterios;
 
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
+import lombok.NoArgsConstructor;
 import utn.models.domain.Hecho;
 import utn.models.helpers.Categoria;
 
-public class CriterioPorCategoria implements ICriterioDePertenencia {
-  private final Categoria categoria;
+@NoArgsConstructor
+@Entity
+@DiscriminatorValue("CATEGORIA")
+public class CriterioPorCategoria extends ICriterioDePertenencia {
+
+  @ManyToOne
+  private Categoria categoria;
 
   public CriterioPorCategoria(Categoria categoria) {
     this.categoria = categoria;

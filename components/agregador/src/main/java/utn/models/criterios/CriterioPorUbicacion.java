@@ -1,10 +1,19 @@
 package utn.models.criterios;
 
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import lombok.NoArgsConstructor;
 import utn.models.domain.Hecho;
 import utn.models.helpers.Ubicacion;
 
-public class CriterioPorUbicacion implements ICriterioDePertenencia {
-  private final Ubicacion ubicacion;
+@NoArgsConstructor
+@Entity
+@DiscriminatorValue("UBICACION")
+public class CriterioPorUbicacion extends ICriterioDePertenencia {
+
+  @Embedded
+  private Ubicacion ubicacion;
 
   public CriterioPorUbicacion(Ubicacion ubicacion) {
     this.ubicacion = ubicacion;

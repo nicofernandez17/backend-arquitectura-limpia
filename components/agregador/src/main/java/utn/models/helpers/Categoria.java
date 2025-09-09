@@ -6,7 +6,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 @Entity @Table (name = "categoria")
 public class Categoria {
   //----------------------------------ATRIBUTOS-----------------------------------------------//
@@ -14,7 +16,7 @@ public class Categoria {
   private String id; //TODO - Cambiar a long o Int; No se porque string
 
   @Column(name = "nombre")
-  private final String nombre;
+  private String nombre;
 
 
   //----------------------------------METODOS-----------------------------------------------//

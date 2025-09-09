@@ -1,12 +1,18 @@
 package utn.models.criterios;
 
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+import lombok.NoArgsConstructor;
 import utn.models.domain.Hecho;
 
 import java.time.LocalDate;
 
-public class CriterioPorFecha implements ICriterioDePertenencia {
-  private final LocalDate desde;
-  private final LocalDate hasta;
+@NoArgsConstructor
+@Entity
+@DiscriminatorValue("FECHA")
+public class CriterioPorFecha extends ICriterioDePertenencia {
+  private  LocalDate desde;
+  private  LocalDate hasta;
 
   public CriterioPorFecha(LocalDate desde, LocalDate hasta) {
     this.desde = desde;

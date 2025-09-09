@@ -1,5 +1,6 @@
 package utn.models.domain;
 
+import jakarta.persistence.*;
 import lombok.*;
 import utn.models.algoritmos.IAlgoritmoConsenso;
 import utn.models.criterios.ICriterioDePertenencia;
@@ -9,18 +10,6 @@ import utn.models.helpers.FuenteNombre;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 
 @Data
 @Builder
@@ -40,7 +29,7 @@ public class Coleccion {
   @JoinColumn(name = "hecho_id", referencedColumnName = "id")
   private List<Hecho> hechos = new ArrayList<>();
 
-  @Column(name = "algoritmo")
+  @Transient
   private IAlgoritmoConsenso algoritmo;
 
   @Column(name = "titulo")
@@ -49,13 +38,13 @@ public class Coleccion {
   @Column(name = "descripcion", columnDefinition = "TEXT")
   private String descripcion;
 
-  //@OneToMany(mappedBy = "colleccion")
-  //@JoinColumn(name = "criterio_id", referencedColumnName = "id")
-  @Transient //TODO - Actualizar cuando sepamos como vincular con Interfaces
+
+  @OneToMany
   private List<ICriterioDePertenencia> criteriosDePertenencia;
 
-  @Builder.Default
-  @Enumerated(EnumType.STRING)
+  @ElementCollection(targetClass = FuenteNombre.class, fetch = FetchType.EAGER)
+  @CollectionTable(name = "coleccion_fuentes", joinColumns = @JoinColumn(name = "coleccion_id"))
+  @Enumerated(EnumType.STRING) // guarda el nombre del enum en la tabla
   @Column(name = "fuente")
   private List<FuenteNombre> fuentes = new ArrayList<>();
 

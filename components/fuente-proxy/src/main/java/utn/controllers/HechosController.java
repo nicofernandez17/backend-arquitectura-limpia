@@ -24,15 +24,11 @@ public class HechosController {
         return proxyService.cargarYObtenerHechos();
     }
 
-
     @GetMapping("/hechos")
     public List<HechoDTO> obtenerHechosDesde(
             @RequestParam(required = false)
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
             LocalDateTime desde) {
-
-
         return proxyService.obtenerDesdeFecha(desde);
     }
-
 }
