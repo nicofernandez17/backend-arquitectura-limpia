@@ -12,9 +12,7 @@ import utn.models.domain.Hecho;
 import utn.models.dtos.HechoDTO;
 import utn.models.dtos.HechoMapper;
 import utn.models.helpers.FuenteNombre;
-import utn.models.helpers.NormalizadorHechos;
 import utn.repositories.ColeccionRepository;
-import utn.repositories.HechoRepository;
 import utn.repositories.IHechoRepository;
 import utn.services.rabbitMQ.RabbitPublisher;
 
@@ -38,13 +36,14 @@ public class AgregadorService {
                             IHechoRepository hechoRepo,
                             ColeccionRepository coleccionRepo,
                             FuenteProvider fuenteProvider,
-                            RabbitPublisher publisherService) {
+                            RabbitPublisher publisherService,
+                            NormalizadorHechos normalizadorHechos) {
         this.restTemplate = builder.build();
         this.hechoRepo = hechoRepo;
         this.coleccionRepo = coleccionRepo;
         this.fuenteProvider = fuenteProvider;
         this.publisherService = publisherService;
-        this.normalizadorHechos = new NormalizadorHechos();
+        this.normalizadorHechos = normalizadorHechos;
     }
 
     public void cargarHechosYAsignar() {
