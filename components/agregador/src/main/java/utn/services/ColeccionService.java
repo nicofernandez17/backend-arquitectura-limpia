@@ -1,19 +1,15 @@
 package utn.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import utn.models.domain.Coleccion;
 import utn.models.domain.Hecho;
 import utn.models.dtos.HechoDTO;
 import utn.models.dtos.HechoMapper;
-import utn.repositories.ColeccionRepository;
-import utn.repositories.HechoRepository;
+import utn.repositories.IColeccionRepository;
+import utn.repositories.IHechoRepository;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,11 +19,11 @@ import java.util.Optional;
 @Service
 public class ColeccionService {
 
-    private final ColeccionRepository coleccionRepository;
-    private final HechoRepository hechoRepository;
+    private final IColeccionRepository coleccionRepository;
+    private final IHechoRepository hechoRepository;
 
     @Autowired
-    public ColeccionService(ColeccionRepository coleccionRepository, HechoRepository hechoRepository) {
+    public ColeccionService(IColeccionRepository coleccionRepository, IHechoRepository hechoRepository) {
         this.coleccionRepository = coleccionRepository;
         this.hechoRepository = hechoRepository;
     }
@@ -48,23 +44,23 @@ public class ColeccionService {
         return coleccionRepository.findAll();
     }
 
-    public Optional<Coleccion> obtenerColeccionPorId(String id) {
+    public Optional<Coleccion> obtenerColeccionPorId(Long id) {
         return coleccionRepository.findById(id);
     }
 
-    public List<Hecho> obtenerHechosPorColeccion(String idColeccion) {
+    public List<Hecho> obtenerHechosPorColeccion(Long idColeccion) {
         return coleccionRepository.findById(idColeccion)
                 .map(Coleccion::getHechos)
                 .orElse(Collections.emptyList());
     }
 
-    public List<Hecho> obtenerHechosIrrestricto(String id) {
+    public List<Hecho> obtenerHechosIrrestricto(Long id) {
         Coleccion coleccion = coleccionRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Colección no encontrada"));
         return coleccion.getHechos();
     }
 
-    public List<Hecho> obtenerHechosCurado(String id) {
+    public List<Hecho> obtenerHechosCurado(Long id) {
         Coleccion coleccion = coleccionRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Colección no encontrada"));
         return coleccion.getHechosFiltradosPorConsenso();
@@ -78,7 +74,7 @@ public class ColeccionService {
         });
     }
 
-    public void actualizarColeccion(String id, String nuevoTitulo, String nuevaDescripcion) {
+    public void actualizarColeccion(Long id, String nuevoTitulo, String nuevaDescripcion) {
         coleccionRepository.findById(id).ifPresent(coleccion -> {
             coleccion.setTitulo(nuevoTitulo);
             coleccion.setDescripcion(nuevaDescripcion);
@@ -98,8 +94,8 @@ public class ColeccionService {
     }
 
     // ===== ELIMINAR =====
-    public void eliminarColeccion(String id) {
-        coleccionRepository.delete(id);
+    public void eliminarColeccion(Long id) {
+        coleccionRepository.deleteById(id);
     }
 
     public void eliminarTodos() {

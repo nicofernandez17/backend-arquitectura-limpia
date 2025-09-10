@@ -1,12 +1,11 @@
 package utn.controllers.seeding;
 
 import org.springframework.stereotype.Service;
-import utn.models.algoritmos.impl.AlgoritmoMayoriaAbsoluta;
 import utn.models.algoritmos.impl.AlgoritmoMayoriaSimple;
 import utn.models.algoritmos.impl.AlgoritmoMultiplesMenciones;
 import utn.models.domain.Coleccion;
 import utn.models.helpers.FuenteNombre;
-import utn.repositories.ColeccionRepository;
+import utn.repositories.IColeccionRepository;
 import utn.services.AgregadorService;
 
 import java.util.ArrayList;
@@ -16,11 +15,11 @@ import java.util.List;
 public class ColeccionSeeder {
 
 
-    private final ColeccionRepository coleccionRepository;
+    private final IColeccionRepository coleccionRepository;
     private final AgregadorService agregadorService;
 
 
-    public ColeccionSeeder(ColeccionRepository coleccionRepository, AgregadorService agregadorService) {
+    public ColeccionSeeder(IColeccionRepository coleccionRepository, AgregadorService agregadorService) {
         this.coleccionRepository = coleccionRepository;
         this.agregadorService = agregadorService;
     }

@@ -2,24 +2,22 @@ package utn.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import utn.configs.FuenteConfig;
 import utn.models.algoritmos.IAlgoritmoConsenso;
 import utn.models.domain.Coleccion;
 import utn.models.domain.Hecho;
 import utn.models.helpers.ConsensoNivel;
-import utn.repositories.ColeccionRepository;
-import utn.repositories.HechoRepository;
+import utn.repositories.IColeccionRepository;
 
 import java.util.List;
 
 @Service
 public class ConsensoService {
 
-    private final ColeccionRepository coleccionRepo;
+    private final IColeccionRepository coleccionRepo;
     private final FuenteProvider fuenteConfig;
 
     @Autowired
-    public ConsensoService(ColeccionRepository coleccionRepo,
+    public ConsensoService(IColeccionRepository coleccionRepo,
                            FuenteProvider fuenteConfig) {
         this.coleccionRepo = coleccionRepo;
         this.fuenteConfig = fuenteConfig;
