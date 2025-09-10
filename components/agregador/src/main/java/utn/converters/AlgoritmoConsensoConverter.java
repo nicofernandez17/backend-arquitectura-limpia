@@ -20,9 +20,9 @@ public class AlgoritmoConsensoConverter implements AttributeConverter<IAlgoritmo
     public IAlgoritmoConsenso convertToEntityAttribute(String dbData) {
         if (dbData == null) return null;
         return switch (dbData) {
-            case "MayoríaSimple" -> new AlgoritmoMayoriaSimple();
-            case "MayoríaAbsoluta" -> new AlgoritmoMayoriaAbsoluta();
-            case "MúltiplesMenciones" -> new AlgoritmoMultiplesMenciones();
+            case "AlgoritmoMayoriaSimple" -> new AlgoritmoMayoriaSimple();
+            case "AlgoritmoMayoríaAbsoluta" -> new AlgoritmoMayoriaAbsoluta();
+            case "AlgoritmoMultiplesMenciones" -> new AlgoritmoMultiplesMenciones();
             default -> throw new IllegalArgumentException("Algoritmo desconocido: " + dbData);
         };
     }
