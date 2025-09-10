@@ -25,6 +25,7 @@
     <module>components/fuente-estatica</module>
     <module>components/fuente-proxy</module>
     <module>components/servicioEstadisticas</module>
+    <module>components/utils</module>
 
   </modules>
 
