@@ -11,6 +11,8 @@ import utn.models.dto.HechoDTO;
 import utn.models.dto.HechoMapper;
 import utn.services.NormalizadorService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/normalizar")
 public class NormalizadorController {
@@ -23,11 +25,14 @@ public class NormalizadorController {
     }
 
     @PostMapping
-    public HechoDTO normalizar(@RequestBody HechoDTO hechoDTO) {
-        Hecho hecho = HechoMapper.aDominio(hechoDTO);
-        HechoDTO normalizado = HechoMapper.aDTO(normalizadorService.normalizar(hecho));
+    public List<HechoDTO> normalizar(@RequestBody List<HechoDTO> hechosDTO) {
+        List<Hecho> hechos = hechosDTO.stream().map(HechoMapper::aDominio).toList();
 
-        return normalizado;
+        System.out.println("Normalizando " + hechos.size() + " hechos");
+
+        List<Hecho> normalizados = hechos.stream().map(normalizadorService::normalizar).toList();
+
+        return normalizados.stream().map(HechoMapper::aDTO).toList();
     }
 
 }
