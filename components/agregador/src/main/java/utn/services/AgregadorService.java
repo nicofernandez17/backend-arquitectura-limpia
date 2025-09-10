@@ -12,6 +12,7 @@ import utn.models.domain.Hecho;
 import utn.models.dtos.HechoDTO;
 import utn.models.dtos.HechoMapper;
 import utn.models.helpers.FuenteNombre;
+import utn.models.helpers.HechoClaveUtils;
 import utn.repositories.ColeccionRepository;
 import utn.repositories.IHechoRepository;
 import utn.services.rabbitMQ.RabbitPublisher;
@@ -67,25 +68,28 @@ public class AgregadorService {
 
             for (HechoDTO dto : entry.getValue()) {
                 Hecho hecho = HechoMapper.aDominio(dto);
+                hecho.setId(HechoClaveUtils.generarClaveLogica(hecho));
 
-                Optional<Hecho> existente = hechoRepo.findIgual(hecho);
+                Optional<Hecho> existente = hechoRepo.findById(hecho.getId());
 
                 if (existente.isPresent()) {
                     Hecho existenteHecho = existente.get();
                     existenteHecho.agregarFuente(fuente);
                     hechoRepo.save(existenteHecho);
                 } else {
-                    hecho.setId(UUID.randomUUID().toString());
+                    //hecho.setId(UUID.randomUUID().toString());
                     hecho.agregarFuente(fuente);
+                    hecho = normalizadorHechos.normalizar(hecho);
                     nuevosHechos.add(hecho);
+                    hechoRepo.save(hecho);
                 }
             }
         }
         System.out.println("Hechos ingresando: " + nuevosHechos.size());
         // Normalizar nuevosHechos antes del saveAll
-        List<Hecho> nuevosHechosNormalizados = nuevosHechos.stream().map(normalizadorHechos::normalizar).toList();
+        //List<Hecho> nuevosHechosNormalizados = nuevosHechos.stream().map(normalizadorHechos::normalizar).toList();
 
-        hechoRepo.saveAll(nuevosHechosNormalizados);
+        //hechoRepo.saveAll(nuevosHechosNormalizados);
 
         // le paso al publisher los nuevos hechos en formato DTO
         publisherService.publicarHechos(nuevosHechos.stream().map(HechoMapper::aDTO).toList());

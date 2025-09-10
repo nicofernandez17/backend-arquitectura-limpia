@@ -17,8 +17,9 @@ import java.util.*;
 @Entity @Table(name = "hecho")
 public class Hecho {
   //----------------------------------ATRIBUTOS-----------------------------------------------//
-  @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private String id; //TODO - Cambiar a long o Int; No se porque string
+  @Id
+  @Column(name = "id", nullable = false, updatable = false)
+  private String id;  // clave lógica calculada
 
   @Enumerated(EnumType.STRING)
   @Column(name = "consenso_nivel", nullable = false)

@@ -6,8 +6,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Embeddable
 public class Ubicacion {
-  //----------------------------------ATRIBUTOS-----------------------------------------------//
-  private long id;
 
   private Double latitud;
 

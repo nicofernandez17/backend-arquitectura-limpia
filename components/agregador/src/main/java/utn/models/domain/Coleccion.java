@@ -25,9 +25,13 @@ public class Coleccion {
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
   private String id; //TODO - Cambiar a long o Int; No se porque string
 
+  @ManyToMany
+  @JoinTable(
+          name = "coleccion_hechos",
+          joinColumns = @JoinColumn(name = "coleccion_id"),
+          inverseJoinColumns = @JoinColumn(name = "hecho_id")
+  )
   @Builder.Default
-  @OneToMany(mappedBy = "colleccion")
-  @JoinColumn(name = "hecho_id", referencedColumnName = "id")
   private List<Hecho> hechos = new ArrayList<>();
 
   @Convert(converter = AlgoritmoConsensoConverter.class)
