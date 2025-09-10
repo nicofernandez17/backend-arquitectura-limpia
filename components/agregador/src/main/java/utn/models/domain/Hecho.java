@@ -18,8 +18,12 @@ import java.util.*;
 public class Hecho {
   //----------------------------------ATRIBUTOS-----------------------------------------------//
   @Id
-  @Column(name = "id", nullable = false, updatable = false)
-  private String id;  // clave lógica calculada
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;   // PK estable
+
+
+  @Column(name = "clave_logica",unique = true, length = 65535)
+  private String claveLogica;
 
   @Enumerated(EnumType.STRING)
   @Column(name = "consenso_nivel", nullable = false)

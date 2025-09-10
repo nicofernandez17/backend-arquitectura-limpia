@@ -3,9 +3,6 @@ package utn.models.algoritmos.impl;
 import utn.models.algoritmos.IAlgoritmoConsenso;
 import utn.models.domain.Hecho;
 import utn.models.helpers.ConsensoNivel;
-import utn.repositories.HechoRepository;
-
-import java.util.List;
 
 public class AlgoritmoMultiplesMenciones implements IAlgoritmoConsenso {
 

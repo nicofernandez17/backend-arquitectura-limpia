@@ -12,7 +12,6 @@ import utn.models.dtos.HechoDTO;
 import utn.models.helpers.Categoria;
 import utn.models.helpers.EstadoSolicitud;
 import utn.models.helpers.Ubicacion;
-import utn.repositories.ColeccionRepository;
 import utn.repositories.SolicitudRepository;
 import utn.services.ColeccionService;
 import utn.services.SolicitudService;

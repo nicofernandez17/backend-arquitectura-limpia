@@ -37,21 +37,21 @@ public class ColeccionAdminController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Coleccion> obtenerPorId(@PathVariable String id) {
+    public ResponseEntity<Coleccion> obtenerPorId(@PathVariable Long id) {
         return coleccionService.obtenerColeccionPorId(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/{id}/hechos")
-    public ResponseEntity<List<Hecho>> obtenerHechosPorColeccion(@PathVariable String id) {
+    public ResponseEntity<List<Hecho>> obtenerHechosPorColeccion(@PathVariable Long id) {
         return ResponseEntity.ok(coleccionService.obtenerHechosPorColeccion(id));
     }
 
     // ======= ACTUALIZAR =======
     @PutMapping("/{id}")
     public ResponseEntity<String> actualizar(
-            @PathVariable String id,
+            @PathVariable Long id,
             @RequestParam String nuevoTitulo,
             @RequestParam String nuevaDescripcion) {
         coleccionService.actualizarColeccion(id, nuevoTitulo, nuevaDescripcion);
@@ -60,7 +60,7 @@ public class ColeccionAdminController {
 
     // ======= ELIMINAR =======
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> eliminarPorId(@PathVariable String id) {
+    public ResponseEntity<String> eliminarPorId(@PathVariable Long id) {
         coleccionService.eliminarColeccion(id);
         return ResponseEntity.ok("Colección eliminada");
     }
@@ -93,7 +93,7 @@ public class ColeccionAdminController {
     */
     @PatchMapping("/{id}/fuentes")
     public ResponseEntity<String> modificarFuente(
-            @PathVariable String id,
+            @PathVariable Long id,
             @RequestParam FuenteNombre fuente,
             @RequestParam String operacion) {
 

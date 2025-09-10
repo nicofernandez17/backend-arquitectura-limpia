@@ -32,7 +32,7 @@ public class ColeccionMapper {
 
         // Convertir ID de Long a String, si dto.getId() no es null
         if (dto.getId() != null) {
-            coleccion.setId(dto.getId().toString());
+            coleccion.setId(dto.getId());
         }
 
         coleccion.setTitulo(dto.getTitulo());

@@ -47,7 +47,7 @@ public class ColeccionController {
 
     @GetMapping("/{identificador}/hechos")
     public List<HechoDTO> obtenerHechosPorColeccion(
-            @PathVariable String identificador,
+            @PathVariable Long identificador,
             @RequestParam(defaultValue = "curado") String modo) {
 
         Coleccion coleccion = coleccionService.obtenerColeccionPorId(identificador)

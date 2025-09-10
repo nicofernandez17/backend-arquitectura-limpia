@@ -7,7 +7,6 @@ import utn.models.domain.Coleccion;
 import utn.models.domain.Hecho;
 import utn.models.domain.SolicitudEliminacion;
 import utn.models.helpers.EstadoSolicitud;
-import utn.repositories.ColeccionRepository;
 import utn.repositories.SolicitudRepository;
 import utn.services.ColeccionService;
 import utn.services.SolicitudService;

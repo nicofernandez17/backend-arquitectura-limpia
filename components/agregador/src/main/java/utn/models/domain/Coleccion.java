@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 public class Coleccion {
   //----------------------------------ATRIBUTOS-----------------------------------------------//
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private String id; //TODO - Cambiar a long o Int; No se porque string
+  private Long id; //TODO - Cambiar a long o Int; No se porque string
 
   @ManyToMany
   @JoinTable(
