@@ -9,8 +9,6 @@
 /*--------------------------------DEFINICIONES-1-------------------------------------------*/
 
 *{box-sizing:border-box}
-html,body{height:100%}
-body{margin:0; font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background:var(--bg); color:var(--text);}
 a{color:var(--accent); text-decoration:none}
 a:hover{text-decoration:underline}
 .nav{display:flex; gap:12px; align-items:center; justify-content:space-between; padding:16px 24px; border-bottom:1px solid var(--border); position:sticky; top:0; background:rgba(11,15,20,.85); backdrop-filter: blur(6px);}
@@ -33,7 +31,6 @@ form .actions{margin-top:14px}
 .table th{color:var(--muted); font-weight:600; font-size:12px; text-transform:uppercase; letter-spacing:.03em}
 .kbd{font: 12px/1.2 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; background:#0a1220; border:1px solid var(--border); padding:2px 6px; border-radius:6px; color:var(--muted)}
 hr{border:none; border-top:1px solid var(--border); margin:16px 0}
-.footer{padding:40px 24px; color:var(--muted); text-align:center; border-top:1px solid var(--border)}
 .tag{display:inline-flex; align-items:center; gap:6px; padding:4px 10px; border:1px solid var(--border); border-radius:999px; color:var(--muted); background:#0c131d; font-size:12px}
 .chips{display:flex; gap:8px; flex-wrap:wrap}
 .empty{padding:24px; text-align:center; color:var(--muted)}
@@ -47,7 +44,6 @@ hr{border:none; border-top:1px solid var(--border); margin:16px 0}
 
 :root { --bg:#0b0f14; --card:#121823; --muted:#b3c1d1; --txt:#e6edf6; --pri:#4da3ff; --ok:#1db954; --err:#ff5d5d; }
 *{box-sizing:border-box}
-body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial,sans-serif;background:var(--bg);color:var(--txt);line-height:1.5}
 a{color:var(--pri);text-decoration:none}
 .mm-header{background:#0d1420;position:sticky;top:0;z-index:50;border-bottom:1px solid #1d2735}
 .mm-header-top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px}
@@ -60,7 +56,6 @@ a{color:var(--pri);text-decoration:none}
 .mm-dropdown{display:none;position:absolute;right:0;top:40px;background:#121823;border:1px solid #243149;border-radius:12px;min-width:180px;box-shadow:0 10px 30px rgba(0,0,0,.4);}
 .mm-profile:hover .mm-dropdown{display:block}
 .mm-dd-item{display:block;padding:10px 12px}
-.mm-footer{border-top:1px solid #1d2735;display:flex;justify-content:space-between;gap:12px;padding:16px;color:var(--muted);flex-wrap:wrap}
 .hero{padding:40px 0}
 .row{display:flex;align-items:center}
 .wrap{flex-wrap:wrap}
@@ -85,6 +80,28 @@ ul.meta{list-style:none;padding-left:0}
 
 
 /*-----------------------------Corregidos-y-Finales----------------------------------------*/
+html, body {
+  height:100%
+}
+
+body {
+  margin:0;
+  font-family:
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    Ubuntu,
+    'Helvetica Neue',
+    Arial,
+    sans-serif;
+  background: var(--bg);
+  color:var(--txt);
+  line-height:1.5;
+  display: flex;
+  flex-direction: column;
+}
+
 .card {
   background:var(--card);
   border:1px solid var(--border);
@@ -117,9 +134,23 @@ ul.meta{list-style:none;padding-left:0}
   width: 80%;
   margin:0 auto;
   padding:16px;
+  flex: 1;
 }
 
 .grid {
   display:grid;
   gap:16px;
+}
+
+.footer {
+  padding:40px 24px;
+  color:var(--muted);
+  text-align:center;
+  border-top:1px solid var(--border);
+  box-sizing: border-box;
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  padding:16px;
+  flex-wrap:wrap
 }
