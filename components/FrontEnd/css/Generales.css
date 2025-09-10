@@ -1,7 +1,7 @@
 /*--------------------------------VARIABLES-GENERALES--------------------------------------*/
 :root{
-  --bg:#0b0f14; --card:#0f1620; --muted:#9fb0c3; --text:#e6edf3; --accent:#66c2ff; --danger:#ff7a7a;
-  --success:#6ee7a8; --warning:#fde68a; --border:#1f2a37;
+  --bg:#0b0f14; --card:#0f1620; --muted:#9fb0c3; --text:#e6edf3; --accent:#66c2ff; --border:#1f2a37; --hover:#555
+  --success:#6ee7a8; --warning:#fde68a; --danger:#ff7a7a;
   --radius:16px;
   --shadow: 0 6px 24px rgba(0,0,0,.35);
 }
@@ -153,4 +153,47 @@ body {
   gap:12px;
   padding:16px;
   flex-wrap:wrap
+}
+
+/*---------Desplegables-----------*/
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-btn {
+  background: var(--border);
+  color: var(--accent);
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.dropdown-btn:hover {
+  background: var(--hover);
+}
+
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: var(--card);
+  min-width: 160px;
+  box-shadow: var(--shadow);
+  border-radius: 6px;
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: var(--text);
+  padding: 10px 15px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
 }
