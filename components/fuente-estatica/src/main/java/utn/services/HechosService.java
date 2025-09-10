@@ -2,6 +2,7 @@ package utn.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import utn.models.domain.Hecho;
 import utn.models.lectores.AdapterLectorCsv;
@@ -14,6 +15,7 @@ import java.util.List;
 @Service
 public class HechosService {
 
+    private final NormalizadorClientService normalizadorClientService;
     private final IHechoRepository hechosRepository;
     private final Lector lectorCsv;
 
@@ -21,16 +23,19 @@ public class HechosService {
     private String archivoRuta;
 
     @Autowired
-    public HechosService(IHechoRepository hechosRepository) {
+    public HechosService(NormalizadorClientService normalizadorClientService, IHechoRepository hechosRepository) {
+        this.normalizadorClientService = normalizadorClientService;
         this.hechosRepository = hechosRepository;
         this.lectorCsv = new AdapterLectorCsv();
     }
 
+    @Async
     public List<Hecho> cargarDesdeCsv() {
         List<Hecho> nuevosHechos = lectorCsv.leer(archivoRuta);
 
+        List<Hecho> normalizados = normalizadorClientService.normalizarHechos(nuevosHechos);
 
-        hechosRepository.saveAll(nuevosHechos);
+        hechosRepository.saveAll(normalizados);
 
         return hechosRepository.findAll();
     }

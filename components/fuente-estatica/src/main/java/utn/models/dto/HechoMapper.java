@@ -1,5 +1,6 @@
 package utn.models.dto;
 
+import utn.models.domain.Categoria;
 import utn.models.domain.Hecho;
 import utn.models.domain.Ubicacion;
 import java.util.Optional;
@@ -21,13 +22,31 @@ public class HechoMapper {
                         .map(Ubicacion::getLongitud)
                         .orElse(0.0))
                 .fecha_hecho(hecho.getFecha())
-                .created_at(hecho.getFechaDeCarga())
+                .created_at(hecho.getCreated_at())
                 .updated_at(hecho.getUpdated_at())
                 .archivoContenido(null)
                 .archivoNombre(null)
                 .build();
     }
 
-    // Solo tengo Dominio -> DTO porque los hechos van de la Fuente al Agregador, y la fuente no recibe HechosDTO que deba convertir
+    // DTO → Dominio
+    public static Hecho aDominio(HechoDTO dto) {
+        Categoria categoria = null;
+        if (dto.getCategoria() != null && !dto.getCategoria().isBlank()) {
+            categoria = new Categoria(dto.getCategoria());
+        }
 
+        Ubicacion ubicacion = new Ubicacion(dto.getLatitud(), dto.getLongitud());
+
+        return Hecho.builder()
+                // No seteamos ID aquí, Hibernate lo generará
+                .titulo(dto.getTitulo())
+                .descripcion(dto.getDescripcion())
+                .categoria(categoria)
+                .ubicacion(ubicacion)
+                .fecha(dto.getFecha_hecho())
+                .created_at(dto.getCreated_at())
+                .updated_at(dto.getUpdated_at())
+                .build();
+    }
 }

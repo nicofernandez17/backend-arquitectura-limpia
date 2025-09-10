@@ -4,8 +4,10 @@ import org.springframework.test.util.ReflectionTestUtils;
 import utn.controllers.HechosController;
 import utn.models.dto.HechoDTO;
 import utn.models.lectores.AdapterLectorCsv;
+import utn.repositories.IHechoRepository;
 import utn.repositories.impl.HechosRepository;
 import utn.services.HechosService;
+import utn.services.NormalizadorClientService;
 
 import java.io.File;
 import java.util.List;
@@ -16,14 +18,15 @@ import static org.junit.jupiter.api.Assertions.*;
 class HechosIntegracionRealCsvTest {
 
   static final String CSV_PATH = "src/main/resources/desastres_naturales_argentina.csv";
-  HechosRepository repository;
+  IHechoRepository repository;
+  NormalizadorClientService normalizadorClientService;
   HechosService service;
   HechosController controller;
 
   @BeforeEach
   void setUp() {
-    repository = new HechosRepository();
-    service = new HechosService(repository);
+    //repository = new HechosRepository();
+    service = new HechosService(normalizadorClientService, repository);
     ReflectionTestUtils.setField(service, "archivoRuta", CSV_PATH);
     controller = new HechosController(service);
   }

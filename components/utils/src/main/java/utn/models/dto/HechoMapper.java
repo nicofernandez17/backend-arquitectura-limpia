@@ -22,7 +22,7 @@ public class HechoMapper {
                         .map(Ubicacion::getLongitud)
                         .orElse(0.0))
                 .fecha_hecho(hecho.getFecha())
-                .created_at(hecho.getFechaDeCarga())
+                .created_at(hecho.getCreated_at())
                 .updated_at(hecho.getUpdated_at())
                 .archivoContenido(null)
                 .archivoNombre(null)

@@ -26,7 +26,7 @@ public class HechosController {
     @PostMapping
     public ResponseEntity<String> cargarDesdeCsv() {
         hechosService.cargarDesdeCsv();
-        return ResponseEntity.ok("Hechos cargados desde el CSV correctamente.");
+        return ResponseEntity.ok("Se inicio la carga y procesamiento de los hechos.");
     }
 
 
