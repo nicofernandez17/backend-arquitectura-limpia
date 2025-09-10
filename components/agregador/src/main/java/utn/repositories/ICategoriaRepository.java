@@ -7,6 +7,4 @@ import java.util.Optional;
 
 public interface ICategoriaRepository extends JpaRepository<Categoria,Integer> {
     public Optional<Categoria> findByNombre(String nombre);
-
-    String nombre(String nombre);
 }
