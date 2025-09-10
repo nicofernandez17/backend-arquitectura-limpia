@@ -49,6 +49,7 @@ public class Hecho {
 
   private LocalDateTime updated_at;
 
+  @Lob
   private byte[] multimediaArchivo;
 
   private String multimediaNombre;

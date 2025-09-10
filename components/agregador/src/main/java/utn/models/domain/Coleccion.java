@@ -25,7 +25,7 @@ public class Coleccion {
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id; //TODO - Cambiar a long o Int; No se porque string
 
-  @ManyToMany
+  @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(
           name = "coleccion_hechos",
           joinColumns = @JoinColumn(name = "coleccion_id"),
@@ -44,7 +44,7 @@ public class Coleccion {
   private String descripcion;
 
 
-  @OneToMany
+  @OneToMany(fetch = FetchType.EAGER)
   private List<ICriterioDePertenencia> criteriosDePertenencia;
 
   @ElementCollection(targetClass = FuenteNombre.class, fetch = FetchType.EAGER)

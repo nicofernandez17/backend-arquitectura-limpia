@@ -25,7 +25,7 @@ public class Hecho {
   @Column(name = "clave_logica", length = 512) // quitamos unique
   private String claveLogica;
 
-  @Column(name = "clave_hash", unique = true, nullable = false, length = 64)
+  @Column(name = "clave_hash", unique = false, nullable = false, length = 64)
   private String claveHash;
 
   @Enumerated(EnumType.STRING)
@@ -38,8 +38,8 @@ public class Hecho {
   @Column(name = "titulo")
   private String titulo;
 
-  @OneToOne
-  @JoinColumn(name = "categoria_id", referencedColumnName = "id")
+  @ManyToOne
+  @JoinColumn(name = "categoria_id")
   private Categoria categoria;
 
   @Embedded

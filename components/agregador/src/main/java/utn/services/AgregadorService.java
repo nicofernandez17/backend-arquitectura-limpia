@@ -92,6 +92,7 @@ public class AgregadorService {
                     System.out.println("Hecho ya existe, actualizando fuentes...");
                     Hecho existenteHecho = existente.get();
                     existenteHecho.agregarFuente(fuente);
+                    //TODO aca comente para probar, segun gpt se persiste automaticamente al traerlo con findByClaveHash
                     hechoRepo.save(existenteHecho); // update
                 } else {
                     // Normalizo y guardo
