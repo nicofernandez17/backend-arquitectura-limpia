@@ -3,8 +3,8 @@ package utn.services;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 import utn.models.domain.Hecho;
-import utn.models.helpers.Categoria;
-import utn.models.helpers.DiccionarioNormalizacion;
+import utn.models.domain.Categoria;
+import utn.models.utils.DiccionarioNormalizacion;
 import utn.repositories.ICategoriaRepository;
 
 import java.io.IOException;
@@ -20,7 +20,7 @@ public class NormalizadorService {
     private final Map<String, String> provincias;
 
 
-    public NormalizadorHechos(ICategoriaRepository categoriaRepository) {
+    public NormalizadorService(ICategoriaRepository categoriaRepository) {
         this.categoriaRepository = categoriaRepository;
         ObjectMapper mapper = new ObjectMapper();
         try(InputStream is = getClass().getClassLoader().getResourceAsStream("diccionario.normalizacion.json")){

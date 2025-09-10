@@ -2,7 +2,7 @@ package utn.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import utn.model.domain.Hecho;
+import utn.models.domain.Hecho;
 
 import java.time.LocalDateTime;
 import java.util.List;

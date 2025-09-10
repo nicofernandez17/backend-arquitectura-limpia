@@ -2,10 +2,8 @@ package utn.services.rabbitMQ;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
-import utn.model.dto.HechoDTO;
+import utn.models.dto.HechoDTO;
 import utn.services.clientServices.MetaMapaService;
-
-import java.util.List;
 
 @Service
 public class RabbitMetamapaListener {

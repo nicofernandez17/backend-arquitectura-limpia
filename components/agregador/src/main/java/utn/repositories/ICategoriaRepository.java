@@ -6,5 +6,5 @@ import utn.models.helpers.Categoria;
 import java.util.Optional;
 
 public interface ICategoriaRepository extends JpaRepository<Categoria,Integer> {
-    public Optional<Categoria> findByNombre(String nombre);
+    Optional<Categoria> findByNombre(String nombre);
 }

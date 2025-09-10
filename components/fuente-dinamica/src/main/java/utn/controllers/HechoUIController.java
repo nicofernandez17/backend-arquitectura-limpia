@@ -1,22 +1,18 @@
 package utn.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import utn.model.domain.Hecho;
-import utn.model.domain.Revision;
-import utn.model.dtos.HechoDTO;
-import utn.model.dtos.HechoFormDTO;
-import utn.model.dtos.HechoMapper;
+import utn.models.domain.Revision;
+import utn.models.dtos.HechoDTO;
+import utn.models.dtos.HechoFormDTO;
+import utn.models.dtos.HechoMapper;
 import utn.services.HechoService;
 import utn.services.RevisionService;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 @RestController

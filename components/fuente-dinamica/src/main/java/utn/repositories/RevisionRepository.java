@@ -1,8 +1,8 @@
 package utn.repositories;
 
 import org.springframework.stereotype.Repository;
-import utn.model.domain.Revision;
-import utn.model.helpers.EstadoRevision;
+import utn.models.domain.Revision;
+import utn.models.helpers.EstadoRevision;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;

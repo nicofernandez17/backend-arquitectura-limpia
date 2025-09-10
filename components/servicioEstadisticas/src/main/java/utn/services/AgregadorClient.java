@@ -5,10 +5,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
-import utn.model.domain.Coleccion;
-import utn.model.domain.Hecho;
-import utn.model.dto.ColeccionDTO;
-import utn.model.dto.ColeccionMapper;
+import utn.models.domain.Coleccion;
+import utn.models.domain.Hecho;
+import utn.models.dto.ColeccionDTO;
+import utn.models.dto.ColeccionMapper;
 
 import java.util.Arrays;
 import java.util.List;

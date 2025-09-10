@@ -1,7 +1,7 @@
 package utn.services.clientServices;
 
 import reactor.core.publisher.Mono;
-import utn.model.domain.Hecho;
+import utn.models.domain.Hecho;
 
 import java.util.List;
 

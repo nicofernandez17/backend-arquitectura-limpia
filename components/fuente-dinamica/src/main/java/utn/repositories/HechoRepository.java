@@ -1,7 +1,7 @@
 package utn.repositories;
 
 import org.springframework.stereotype.Repository;
-import utn.model.domain.Hecho;
+import utn.models.domain.Hecho;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;

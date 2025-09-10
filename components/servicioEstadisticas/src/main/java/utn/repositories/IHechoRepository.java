@@ -1,6 +1,6 @@
 package utn.repositories;
 
-import utn.model.domain.Hecho;
+import utn.models.domain.Hecho;
 
 import java.util.List;
 import java.util.Optional;

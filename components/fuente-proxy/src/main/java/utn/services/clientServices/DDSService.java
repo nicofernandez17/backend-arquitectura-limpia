@@ -1,26 +1,16 @@
 package utn.services.clientServices;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import reactor.core.scheduler.Schedulers;
-import reactor.util.retry.Retry;
-import utn.model.domain.Hecho;
-import utn.model.dto.HechoDTO;
-import utn.model.dto.HechoMapper;
-import utn.model.dto.HechosResponseDTO;
+import utn.models.domain.Hecho;
+import utn.models.dto.HechoMapper;
+import utn.models.dto.HechosResponseDTO;
 import utn.repositories.IHechoRepository;
 
-import java.net.http.HttpClient;
-import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.CancellationException;
-import java.util.stream.Collectors;
 
 @Service
 public class DDSService implements IFuenteService {

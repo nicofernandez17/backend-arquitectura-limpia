@@ -2,17 +2,14 @@ package utn.services;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
-import utn.model.domain.Hecho;
-import utn.model.domain.Revision;
-import utn.model.dtos.HechoDTO;
-import utn.model.dtos.HechoMapper;
-import utn.model.dtos.RevisionProcesarDTO;
-import utn.model.helpers.EstadoRevision;
+import utn.models.domain.Hecho;
+import utn.models.domain.Revision;
+import utn.models.dtos.HechoMapper;
+import utn.models.dtos.RevisionProcesarDTO;
+import utn.models.helpers.EstadoRevision;
 import utn.repositories.IRevisionRepository;
-import utn.repositories.RevisionRepository;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 @Service
 public class RevisionService {

@@ -1,8 +1,8 @@
 package utn.services;
 
 import org.springframework.stereotype.Service;
-import utn.model.domain.Coleccion;
-import utn.model.domain.Hecho;
+import utn.models.domain.Coleccion;
+import utn.models.domain.Hecho;
 
 import java.util.List;
 import java.util.stream.Collectors;

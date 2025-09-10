@@ -3,14 +3,11 @@ package utn.services;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-import utn.model.domain.Hecho;
-import utn.model.dtos.HechoDTO;
-import utn.model.dtos.HechoMapper;
-import utn.repositories.HechoRepository;
+import utn.models.domain.Hecho;
+import utn.models.dtos.HechoDTO;
+import utn.models.dtos.HechoMapper;
 import utn.repositories.IHechoRepository;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;

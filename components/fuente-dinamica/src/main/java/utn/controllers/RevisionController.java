@@ -2,7 +2,7 @@ package utn.controllers;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import utn.model.dtos.RevisionProcesarDTO;
+import utn.models.dtos.RevisionProcesarDTO;
 import utn.services.RevisionService;
 
 @RestController

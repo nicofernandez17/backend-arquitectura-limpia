@@ -1,14 +1,11 @@
 package utn.services.clientServices;
 
-import org.reactivestreams.Publisher;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
-import utn.model.domain.Hecho;
-import utn.model.dto.HechoDTO;
-import utn.model.dto.HechoMapper;
-import utn.model.dto.HechosResponseDTO;
+import utn.models.domain.Hecho;
+import utn.models.dto.HechoDTO;
+import utn.models.dto.HechoMapper;
 import utn.repositories.IHechoRepository;
 
 import java.time.LocalDateTime;

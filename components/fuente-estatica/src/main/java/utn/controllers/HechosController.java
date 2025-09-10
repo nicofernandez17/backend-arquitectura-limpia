@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import utn.model.dto.HechoDTO;
-import utn.model.dto.HechoMapper;
+import utn.models.dto.HechoDTO;
+import utn.models.dto.HechoMapper;
 import utn.services.HechosService;
 
 import java.time.LocalDateTime;
