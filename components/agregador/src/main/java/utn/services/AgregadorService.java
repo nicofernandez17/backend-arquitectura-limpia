@@ -28,8 +28,6 @@ public class AgregadorService {
     private final IColeccionRepository coleccionRepo;
     private final FuenteProvider fuenteProvider;
     private final NormalizadorHechos normalizadorHechos;
-
-    // Publicador para RabbitMQ
     private final RabbitPublisher publisherService;
 
     public AgregadorService(RestTemplateBuilder builder,
@@ -60,7 +58,7 @@ public class AgregadorService {
     private void consolidarHechosDesdeFuentes() {
         Map<FuenteNombre, List<HechoDTO>> hechosPorFuente = new HashMap<>();
 
-        // Traer hechos de cada fuente
+        // Traigo hechos de cada fuente
         for (FuenteNombre fuente : fuenteProvider.getTodasLasFuentes()) {
             String url = fuenteProvider.getUrl(fuente);
             List<HechoDTO> hechos = obtenerHechosDesdeUrl(url);
@@ -69,48 +67,50 @@ public class AgregadorService {
 
         List<Hecho> nuevosHechos = new ArrayList<>();
 
-        // Iterar cada fuente y sus hechos
         for (Map.Entry<FuenteNombre, List<HechoDTO>> entry : hechosPorFuente.entrySet()) {
             FuenteNombre fuente = entry.getKey();
 
             for (HechoDTO dto : entry.getValue()) {
                 Hecho hecho = HechoMapper.aDominio(dto);
 
-                // Generar clave lógica determinista
-                hecho.setClaveLogica(HechoClaveUtils.generarClaveLogica(hecho));
+                // Generar hash único y mostrarlo
+                String hash = HechoClaveUtils.generarClaveHash(hecho);
+                hecho.setClaveHash(hash);
 
-                // Buscar si ya existe por clave lógica
-                Optional<Hecho> existente = hechoRepo.findByClaveLogica(hecho.getClaveLogica());
+                String claveLogica = HechoClaveUtils.generarClaveLogica(hecho);
+                hecho.setClaveLogica(claveLogica);
+
+                System.out.println("Procesando hecho -> Título: " + hecho.getTitulo() +
+                        ", Fecha: " + hecho.getFecha() +
+                        ", ClaveHash: " + hash +
+                        ", ClaveLogica: " + claveLogica);
+
+                // Verificar si ya existe por claveHash
+                Optional<Hecho> existente = hechoRepo.findByClaveHash(hash);
 
                 if (existente.isPresent()) {
-                    // Si existe, solo agrego la fuente y hago update
+                    System.out.println("Hecho ya existe, actualizando fuentes...");
                     Hecho existenteHecho = existente.get();
                     existenteHecho.agregarFuente(fuente);
-                    hechoRepo.saveAndFlush(existenteHecho); // forzar flush inmediato
+                    hechoRepo.save(existenteHecho); // update
                 } else {
-                    // Si no existe, normalizo y guardo
+                    // Normalizo y guardo
                     hecho.agregarFuente(fuente);
                     hecho = normalizadorHechos.normalizar(hecho);
                     nuevosHechos.add(hecho);
-
-                    // Guardar inmediatamente para que futuras búsquedas lo vean
-                    hechoRepo.saveAndFlush(hecho);
+                    System.out.println("Insertando nuevo hecho con hash: " + hash);
+                    hechoRepo.save(hecho); // insert
                 }
             }
         }
 
-        System.out.println("Hechos ingresando: " + nuevosHechos.size());
+        System.out.println("Total de nuevos hechos insertados: " + nuevosHechos.size());
 
         // Publicar hechos nuevos a Rabbit
         publisherService.publicarHechos(
                 nuevosHechos.stream().map(HechoMapper::aDTO).toList()
         );
     }
-
-
-
-
-
 
     /**
      * Asigna hechos ya existentes en BD a las colecciones correspondientes
@@ -133,9 +133,6 @@ public class AgregadorService {
         coleccionRepo.saveAll(colecciones);
     }
 
-    /**
-     * Consulta una fuente externa y devuelve hechos DTO
-     */
     private List<HechoDTO> obtenerHechosDesdeUrl(String url) {
         try {
             ResponseEntity<List<HechoDTO>> response = restTemplate.exchange(
@@ -150,5 +147,6 @@ public class AgregadorService {
             return List.of();
         }
     }
-
 }
+
+

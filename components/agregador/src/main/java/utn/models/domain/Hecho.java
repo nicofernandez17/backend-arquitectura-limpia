@@ -22,8 +22,11 @@ public class Hecho {
   private Long id;   // PK estable
 
 
-  @Column(name = "clave_logica",unique = true, length = 65535)
+  @Column(name = "clave_logica", length = 512) // quitamos unique
   private String claveLogica;
+
+  @Column(name = "clave_hash", unique = true, nullable = false, length = 64)
+  private String claveHash;
 
   @Enumerated(EnumType.STRING)
   @Column(name = "consenso_nivel", nullable = false)
