@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "colleccion")
+@Table(name = "coleccion")
 public class Coleccion {
   //----------------------------------ATRIBUTOS-----------------------------------------------//
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
