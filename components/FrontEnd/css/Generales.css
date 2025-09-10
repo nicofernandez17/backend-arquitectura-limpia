@@ -121,5 +121,5 @@ ul.meta{list-style:none;padding-left:0}
 
 .grid {
   display:grid;
-  gap:16px
+  gap:16px;
 }

@@ -7,6 +7,11 @@
 
 .container {
   width: 80%;
-  margin:0 auto;
+  margin:20px auto;
   padding:16px
+
+}
+
+.card {
+  padding: 20px;
 }
