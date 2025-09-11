@@ -19,16 +19,26 @@
                 class="mm-profile" hidden="" id="nav-profile">
                     <button class="mm-btn">Mi Perfil</button>
                     <div class="mm-dropdown"><a class="mm-dd-item" href="mi_perfil.html">Ir a mi perfil</a><a class="mm-dd-item" href="panel_control.html" id="dd-panel">Ir a Panel de control</a></div>
-        </div>
-        </nav>
+                </div>
+            </nav>
         </div>
     </header>
 
     <!-- Grilla de colecciones -->
     <main class="container">
-        <h1 style="margin-bottom: 20px;">Menú colecciones</h1>
+        <div class="titulo">
+                <h1>Menú colecciones</h1>
+                <span class="small">Selecciona la colección de su preferencia</span>
+        </div>
         <div class="row" id="coleccionesGrid">
             <!-- Tarjetas generadas por JS -->
+        </div>
+        <div style="text-align: center;" class="card">
+            <h1 style="padding-bottom: 20px">¡Añade nuevos elementos!</h1>
+            <div>
+                <a href="subir_hecho.html" class="btn primary">Subir nuevo Hecho</a>
+                <a href="crear_coleccion.html" class="btn primary">Crear nueva colección</a>
+            </div>
         </div>
     </main>
     <!-- Footer -->
@@ -53,7 +63,7 @@
             <div class="card shadow-sm p-3 h-100">
               <h5 class="base_text">${c.nombre}</h5>
               <p class="texto">${c.descripcion}</p>
-              <button class="btn primary">Ver hechos</button>
+              <a href="visualizador_Collecciones.html" class="btn primary">Ver hechos</a>
             </div>
           `;
           grid.appendChild(col);
