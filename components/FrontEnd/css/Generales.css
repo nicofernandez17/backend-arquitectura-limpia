@@ -108,6 +108,7 @@ body {
   border-radius:var(--radius);
   box-shadow:var(--shadow);
   padding: 16px;
+  color: var(--text)
 }
 
 .card h2 {
@@ -196,4 +197,20 @@ body {
 
 .dropdown:hover .dropdown-content {
   display: block;
+}
+
+.li {
+  text-decoration:underline;
+  font-weight: bold;
+}
+
+.span {
+  text-decoration: none;
+  font-weight: normal;
+}
+
+.titulo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;    
 }
