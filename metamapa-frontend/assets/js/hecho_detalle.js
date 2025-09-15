@@ -1,56 +1,56 @@
+// hecho_detalle.js
+
 document.addEventListener("DOMContentLoaded", () => {
   // 1. Obtener ID desde la URL
   const params = new URLSearchParams(window.location.search);
   const hechoId = parseInt(params.get("id"));
 
-  // 2. Ejemplo de hechos (en el futuro: fetch a tu backend)
-  const hechos = [
-    {
-      id: 1,
-      titulo: "Inundación en Santa Fe",
-      descripcion: "Las intensas lluvias provocaron desbordes en varias zonas urbanas.",
-      categoria: "Inundación",
-      ubicacion: "Santa Fe, Argentina",
-      coords: [-31.6333, -60.7000],
-      imagen: "assets/img/inundacion.webp",
-      fuente: "https://ejemplo.com/inundacion-santafe"
-    },
-    {
-      id: 2,
-      titulo: "Incendio forestal en Córdoba",
-      descripcion: "Un incendio de gran magnitud afectó 200 hectáreas en las sierras.",
-      categoria: "Incendio",
-      ubicacion: "Sierras de Córdoba, Argentina",
-      coords: [-31.4201, -64.1888],
-      imagen: "assets/img/incendio.webp",
-      fuente: "https://ejemplo.com/incendio-cordoba"
-    }
-  ];
+  // 2. Buscar el hecho en todas las colecciones
+  let hecho = null;
+  for (const coleccion of colecciones) {
+    hecho = coleccion.hechos.find(h => h.id === hechoId);
+    if (hecho) break;
+  }
 
-  // 3. Buscar el hecho
-  const hecho = hechos.find(h => h.id === hechoId);
   if (!hecho) {
     document.querySelector("main").innerHTML = "<p class='text-center text-danger'>Hecho no encontrado</p>";
     return;
   }
 
-  // 4. Insertar datos en el DOM
+  // 3. Insertar datos en el DOM
   document.querySelector("h1").textContent = hecho.titulo;
-  document.querySelector(".text-muted span").textContent = hecho.categoria;
+  document.querySelector(".text-muted span").textContent = hecho.categoria || "Sin categoría";
   document.querySelector("section .col-md-8 p").textContent = hecho.descripcion;
-  document.querySelector("section .col-md-4 p").textContent = hecho.ubicacion;
-  document.querySelector("section img").src = hecho.imagen;
-  document.querySelector("section img").alt = "Imagen de " + hecho.titulo;
-  document.querySelector("section a").href = hecho.fuente;
+  document.querySelector("section .col-md-4 p").textContent = hecho.lugar || "Ubicación desconocida";
+  
+  // Imagen opcional (si existe en el dato de prueba)
+  const imgEl = document.querySelector("section img");
+  if (hecho.imagen) {
+    imgEl.src = hecho.imagen;
+    imgEl.alt = "Imagen de " + hecho.titulo;
+  } else {
+    imgEl.style.display = "none";
+  }
 
-  // 5. Inicializar Leaflet en la ubicación del hecho
-  const map = L.map("mapa-detalle").setView(hecho.coords, 13);
+  // Fuente
+  const fuenteEl = document.querySelector("section a");
+  if (hecho.fuente) {
+    fuenteEl.href = hecho.fuente;
+    fuenteEl.textContent = hecho.fuente;
+  } else {
+    fuenteEl.style.display = "none";
+  }
+
+  // 4. Inicializar Leaflet en la ubicación del hecho
+  // Se requiere que los hechos tengan lat/lng en los datos de prueba
+  const coords = hecho.coords || hecho.latLng || [ -34.6037, -58.3816 ]; // fallback
+  const map = L.map("mapa-detalle").setView(coords, 13);
 
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
   }).addTo(map);
 
-  L.marker(hecho.coords)
+  L.marker(coords)
     .addTo(map)
-    .bindPopup(`<b>${hecho.titulo}</b><br>${hecho.ubicacion}`);
+    .bindPopup(`<b>${hecho.titulo}</b><br>${hecho.lugar || hecho.ubicacion || ""}`);
 });

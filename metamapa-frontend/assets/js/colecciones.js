@@ -1,7 +1,32 @@
+// colecciones.js
+
 document.addEventListener('DOMContentLoaded', () => {
-  const inputBusqueda = document.getElementById('busqueda-colecciones');
   const grid = document.getElementById('grid-colecciones');
-  const cards = Array.from(grid.querySelectorAll('.col'));
+
+  // Renderizar colecciones
+  function renderColecciones(lista) {
+    grid.innerHTML = "";
+    lista.forEach(c => {
+      grid.innerHTML += `
+        <div class="col">
+          <div class="card h-100" data-cantidad="${c.hechos.length}" data-fecha="${c.fecha}">
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title">${c.titulo}</h5>
+              <p class="card-text flex-grow-1">${c.descripcion}</p>
+              <a href="coleccion_detalle.html?id=${c.id}" class="btn btn-primary mt-auto">Ver colección</a>
+            </div>
+          </div>
+        </div>
+      `;
+    });
+  }
+
+  renderColecciones(colecciones);
+
+  // ========================
+  // BÚSQUEDA Y ORDEN
+  // ========================
+  const inputBusqueda = document.getElementById('busqueda-colecciones');
   const botonesOrden = document.querySelectorAll('[data-orden]');
 
   let ordenActual = { alfabetico: 'asc' };
@@ -10,25 +35,22 @@ document.addEventListener('DOMContentLoaded', () => {
   function actualizarBotones(criterio) {
     botonesOrden.forEach(b => {
       const icono = b.querySelector('i');
-      // Reset: flecha arriba y quitar btn-success
       icono.classList.remove('bi-arrow-down');
       icono.classList.add('bi-arrow-up');
       b.classList.remove('btn-primary', 'text-light');
     });
 
-    // Botón activo
     const botonActivo = document.querySelector(`[data-orden="${criterio}"]`);
     botonActivo.classList.add('btn-primary', 'text-light');
     if(ordenActual[criterio] === 'desc'){
-      botonActivo.querySelector('i').classList.remove('bi-arrow-up');
-      botonActivo.querySelector('i').classList.add('bi-arrow-down');
+      botonActivo.querySelector('i').classList.replace('bi-arrow-up', 'bi-arrow-down');
     }
   }
 
   function ordenar(criterio) {
-    const visibles = cards.filter(c => c.style.display !== 'none');
+    let cards = Array.from(grid.querySelectorAll('.col')).filter(c => c.style.display !== 'none');
 
-    visibles.sort((a, b) => {
+    cards.sort((a, b) => {
       let valA, valB;
       switch(criterio){
         case 'alfabetico':
@@ -36,8 +58,8 @@ document.addEventListener('DOMContentLoaded', () => {
           valB = b.querySelector('.card-title').textContent.toLowerCase();
           break;
         case 'cantidad':
-          valA = parseInt(a.querySelector('.card').dataset.cantidad || 0);
-          valB = parseInt(b.querySelector('.card').dataset.cantidad || 0);
+          valA = parseInt(a.querySelector('.card').dataset.cantidad);
+          valB = parseInt(b.querySelector('.card').dataset.cantidad);
           break;
         case 'fecha':
           valA = new Date(a.querySelector('.card').dataset.fecha);
@@ -49,35 +71,32 @@ document.addEventListener('DOMContentLoaded', () => {
       return 0;
     });
 
-    visibles.forEach(c => grid.appendChild(c));
+    cards.forEach(c => grid.appendChild(c));
     actualizarBotones(criterio);
   }
 
-  // FILTRADO EN TIEMPO REAL
+  // Filtrado en tiempo real
   inputBusqueda.addEventListener('input', () => {
     const texto = inputBusqueda.value.toLowerCase();
-    cards.forEach(col => {
+    Array.from(grid.querySelectorAll('.col')).forEach(col => {
       const titulo = col.querySelector('.card-title').textContent.toLowerCase();
       col.style.display = titulo.includes(texto) ? '' : 'none';
     });
   });
 
-  // CLICK EN BOTONES DE ORDEN
+  // Botones de orden
   botonesOrden.forEach(boton => {
     boton.addEventListener('click', () => {
       const criterio = boton.dataset.orden;
-
       if(ultimoCriterio !== criterio){
         ordenActual[criterio] = 'asc';
         ultimoCriterio = criterio;
       } else {
         ordenActual[criterio] = ordenActual[criterio] === 'asc' ? 'desc' : 'asc';
       }
-
       ordenar(criterio);
     });
   });
 
-  // ORDEN INICIAL: alfabetico ascendente
-  ordenar('alfabetico');
+  ordenar('alfabetico'); // orden inicial
 });
