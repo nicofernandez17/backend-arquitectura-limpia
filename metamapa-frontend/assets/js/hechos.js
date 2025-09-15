@@ -1,46 +1,54 @@
-document.addEventListener('DOMContentLoaded', () => {
-  // Crear mapa centrado en coordenadas iniciales
-  const mapa = L.map('mapa-hechos').setView([-34.6037, -58.3816], 5); // ejemplo Argentina
+// assets/js/hechos.js
 
-  // Capa base
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '&copy; OpenStreetMap'
+document.addEventListener("DOMContentLoaded", () => {
+  // Inicializar el mapa
+  const mapa = L.map("mapa-hechos").setView([-34.6037, -58.3816], 5); // Centro aprox. Argentina
+
+  // Cargar tiles de OpenStreetMap
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
   }).addTo(mapa);
 
-  // Datos de ejemplo de hechos
+  // Datos de ejemplo (luego podés cargarlos desde tu backend)
   const hechos = [
-    { id: 1, tipo: 'lluvia', titulo: 'Lluvia fuerte en Buenos Aires', lat: -34.6037, lng: -58.3816, fecha: '2025-09-10' },
-    { id: 2, tipo: 'inundacion', titulo: 'Inundación en Santa Fe', lat: -31.6333, lng: -60.7000, fecha: '2025-09-08' },
-    { id: 3, tipo: 'incendio', titulo: 'Incendio forestal en Córdoba', lat: -31.4201, lng: -64.1888, fecha: '2025-09-09' },
-    { id: 4, tipo: 'terremoto', titulo: 'Terremoto leve en San Juan', lat: -31.5375, lng: -68.5364, fecha: '2025-09-07' }
+    {
+      id: 1,
+      titulo: "Inundación en Santa Fe",
+      descripcion: "Calles anegadas tras fuertes lluvias.",
+      lat: -31.6333,
+      lng: -60.7000
+    },
+    {
+      id: 2,
+      titulo: "Incendio en Córdoba",
+      descripcion: "Fuerte incendio forestal en las sierras.",
+      lat: -31.4201,
+      lng: -64.1888
+    },
+    {
+      id: 3,
+      titulo: "Terremoto en Mendoza",
+      descripcion: "Sismo leve sin víctimas reportadas.",
+      lat: -32.8895,
+      lng: -68.8458
+    }
   ];
 
-  let markers = [];
+  // Agregar marcadores al mapa
+  hechos.forEach(hecho => {
+    const marcador = L.marker([hecho.lat, hecho.lng]).addTo(mapa);
 
-  function mostrarHechos(filtroTipo = 'todos') {
-    // Limpiar marcadores existentes
-    markers.forEach(m => mapa.removeLayer(m));
-    markers = [];
+    // Popup con botón de detalle
+    const popupContent = `
+      <div class="text-center">
+        <h6>${hecho.titulo}</h6>
+        <p>${hecho.descripcion}</p>
+        <a href="hecho-detalle.html?id=${hecho.id}" class="btn btn-sm btn-primary w-100 text-white">
+          Ver detalle
+        </a>
+      </div>
+    `;
 
-    // Filtrar hechos
-    const hechosFiltrados = filtroTipo === 'todos' ? hechos : hechos.filter(h => h.tipo === filtroTipo);
-
-    // Agregar marcadores
-    hechosFiltrados.forEach(h => {
-      const marker = L.marker([h.lat, h.lng]).addTo(mapa);
-      marker.bindPopup(`<strong>${h.titulo}</strong><br>Fecha: ${h.fecha}`);
-      markers.push(marker);
-    });
-  }
-
-  // Mostrar todos al cargar
-  mostrarHechos();
-
-  // Filtrar por tipo al hacer click en los botones
-  document.querySelectorAll('[data-tipo]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      mostrarHechos(btn.dataset.tipo);
-    });
+    marcador.bindPopup(popupContent);
   });
 });

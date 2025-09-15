@@ -8,11 +8,17 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/styles.css">
   <!-- Leaflet CSS -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  crossorigin=""
+/>
 
-  <!-- Leaflet JS -->
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
+<!-- Leaflet JS -->
+<script
+  src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+  crossorigin="">
+</script>
 
 </head>
 <body>
@@ -46,21 +52,50 @@
     </div>
   </nav>
 
-  <main>
-    <section class="container my-5">
-      <section class="text-center mb-4">
-        <h1 class="display-4">Hechos Recientes</h1>
-        <p class="lead">Explora los eventos marcados en el mapa y consulta sus detalles.</p>
-      </section>
+  <main class="container my-5">
 
-      <!-- Mapa -->
-      <section class="mb-4">
-        <div id="mapa-hechos" style="height: 600px; width: 100%; border-radius: 0.5rem;"></div>
-      </section>
+    <!-- Título -->
+    <section class="mb-4 text-center">
+      <h1 class="display-5">Título del hecho</h1>
+      <p class="text-muted">Categoría: <span class="fw-bold">Inundación</span></p>
+    </section>
 
+    <!-- Descripción y ubicación -->
+    <section class="row mb-4">
+      <div class="col-md-8">
+        <h4>Descripción</h4>
+        <p>
+          Aquí va una explicación detallada del hecho, por ejemplo cómo ocurrió, 
+          cuándo, qué consecuencias tuvo, etc.
+        </p>
+      </div>
+      <div class="col-md-4">
+        <h4>Ubicación</h4>
+        <p>Santa Fe, Argentina</p>
+        <div id="mapa-detalle" style="height: 250px; width: 100%; border-radius: 0.5rem;"></div>
+      </div>
+    </section>
+
+    <!-- Contenido multimedia -->
+    <section class="mb-4">
+      <h4>Imagen del hecho</h4>
+      <img src="" alt="Imagen del hecho" class="img-fluid rounded shadow-sm">
+    </section>
+
+    <!-- Fuente -->
+    <section class="mb-4">
+      <h4>Fuente</h4>
+      <p>
+        Información recopilada de 
+        <a href="https://ejemplo.com" target="_blank" class="text-decoration-underline">
+          Diario Ejemplo
+        </a>.
+      </p>
     </section>
 
   </main>
+
+
 
     <!-- Footer -->
   <footer id="legal" class="bg-primary text-white text-center py-3 mt-5">
@@ -69,6 +104,6 @@
 
   <!-- Bootstrap JS CDN -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/js/hechos.js"></script>
+  <script src="assets/js/hecho_detalle.js"></script>
 </body>
 </html>
