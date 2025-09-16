@@ -54,3 +54,16 @@ document.addEventListener("DOMContentLoaded", () => {
     .addTo(map)
     .bindPopup(`<b>${hecho.titulo}</b><br>${hecho.lugar || hecho.ubicacion || ""}`);
 });
+
+
+// Solicitud Eliminación
+
+const justificacion = document.getElementById("justificacion");
+  const contador = document.getElementById("contador");
+  const btnEnviar = document.getElementById("btnEnviar");
+
+  justificacion.addEventListener("input", () => {
+    const length = justificacion.value.length;
+    contador.textContent = `${length}/500 caracteres`;
+    btnEnviar.disabled = length < 500;
+  });
