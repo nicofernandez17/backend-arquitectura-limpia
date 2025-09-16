@@ -4,6 +4,8 @@ colecciones.forEach(c => {
   hechos.push(...c.hechos);
 });
 
+let idHechoAEliminar = null; // variable global temporal
+
 // Rellenar tabla desktop
 const tablaBody = document.querySelector('#tabla-hechos tbody');
 hechos.forEach(h => {
@@ -17,7 +19,9 @@ hechos.forEach(h => {
       <a href="hecho_editar.html?id=${h.id}" class="btn btn-sm btn-primary me-2">
         <i class="bi bi-pencil-square"></i>
       </a>
-      <button class="btn btn-sm btn-danger"><i class="bi bi-trash"></i></button>
+      <button class="btn btn-sm btn-danger btn-eliminar" data-id="${h.id}">
+        <i class="bi bi-trash"></i>
+      </button>
     </td>
   `;
   tablaBody.appendChild(row);
@@ -38,9 +42,34 @@ hechos.forEach(h => {
         <a href="hecho_editar.html?id=${h.id}" class="btn btn-sm btn-primary me-2">
           <i class="bi bi-pencil-square"></i>
         </a>
-        <button class="btn btn-sm btn-danger"><i class="bi bi-trash"></i></button>
+        <button class="btn btn-sm btn-danger btn-eliminar" data-id="${h.id}">
+          <i class="bi bi-trash"></i>
+        </button>
       </div>
     </div>
   `;
   cardsContainer.appendChild(card);
+});
+
+// Inicializar modal de Bootstrap
+const modalEliminar = new bootstrap.Modal(document.getElementById('confirmarEliminarModal'));
+
+document.addEventListener("click", (e) => {
+  if (e.target.closest(".btn-eliminar")) {
+    const id = e.target.closest(".btn-eliminar").dataset.id;
+    idHechoAEliminar = id; // guardar id en variable global
+    modalEliminar.show(); // abrir modal
+  }
+});
+
+document.getElementById("btnConfirmarEliminar").addEventListener("click", () => {
+  if (idHechoAEliminar) {
+    console.log("Eliminar hecho con id:", idHechoAEliminar);
+
+    // 🔥 acá llamás a tu backend o borrás el hecho de la lista
+    // ej: fetch(`/api/hechos/${idHechoAEliminar}`, { method: "DELETE" })
+
+    modalEliminar.hide();
+    idHechoAEliminar = null;
+  }
 });
