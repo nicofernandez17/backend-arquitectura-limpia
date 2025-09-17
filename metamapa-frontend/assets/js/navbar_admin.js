@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
   navbarContainer.innerHTML = `
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
       <div class="container">
-        <a class="navbar-brand" href="panel_control.html">MetaMapa Admin</a>
+        <a class="navbar-brand" href="control_panel.html">MetaMapa Admin</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -23,15 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
             </li>
 
             <li class="nav-item my-2 w-100 w-md-auto">
-              <a class="nav-link" href="fuentes_admin.html">Fuentes</a>
-            </li>
-
-            <li class="nav-item my-2 w-100 w-md-auto">
-              <a class="nav-link" href="consenso_admin.html">Algoritmos</a>
-            </li>
-
-            <li class="nav-item my-2 w-100 w-md-auto">
-              <a class="nav-link" href="hechos_admin.html">Hechos</a>
+              <a class="nav-link text-nowrap" href="hechos_pendientes.html">Hechos Pendientes</a>
             </li>
 
             <li class="nav-item my-2 w-100 w-md-auto">
