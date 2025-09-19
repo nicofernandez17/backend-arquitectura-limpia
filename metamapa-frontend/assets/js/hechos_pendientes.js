@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const modalFecha = document.getElementById("modalFecha");
   const modalDescripcion = document.getElementById("modalDescripcion");
   const modalFuente = document.getElementById("modalFuente");
+  const modalImagen = document.getElementById("modalImagen");
 
   const modalAccionHeader = document.getElementById("modalAccionHeader");
   const modalAccionTitulo = document.getElementById("modalAccionTitulo");
@@ -112,6 +113,20 @@ document.addEventListener("DOMContentLoaded", () => {
         modalAccionTitulo.textContent = "Rechazar Hecho";
         modalAccionBody.textContent = `¿Deseas rechazar el hecho "${hecho.titulo}"?`;
         modalAccion.show();
+      });
+      li.querySelector(".btn-detalles").addEventListener("click", () => {
+      modalTitulo.textContent = hecho.titulo;
+      modalCategoria.textContent = hecho.categoria;
+      modalUbicacion.textContent = hecho.lugar;
+      modalFecha.textContent = hecho.fecha;
+      modalDescripcion.textContent = hecho.descripcion;
+      modalFuente.textContent = hecho.fuente;
+
+      // Agregamos la imagen
+      modalImagen.src = hecho.imagen;
+      modalImagen.alt = `Imagen del hecho: ${hecho.titulo}`;
+
+      modalDetalles.show();
       });
 
       listaHechos.appendChild(li);

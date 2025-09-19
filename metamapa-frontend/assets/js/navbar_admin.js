@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const navbarContainer = document.getElementById("navbar");
 
   navbarContainer.innerHTML = `
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
       <div class="container">
         <a class="navbar-brand" href="control_panel.html">MetaMapa Admin</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
@@ -66,3 +66,10 @@ document.addEventListener("DOMContentLoaded", () => {
 if ("scrollRestoration" in history) {
   history.scrollRestoration = "manual";
 }
+
+window.addEventListener("DOMContentLoaded", () => {
+  const navbar = document.querySelector(".navbar.fixed-top");
+  if (navbar) {
+    document.body.style.paddingTop = navbar.offsetHeight + "px";
+  }
+});
