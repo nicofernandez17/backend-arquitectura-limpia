@@ -158,3 +158,31 @@ const colecciones = [
     ]
   }
 ];
+
+// Solicitudes de eliminación
+const solicitudes_eliminacion = [
+  {
+    id: 1,
+    hechoTitulo: "Terremoto en San Juan",
+    fechaSolicitud: "2025-09-19",
+    solicitante: "Juan Pérez",
+    motivo: "Información incorrecta",
+    hechoId: 101
+  },
+  {
+    id: 2,
+    hechoTitulo: "Eclipse solar total",
+    fechaSolicitud: "2025-09-18",
+    solicitante: "", // Anónimo
+    motivo: "Evento duplicado",
+    hechoId: 401
+  },
+  {
+    id: 3,
+    hechoTitulo: "Revolución de Mayo",
+    fechaSolicitud: "2025-09-15",
+    solicitante: "María López",
+    motivo: "Error de fecha",
+    hechoId: 501
+  }
+];

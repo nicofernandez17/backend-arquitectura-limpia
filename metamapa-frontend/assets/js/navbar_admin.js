@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
             </li>
 
             <li class="nav-item my-2 w-100 w-md-auto">
-              <a class="nav-link" href="solicitudes_admin.html">Solicitudes</a>
+              <a class="nav-link" href="solicitudes_eliminacion.html">Solicitudes</a>
             </li>
 
             <!-- Dropdown de usuario admin -->
