@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!navbar) return; // seguridad por si falta el div
 
   navbar.innerHTML = `
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
     <div class="container">
       <a class="navbar-brand" href="index.html">MetaMapa</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
@@ -38,3 +38,12 @@ document.addEventListener("DOMContentLoaded", () => {
 if ("scrollRestoration" in history) {
   history.scrollRestoration = "manual";
 }
+
+
+// Ajustar el padding-top del body dinámicamente según altura de la navbar
+window.addEventListener("DOMContentLoaded", () => {
+  const navbar = document.querySelector(".navbar.fixed-top");
+  if (navbar) {
+    document.body.style.paddingTop = navbar.offsetHeight + "px";
+  }
+});

@@ -61,10 +61,6 @@ document.addEventListener('DOMContentLoaded', () => {
           valA = parseInt(a.querySelector('.card').dataset.cantidad);
           valB = parseInt(b.querySelector('.card').dataset.cantidad);
           break;
-        case 'fecha':
-          valA = new Date(a.querySelector('.card').dataset.fecha);
-          valB = new Date(b.querySelector('.card').dataset.fecha);
-          break;
       }
       if(valA < valB) return ordenActual[criterio] === 'asc' ? -1 : 1;
       if(valA > valB) return ordenActual[criterio] === 'asc' ? 1 : -1;
