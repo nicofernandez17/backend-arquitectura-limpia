@@ -29,9 +29,13 @@ document.addEventListener("DOMContentLoaded", () => {
             <li class="nav-item my-2 w-100 w-md-auto">
               <a class="nav-link" href="solicitudes_eliminacion.html">Solicitudes</a>
             </li>
+            
+            <li class="nav-item my-2 w-100 w-md-auto">
+              <a class="nav-link text-nowrap" href="importar_csv.html">Importar CSV</a>
+            </li>
 
             <!-- Dropdown de usuario admin -->
-            <li class="nav-item my-2 w-100 text-center">
+            <li class="nav-item mx-2 my-2 w-100 text-center">
               <div class="dropdown">
                 <button class="btn btn-light dropdown-toggle d-flex mx-auto align-items-center" 
                         type="button" id="adminDropdown" 
