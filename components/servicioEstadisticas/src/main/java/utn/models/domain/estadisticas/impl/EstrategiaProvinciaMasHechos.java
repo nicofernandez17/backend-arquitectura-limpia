@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import utn.models.domain.Coleccion;
 import utn.models.domain.estadisticas.EstadisticasColeccion;
 import utn.models.domain.estadisticas.IEstrategiaEstadistica;
+import utn.services.GeocodingService;
 
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -21,7 +22,7 @@ public class EstrategiaProvinciaMasHechos implements IEstrategiaEstadistica {
     public void calcular(Coleccion coleccion, EstadisticasColeccion resultado) {
         Map<String, Long> countByProvincia = coleccion.getHechos().stream()
                 .collect(Collectors.groupingBy(
-                        h -> geocodingService.obtenerProvincia(h.getLatitud(), h.getLongitud()),
+                        h -> geocodingService.obtenerProvincia(h.getUbicacion().getLatitud(), h.getUbicacion().getLongitud()),
                         Collectors.counting()
                 ));
 

@@ -116,10 +116,11 @@ public class AgregadorService {
     /**
      * Asigna hechos ya existentes en BD a las colecciones correspondientes
      */
-    private void asignarHechosAColecciones() {
+    @Transactional
+    protected void asignarHechosAColecciones() {
         List<Hecho> hechos = hechoRepo.findAll();
         List<Coleccion> colecciones = coleccionRepo.findAll();
-
+        System.out.println("Insertando en colecciones ");
         for (Coleccion coleccion : colecciones) {
             for (Hecho hecho : hechos) {
                 for (FuenteNombre fuente : hecho.getFuentes()) {
