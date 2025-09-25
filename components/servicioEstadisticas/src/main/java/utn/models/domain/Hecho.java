@@ -1,5 +1,6 @@
 package utn.models.domain;
 
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -11,8 +12,11 @@ import java.util.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
+@Table(name = "hecho")
 public class Hecho {
 
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
 
     private String descripcion;
