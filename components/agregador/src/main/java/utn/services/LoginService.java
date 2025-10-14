@@ -2,6 +2,7 @@ package utn.services;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import utn.exceptions.NotFoundException;
 import utn.models.domain.Usuario;
 import utn.models.dtos.UserRolesPermissionsDTO;
 import utn.repositories.IUsuarioRepository;
