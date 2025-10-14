@@ -2,16 +2,20 @@ package utn.services;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import utn.models.domain.Usuario;
+import utn.models.dtos.UserRolesPermissionsDTO;
+import utn.repositories.IUsuarioRepository;
+import utn.utils.JwtUtil;
 
 import java.util.Optional;
 
 @Service
 public class LoginService {
     
-    private final IUsuariosRepository usuariosRepository;
+    private final IUsuarioRepository usuariosRepository;
     private final BCryptPasswordEncoder passwordEncoder;
     
-    public LoginService(UsuariosRepository usuariosRepository) {
+    public LoginService(IUsuarioRepository usuariosRepository) {
         this.usuariosRepository = usuariosRepository;
         this.passwordEncoder = new BCryptPasswordEncoder();
     }
