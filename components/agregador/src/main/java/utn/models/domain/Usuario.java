@@ -1,8 +1,6 @@
 package utn.models.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 import utn.models.domain.usuarios.Permiso;
 import utn.models.domain.usuarios.Rol;
@@ -18,19 +16,34 @@ import java.util.List;
 @Entity
 @Table(name = "usuario")
 public class Usuario {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String nombre;
+
+    @Column(unique = true, nullable = false)
     private String nombreDeUsuario;
+
+    @Column(nullable = false)
     private String contrasenia;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Rol rol;
-    private List<Permiso> permisos;
 
-    public Usuario() {
-        this.permisos = new ArrayList<>();
-    }
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(
+            name = "usuario_permisos",
+            joinColumns = @JoinColumn(name = "usuario_id")
+    )
+    @Enumerated(EnumType.STRING)
+    @Column(name = "permiso")
+    private List<Permiso> permisos = new ArrayList<>();
 
-    public void agregarPermiso(Permiso permiso) {
-        this.permisos.add(permiso);
-    }
+    public Usuario() {}
+
+
 }
+
