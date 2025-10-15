@@ -80,14 +80,14 @@ public class ColeccionSeeder implements CommandLineRunner {
         // Usuarios
         Usuario admin = new Usuario();
         admin.setNombre("Administrador");
-        admin.setNombreDeUsuario("admin");
+        admin.setNombreDeUsuario("admin@gmail.com");
         admin.setContrasenia(passwordEncoder.encode("admin123"));
         admin.setRol(Rol.ADMINISTRADOR);
         admin.setPermisos(List.of(Permiso.LEER, Permiso.ESCRIBIR, Permiso.ELIMINAR));
 
         Usuario user = new Usuario();
         user.setNombre("Usuario Normal");
-        user.setNombreDeUsuario("user");
+        user.setNombreDeUsuario("user@gmail.com");
         user.setContrasenia(passwordEncoder.encode("user123"));
         user.setRol(Rol.USUARIO);
         user.setPermisos(List.of(Permiso.LEER));
