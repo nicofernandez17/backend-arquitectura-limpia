@@ -7,6 +7,10 @@ import org.springframework.web.bind.annotation.*;
 import utn.models.algoritmos.IAlgoritmoConsenso;
 import utn.models.domain.Coleccion;
 import utn.models.domain.Hecho;
+import utn.models.dtos.ColeccionDTO;
+import utn.models.dtos.ColeccionMapper;
+import utn.models.dtos.HechoDTO;
+import utn.models.dtos.HechoMapper;
 import utn.models.helpers.FuenteNombre;
 import utn.services.ColeccionService;
 
@@ -32,20 +36,29 @@ public class ColeccionAdminController {
 
     // ======= LEER =======
     @GetMapping
-    public ResponseEntity<List<Coleccion>> obtenerTodas() {
-        return ResponseEntity.ok(coleccionService.obtenerColecciones());
+    public ResponseEntity<List<ColeccionDTO>> obtenerTodas() {
+        List<ColeccionDTO> coleccionesDTO = coleccionService.obtenerColecciones().stream()
+                .map(ColeccionMapper::toDTO)
+                .toList();
+
+        return ResponseEntity.ok(coleccionesDTO);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Coleccion> obtenerPorId(@PathVariable Long id) {
+    public ResponseEntity<ColeccionDTO> obtenerPorId(@PathVariable Long id) {
         return coleccionService.obtenerColeccionPorId(id)
+                .map(ColeccionMapper::toDTO)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/{id}/hechos")
-    public ResponseEntity<List<Hecho>> obtenerHechosPorColeccion(@PathVariable Long id) {
-        return ResponseEntity.ok(coleccionService.obtenerHechosPorColeccion(id));
+    public ResponseEntity<List<HechoDTO>> obtenerHechosPorColeccion(@PathVariable Long id) {
+        List<HechoDTO> hechosDTO = coleccionService.obtenerHechosPorColeccion(id).stream()
+                .map(HechoMapper::aDTO)
+                .toList();
+
+        return ResponseEntity.ok(hechosDTO);
     }
 
     // ======= ACTUALIZAR =======
@@ -71,26 +84,7 @@ public class ColeccionAdminController {
         return ResponseEntity.ok("Todas las colecciones eliminadas");
     }
 
-    /*
-    @PatchMapping("/{id}/algoritmo")
-    public ResponseEntity<String> modificarAlgoritmo(
-            @PathVariable String id,
-            @RequestParam String algoritmoNombre) {
-
-        return coleccionService.obtenerColeccionPorId(id).map(coleccion -> {
-            IAlgoritmoConsenso algoritmo = coleccionService.obtenerAlgoritmoPorNombre(algoritmoNombre);
-
-            if (algoritmo == null) {
-                return ResponseEntity.badRequest().body("Algoritmo no válido");
-            }
-
-            coleccion.setAlgoritmo(algoritmo);
-            coleccionService.guardarColeccion(coleccion);
-
-            return ResponseEntity.ok("Algoritmo modificado correctamente");
-        }).orElse(ResponseEntity.notFound().build());
-    }
-    */
+    // ======= FUENTES =======
     @PatchMapping("/{id}/fuentes")
     public ResponseEntity<String> modificarFuente(
             @PathVariable Long id,
@@ -122,5 +116,5 @@ public class ColeccionAdminController {
 
         }).orElse(ResponseEntity.notFound().build());
     }
-
 }
+
