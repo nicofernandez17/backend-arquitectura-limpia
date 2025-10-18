@@ -19,6 +19,7 @@ public class ColeccionMapper {
         return ColeccionDTO.builder()
                 .id(coleccion.getId())  // Convert from String to Long
                 .titulo(coleccion.getTitulo())
+                .descripcion(coleccion.getDescripcion())
                 .hechos(hechoDTOList)
                 .build();
     }
