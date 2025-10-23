@@ -17,7 +17,7 @@ import utn.services.ColeccionService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/admin/colecciones")
+@RequestMapping("/api/admin/colecciones")
 public class ColeccionAdminController {
 
     private final ColeccionService coleccionService;

@@ -7,7 +7,7 @@ import utn.models.domain.SolicitudEliminacion;
 import utn.services.SolicitudService;
 
 @RestController
-@RequestMapping("/solicitudes")
+@RequestMapping("/api/solicitudes")
 public class SolicitudController {
 
     private final SolicitudService solicitudService;

@@ -21,7 +21,7 @@ import utn.services.ColeccionService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/hechos")
+@RequestMapping("/api/hechos")
 public class HechosController {
 
     private final ColeccionService coleccionService;

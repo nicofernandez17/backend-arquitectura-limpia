@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/colecciones")
+@RequestMapping("/api/colecciones")
 public class ColeccionController {
 
     private final ColeccionService coleccionService;

@@ -15,6 +15,7 @@ public class HechoMapper {
     public static HechoDTO aDTO(Hecho hecho) {
         return HechoDTO.builder()
                 .titulo(hecho.getTitulo())
+                .id(String.valueOf(hecho.getId()))
                 .descripcion(hecho.getDescripcion())
                 .categoria(Optional.ofNullable(hecho.getCategoria().getNombre())
                         .map(Object::toString)

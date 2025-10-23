@@ -10,7 +10,7 @@ import utn.repositories.IHechoRepository;
 import java.util.List;
 
 @RestController
-@RequestMapping("/admin/hechos")
+@RequestMapping("/api/admin/hechos")
 public class HechoAdminController {
 
     private final IHechoRepository hechoRepository;
