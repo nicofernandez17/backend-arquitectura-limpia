@@ -45,6 +45,14 @@ public class ColeccionController {
                 .collect(Collectors.toList());
     }
 
+    @GetMapping("/{id}")
+    public ColeccionDTO obtenerColeccion(@PathVariable Long id) {
+        Coleccion coleccion = coleccionService.obtenerColeccionPorId(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Colección no encontrada"));
+
+        return ColeccionMapper.toDTO(coleccion);
+    }
+
     @GetMapping("/{identificador}/hechos")
     public List<HechoDTO> obtenerHechosPorColeccion(
             @PathVariable Long identificador,
