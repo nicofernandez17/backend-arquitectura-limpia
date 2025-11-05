@@ -16,3 +16,5 @@ public class HechoFormDTO {
     private LocalDateTime fecha;
     private MultipartFile archivo;
 }
+
+

@@ -1,23 +1,10 @@
 package utn.models.domain;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
 import utn.models.helpers.EstadoSolicitud;
 
 import java.time.LocalDateTime;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 
 @NoArgsConstructor
 @Entity @Table(name = "solicitud_eliminacion")
@@ -54,6 +41,8 @@ public class SolicitudEliminacion {
     this.fechaCreacion = LocalDateTime.now();
     this.estado = EstadoSolicitud.PENDIENTE;
   }
+
+
 
   public void aceptar() {
     this.estado = EstadoSolicitud.ACEPTADA;

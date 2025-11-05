@@ -15,7 +15,6 @@ public class SolicitudDTO {
 
     private String hecho;
 
-
     private final String motivo;
 
 }
