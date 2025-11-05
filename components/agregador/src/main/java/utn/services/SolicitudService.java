@@ -8,6 +8,7 @@ import utn.services.spamDetector.akismet.AkismetService;
 import utn.services.spamDetector.ISpamDetector;
 import utn.repositories.SolicitudRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,6 +25,9 @@ public class SolicitudService {
         this.spamDetector = spamDetector;
     }
 
+    public List<SolicitudEliminacion> obtenerSolicitudes(){
+        return solicitudRepository.findAll();
+    }
 
     public SolicitudEliminacion crearSolicitud(SolicitudEliminacion solicitud) {
 
