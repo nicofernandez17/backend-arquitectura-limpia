@@ -10,8 +10,12 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 public class SolicitudDTO {
-    private LocalDateTime fechaCreacion;
-    private String estado;
+
+    @Builder.Default
+    private LocalDateTime fechaCreacion = LocalDateTime.now();
+
+    @Builder.Default
+    private String estado = "PENDIENTE";
 
     private String hecho;
 
