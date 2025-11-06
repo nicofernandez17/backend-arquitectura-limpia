@@ -12,6 +12,7 @@ public class SolicitudMapper {
         if (solicitud == null) return null;
 
         return SolicitudDTO.builder()
+                .id(solicitud.getId())
                 .fechaCreacion(solicitud.getFechaCreacion())
                 .estado(solicitud.getEstado().name()) // Enum → String
                 .hecho(solicitud.getHecho() != null ? String.valueOf(solicitud.getHecho().getId()) : "Sin título")

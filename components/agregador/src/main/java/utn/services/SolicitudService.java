@@ -57,16 +57,37 @@ public class SolicitudService {
     }
 
     public SolicitudEliminacion procesarSolicitud(Long id, String accion) {
+        System.out.println("➡️ Procesando solicitud de eliminación: id=" + id + ", acción='" + accion + "'");
 
         SolicitudEliminacion solicitud = solicitudRepository.findById(id).orElse(null);
+        if (solicitud == null) {
+            System.out.println("⚠️ No se encontró ninguna solicitud con id=" + id);
+            throw new IllegalArgumentException("Solicitud no encontrada con id=" + id);
+        }
 
-        if (accion == "aceptar"){
+        System.out.println("🔍 Estado actual de la solicitud: " + solicitud.getEstado());
+
+        if ("aceptar".equalsIgnoreCase(accion)) {
             solicitud.aceptar();
-        } else if (accion == "rechazar"){solicitud.rechazar();}
+            System.out.println("✅ Solicitud con id=" + id + " marcada como ACEPTADA");
+        } else if ("rechazar".equalsIgnoreCase(accion)) {
+            solicitud.rechazar();
+            System.out.println("❌ Solicitud con id=" + id + " marcada como RECHAZADA");
+        } else {
+            System.out.println("🚫 Acción inválida recibida: '" + accion + "'");
+            throw new IllegalArgumentException("Acción no válida: " + accion);
+        }
 
+        SolicitudEliminacion guardada = solicitudRepository.save(solicitud);
+        System.out.println("💾 Solicitud guardada correctamente con id=" + guardada.getId()
+                + ", nuevo estado=" + guardada.getEstado());
 
-        return solicitud;
+        if (guardada.getHecho() != null) {
+            System.out.println("📘 Hecho asociado -> id=" + guardada.getHecho().getId()
+                    + ", título=" + guardada.getHecho().getTitulo());
+        }
 
+        return guardada;
     }
 
 

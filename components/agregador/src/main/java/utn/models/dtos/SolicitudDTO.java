@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @Builder
 public class SolicitudDTO {
 
+    private Long id;
     @Builder.Default
     private LocalDateTime fechaCreacion = LocalDateTime.now();
 
