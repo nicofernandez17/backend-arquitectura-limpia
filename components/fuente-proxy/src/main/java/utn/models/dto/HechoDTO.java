@@ -17,7 +17,6 @@ public class HechoDTO {
     private LocalDateTime fecha_hecho;
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
-    private byte[] archivoContenido;
-    private String archivoNombre;
+    private String multimediaPath;
     //TODO
 }

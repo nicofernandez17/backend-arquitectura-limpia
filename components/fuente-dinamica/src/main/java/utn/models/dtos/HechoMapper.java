@@ -33,8 +33,7 @@ public class HechoMapper {
                         .orElse(null))
                 .created_at(hecho.getFechaDeCarga())
                 .updated_at(hecho.getUpdated_at())
-                .archivoContenido(hecho.getMultimediaArchivo())
-                .archivoNombre(hecho.getMultimediaNombre())
+                .multimediaPath(hecho.getMultimediaNombre())
                 .usuarioId(hecho.getUsuarioId())
                 .build();
     }
@@ -59,9 +58,8 @@ public class HechoMapper {
                 fecha,
                 fechaDeCarga,
                 Origen.API);
-
-        hecho.setMultimediaArchivo(dto.getArchivoContenido());
-        hecho.setMultimediaNombre(dto.getArchivoNombre());
+System.out.println("Multimedia del hecho: " + dto.getMultimediaPath());
+        hecho.setMultimediaNombre(dto.getMultimediaPath());
         hecho.setUsuarioId(dto.getUsuarioId());
 
         return hecho;
@@ -84,29 +82,16 @@ public class HechoMapper {
             hecho.setFecha(dto.getFecha_hecho().toLocalDate());
         }
 
-        if (dto.getArchivoContenido() != null) {
-            hecho.setMultimediaArchivo(dto.getArchivoContenido());
-            hecho.setMultimediaNombre(dto.getArchivoNombre());
+        if (dto.getMultimediaPath() != null) {
+            hecho.setMultimediaNombre(dto.getMultimediaPath());
         }
 
         // Actualizar timestamp de actualización
         hecho.setUpdated_at(LocalDateTime.now());
     }
 
-    // Form DTO → DTO
+    // Form DTO → DTO TODO revisar esto, tal vez podemos volarlo porque ya no usamos MultipartFile en el back
     public static HechoDTO fromHechoForm(HechoFormDTO hechoFormDTO) {
-        MultipartFile archivo = hechoFormDTO.getArchivo();
-        byte[] archivoContenido = null;
-        String archivoNombre = null;
-
-        if (archivo != null && !archivo.isEmpty()) {
-            try {
-                archivoContenido = archivo.getBytes();
-                archivoNombre = archivo.getOriginalFilename();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
 
         return HechoDTO.builder()
                 .titulo(hechoFormDTO.getTitulo())
@@ -116,8 +101,7 @@ public class HechoMapper {
                 .longitud(hechoFormDTO.getLongitud())
                 .fecha_hecho(hechoFormDTO.getFecha())
                 .created_at(null)
-                .archivoContenido(archivoContenido)
-                .archivoNombre(archivoNombre)
+                .multimediaPath(hechoFormDTO.getMultimediaPath())
                 .usuarioId(null)
                 .build();
     }

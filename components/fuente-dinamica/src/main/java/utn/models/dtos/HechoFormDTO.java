@@ -14,7 +14,7 @@ public class HechoFormDTO {
     private double latitud;
     private double longitud;
     private LocalDateTime fecha;
-    private MultipartFile archivo;
+    private String multimediaPath;
 }
 
 

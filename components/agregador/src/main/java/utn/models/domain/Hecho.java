@@ -54,10 +54,7 @@ public class Hecho {
   @Column(name = "updated_at", columnDefinition = "DATE")
   private LocalDate updated_at;
 
-  @Transient // Actualizar a un string con el path al archivo. Como mucho la posibilidad de subir el archivo y guardar el path
-              // No vas a guardar un archivo en una base de datos relacional.
-  private byte[] multimediaArchivo;
-
+ // Esto pasó a ser el path del archivo en nuestro frontend-server
   @Column(name = "multimedia_nombre")
   private String multimediaNombre;
 

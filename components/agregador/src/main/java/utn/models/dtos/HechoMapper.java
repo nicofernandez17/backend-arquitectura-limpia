@@ -35,8 +35,7 @@ public class HechoMapper {
                 .updated_at(Optional.ofNullable(hecho.getUpdated_at())
                         .map(LocalDate::atStartOfDay)
                         .orElse(null))
-                .archivoContenido(hecho.getMultimediaArchivo())
-                .archivoNombre(hecho.getMultimediaNombre())
+                .multimediaPath(hecho.getMultimediaNombre())
                 .build();
     }
 
@@ -62,8 +61,7 @@ public class HechoMapper {
                 fecha,
                 fechaDeCarga,
                 Origen.API);
-        hecho.setMultimediaArchivo(dto.getArchivoContenido());
-        hecho.setMultimediaNombre(dto.getArchivoNombre());
+        hecho.setMultimediaNombre(dto.getMultimediaPath());
 
         return hecho;
     }

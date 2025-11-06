@@ -24,8 +24,7 @@ public class HechoMapper {
                 .fecha_hecho(hecho.getFecha())
                 .created_at(hecho.getCreated_at())
                 .updated_at(hecho.getUpdated_at())
-                .archivoContenido(null)
-                .archivoNombre(null)
+                .multimediaPath(null)
                 .build();
     }
 

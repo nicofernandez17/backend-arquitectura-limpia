@@ -28,12 +28,12 @@ public class HechoUIController {
         this.hechosUIService = hechosUIService;
     }
 
-    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<String> registrarHecho(@ModelAttribute HechoFormDTO hechoFormDTO) {
-
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> registrarHecho(@RequestBody HechoFormDTO hechoFormDTO) {
         hechosUIService.registrarHecho(HechoMapper.fromHechoForm(hechoFormDTO));
         return ResponseEntity.status(HttpStatus.CREATED).body("Hecho registrado correctamente");
     }
+
 
     @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Revision> actualizarHecho(
@@ -64,19 +64,20 @@ public class HechoUIController {
     }
     */
 
-    @GetMapping("/{id}/archivo")
+    // TODO Revisar porque lo modifiqué para que no me de error, pero esto seguramente ya no lo usemos
+    /*@GetMapping("/{id}/archivo")
     public ResponseEntity<byte[]> descargarArchivo(@PathVariable Long id) {
         Optional<HechoDTO> hechoDTO = hechosUIService.obtenerPorId(id);
 
-        if (hechoDTO.isEmpty() || hechoDTO.get().getArchivoContenido() == null) {
+        if (hechoDTO.isEmpty() || hechoDTO.get().getMultimediaPath() == null) {
             return ResponseEntity.notFound().build();
         }
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION,
-                        "attachment; filename=\"" + hechoDTO.get().getArchivoNombre() + "\"")
+                        "attachment; filename=\"" + hechoDTO.get().getMultimediaPath() + "\"")
                 .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                .body(hechoDTO.get().getArchivoContenido());
-    }
+                .body(hechoDTO.get().getMultimediaPath());
+    }*/
 
 }
