@@ -40,6 +40,17 @@ public class HechosService {
         return hechosRepository.findAll();
     }
 
+    @Async
+    public List<Hecho> cargarDesdeCsv(String ruta) {
+        List<Hecho> nuevosHechos = lectorCsv.leer(ruta);
+
+        List<Hecho> normalizados = normalizadorClientService.normalizarHechos(nuevosHechos);
+
+        hechosRepository.saveAll(normalizados);
+
+        return hechosRepository.findAll();
+    }
+
     public List<Hecho> obtenerTodos() {
         return hechosRepository.findAll();
     }
