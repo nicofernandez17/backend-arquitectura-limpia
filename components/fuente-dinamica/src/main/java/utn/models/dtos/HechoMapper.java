@@ -19,7 +19,7 @@ public class HechoMapper {
         return HechoDTO.builder()
                 .titulo(hecho.getTitulo())
                 .descripcion(hecho.getDescripcion())
-                .categoria(Optional.ofNullable(hecho.getCategoria())
+                .categoria(Optional.ofNullable(hecho.getCategoria().getNombre())
                         .map(Object::toString)
                         .orElse(null))
                 .latitud(Optional.ofNullable(hecho.getUbicacion())
@@ -58,7 +58,7 @@ public class HechoMapper {
                 fecha,
                 fechaDeCarga,
                 Origen.API);
-System.out.println("Multimedia del hecho: " + dto.getMultimediaPath());
+System.out.println("Categoría del hecho: " + dto.getCategoria());
         hecho.setMultimediaNombre(dto.getMultimediaPath());
         hecho.setUsuarioId(dto.getUsuarioId());
 

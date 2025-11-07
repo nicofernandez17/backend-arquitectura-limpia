@@ -19,6 +19,7 @@
     "Lluvia torrencial": "LLUVIA_INTENSA",
     "Inundación repentina": "INUNDACION",
     "Inundación por lluvias intensas": "INUNDACION",
+    "inundacion": "INUNDACION",
     "Anegamiento masivo": "INUNDACION",
     "Inundación en zona urbana": "INUNDACION",
     "Calor extremo": "TEMPERATURAS_EXTREMAS",
@@ -47,6 +48,7 @@
     "Incendio en zona de monte": "INCENDIO",
     "Fuego arrasador en zona boscosa": "INCENDIO",
     "Quema de pastizales": "INCENDIO",
+    "incendio": "incendio",
     "Sismo con epicentro local": "SISMO",
     "Sismo de gran magnitud": "SISMO",
     "Movimiento telúrico": "SISMO",
@@ -78,7 +80,9 @@
     "Temporal": "TEMPORAL_GENERAL",
     "Frente tormentoso": "TEMPORAL_GENERAL",
     "Tormenta severa": "TEMPORAL_GENERAL",
-    "Tornado": "TORNADO"
+    "Tornado": "TORNADO",
+    "protesta": "PROTESTA",
+    "accidente": "ACCIDENTE"
   },
   "provincias" : {
 
