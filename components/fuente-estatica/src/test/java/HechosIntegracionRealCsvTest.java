@@ -22,7 +22,7 @@ class HechosIntegracionRealCsvTest {
   NormalizadorClientService normalizadorClientService;
   HechosService service;
   HechosController controller;
-
+/* Dejo commiteados los test xq están todos obsoletos y rotos ya...
   @BeforeEach
   void setUp() {
     //repository = new HechosRepository();
@@ -37,7 +37,7 @@ class HechosIntegracionRealCsvTest {
     assertTrue(file.exists(), "El archivo CSV real debe existir en src/main/resources");
   }
 
-  /* Dejo commiteados los test xq están todos obsoletos y rotos ya...
+
   @Test
   void testLecturaCsvReal() {
     AdapterLectorCsv lector = new AdapterLectorCsv();

@@ -14,16 +14,29 @@ public class CsvStorageService {
 
     private static final String DIRECTORIO_DESTINO = "data/uploads";
 
-    public void guardarArchivo(MultipartFile archivo) throws IOException {
+    /**
+     * Guarda un archivo CSV en el almacenamiento local y devuelve su ruta absoluta como String.
+     *
+     * @param archivo El archivo a guardar
+     * @return La ruta absoluta del archivo almacenado
+     * @throws IOException Si ocurre un error al escribir el archivo
+     */
+    public String guardarArchivo(MultipartFile archivo) throws IOException {
         Path destino = Paths.get(DIRECTORIO_DESTINO);
 
-        // Crear directorio si no existe
+        // Crear el directorio si no existe
         if (!Files.exists(destino)) {
             Files.createDirectories(destino);
         }
 
-        // Guardar el archivo con su nombre original
+        // Definir la ruta del archivo final
         Path rutaArchivo = destino.resolve(archivo.getOriginalFilename());
+
+        // Copiar el contenido al destino (reemplazando si ya existe)
         Files.copy(archivo.getInputStream(), rutaArchivo, StandardCopyOption.REPLACE_EXISTING);
+
+        // Devolver la ruta absoluta como String
+        return rutaArchivo.toAbsolutePath().toString();
     }
 }
+
