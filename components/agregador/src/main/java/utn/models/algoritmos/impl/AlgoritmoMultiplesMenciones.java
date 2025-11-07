@@ -1,9 +1,11 @@
 package utn.models.algoritmos.impl;
 
+import org.springframework.stereotype.Component;
 import utn.models.algoritmos.IAlgoritmoConsenso;
 import utn.models.domain.Hecho;
 import utn.models.helpers.ConsensoNivel;
 
+@Component
 public class AlgoritmoMultiplesMenciones implements IAlgoritmoConsenso {
 
     @Override

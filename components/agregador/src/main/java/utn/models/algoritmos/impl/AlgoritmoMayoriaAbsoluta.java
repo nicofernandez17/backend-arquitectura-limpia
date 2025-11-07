@@ -1,11 +1,13 @@
 package utn.models.algoritmos.impl;
 
+import org.springframework.stereotype.Component;
 import utn.models.algoritmos.IAlgoritmoConsenso;
 import utn.models.domain.Hecho;
 import utn.models.helpers.ConsensoNivel;
 
 import java.util.List;
 
+@Component
 public class AlgoritmoMayoriaAbsoluta implements IAlgoritmoConsenso {
 
     @Override

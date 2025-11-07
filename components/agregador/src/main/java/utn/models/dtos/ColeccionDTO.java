@@ -11,5 +11,7 @@ public class ColeccionDTO {
     private Long id;            // ID de la colección
     private String titulo;      // Título de la colección
     private String descripcion;
+    private List<String> fuentes;  // seleccionadas por el usuario
+    private String algoritmo;
     private List<HechoDTO> hechos;  // Lista de hechos en formato HechoDTO
 }
