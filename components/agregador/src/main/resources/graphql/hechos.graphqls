@@ -1,0 +1,26 @@
+scalar LocalDateTime
+
+input HechoFiltroInput {
+  categoria: String
+  fechaDesde: LocalDateTime
+  fechaHasta: LocalDateTime
+}
+
+type HechoDTO {
+  id: String
+  titulo: String
+  descripcion: String
+  categoria: String
+  latitud: Float
+  longitud: Float
+  fecha_hecho: LocalDateTime
+  created_at: LocalDateTime
+  updated_at: LocalDateTime
+  multimediaPath: String
+}
+
+type Query {
+  hechos: [HechoDTO]
+  hechoPorId(id: String!): HechoDTO
+  hechosFiltrados(filtro: HechoFiltroInput): [HechoDTO]
+}

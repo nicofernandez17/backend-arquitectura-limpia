@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class HechoDTO {
-    //TODO revisar el atributo id porque no coincide con los HechoDTO en las fuentes
     private String id;
     private String titulo;
     private String descripcion;
