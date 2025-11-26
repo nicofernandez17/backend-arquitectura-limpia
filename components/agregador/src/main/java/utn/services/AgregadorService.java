@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 import utn.models.domain.Coleccion;
 import utn.models.domain.Hecho;
 import utn.models.dtos.HechoDTO;
@@ -18,6 +19,7 @@ import utn.repositories.IColeccionRepository;
 import utn.repositories.IHechoRepository;
 import utn.services.rabbitMQ.RabbitPublisher;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -58,10 +60,17 @@ public class AgregadorService {
     private void consolidarHechosDesdeFuentes() {
         Map<FuenteNombre, List<HechoDTO>> hechosPorFuente = new HashMap<>();
 
+
         // Traigo hechos de cada fuente
         for (FuenteNombre fuente : fuenteProvider.getTodasLasFuentes()) {
-            String url = fuenteProvider.getUrl(fuente);
-            List<HechoDTO> hechos = obtenerHechosDesdeUrl(url);
+
+            LocalDateTime ahora = LocalDateTime.now().minusMinutes(3);
+
+            String urlConFecha = UriComponentsBuilder
+                    .fromHttpUrl(fuenteProvider.getUrl(fuente))
+                    .queryParam("desde", ahora.toString())
+                    .toUriString();
+            List<HechoDTO> hechos = obtenerHechosDesdeUrl(urlConFecha);
             hechosPorFuente.put(fuente, hechos);
         }
 
