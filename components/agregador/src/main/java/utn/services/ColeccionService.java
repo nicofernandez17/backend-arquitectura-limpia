@@ -11,10 +11,7 @@ import utn.models.dtos.HechoMapper;
 import utn.repositories.IColeccionRepository;
 import utn.repositories.IHechoRepository;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class ColeccionService {
@@ -33,7 +30,9 @@ public class ColeccionService {
         Coleccion coleccion = Coleccion.builder()
                 .titulo(titulo)
                 .descripcion(descripcion)
-                .hechos(new ArrayList<>())
+                // CAMBIO: ahora usamos Set en el dominio.
+                // Acá NO rompo nada, solo cambio la creación.
+                .hechos(new HashSet<>())
                 .criteriosDePertenencia(new ArrayList<>())
                 .build();
         coleccionRepository.save(coleccion);
@@ -50,20 +49,22 @@ public class ColeccionService {
 
     public List<Hecho> obtenerHechosPorColeccion(Long idColeccion) {
         return coleccionRepository.findById(idColeccion)
-                .map(Coleccion::getHechos)
-                .orElse(Collections.emptyList());
+                .map(c -> new ArrayList<>(c.getHechos()))
+                .orElseGet(ArrayList::new);
     }
 
     public List<Hecho> obtenerHechosIrrestricto(Long id) {
         Coleccion coleccion = coleccionRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Colección no encontrada"));
-        return coleccion.getHechos();
+
+        return new ArrayList<>(coleccion.getHechos()); // CAMBIO
     }
 
     public List<Hecho> obtenerHechosCurado(Long id) {
         Coleccion coleccion = coleccionRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Colección no encontrada"));
-        return coleccion.getHechosFiltradosPorConsenso();
+
+        return new ArrayList<>(coleccion.getHechosFiltradosPorConsenso()); // CAMBIO
     }
 
     // ===== ACTUALIZAR =====
@@ -83,13 +84,19 @@ public class ColeccionService {
     }
 
     public void agregarHechos(List<HechoDTO> hechosDTO) {
+
         List<Coleccion> colecciones = coleccionRepository.findAll();
+
+        // Notar: generamos objetos Hecho desde DTO
         List<Hecho> hechos = hechosDTO.stream()
                 .map(HechoMapper::aDominio)
                 .toList();
+
         for (Coleccion coleccion : colecciones) {
+            // NO DUPLICA MÁS porque el dominio usa Set
             coleccion.agregarHechos(hechos);
         }
+
         System.out.println("Hechos agregados a las colecciones");
     }
 
