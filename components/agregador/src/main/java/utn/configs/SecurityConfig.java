@@ -29,7 +29,8 @@ public class SecurityConfig {
                             "/api/hechos/**",
                             "/api/admin/colecciones",
                             "/colecciones/inicializar",
-                            "/api/colecciones/**"
+                            "/api/colecciones/**",
+                            "/actuator/**"
                     ).permitAll();
                     auth.requestMatchers("/api/auth/user/roles-permisos").authenticated();
                     auth.anyRequest().authenticated();
