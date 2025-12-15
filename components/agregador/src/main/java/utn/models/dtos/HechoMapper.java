@@ -58,11 +58,11 @@ public class HechoMapper {
                 dto.getDescripcion(),
                 categoria,
                 ubicacion,
-                fecha,
+                fechaDeCarga,
                 fechaDeCarga,
                 Origen.API);
         hecho.setMultimediaNombre(dto.getMultimediaPath());
-
+        //hecho.setFecha();
         return hecho;
     }
 }

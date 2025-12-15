@@ -22,5 +22,5 @@ type HechoDTO {
 type Query {
   hechos: [HechoDTO]
   hechoPorId(id: String!): HechoDTO
-  hechosFiltrados(filtro: HechoFiltroInput): [HechoDTO]
+  hechosFiltrados(filtro: HechoFiltroInput, idColeccion: Int): [HechoDTO]
 }

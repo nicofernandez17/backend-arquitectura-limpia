@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import utn.models.dtos.HechoDTO;
 import utn.models.dtos.HechoMapper;
 import utn.models.dtos.input.HechoFiltroInput;
+import utn.services.ColeccionService;
 import utn.services.HechoService;
 
 import java.util.List;
@@ -15,10 +16,12 @@ import java.util.List;
 public class HechoGraphQLController {
 
     private final HechoService hechoService;
+    private final ColeccionService coleccionService;
 
     @Autowired
-    public HechoGraphQLController(HechoService hechoService) {
+    public HechoGraphQLController(HechoService hechoService, ColeccionService coleccionService) {
         this.hechoService = hechoService;
+        this.coleccionService = coleccionService;
     }
 
     @QueryMapping
@@ -37,10 +40,22 @@ public class HechoGraphQLController {
     }
 
     @QueryMapping
-    public List<HechoDTO> hechosFiltrados(@Argument HechoFiltroInput filtro) {
-        return hechoService.buscarPorFiltros(filtro)
+    public List<HechoDTO> hechosFiltrados(
+            @Argument HechoFiltroInput filtro,
+            @Argument Integer idColeccion
+    ) {
+        // Obtener los hechos que pertenecen a la colección
+        List<HechoDTO> hechosEnColeccion = coleccionService
+                .obtenerHechosPorColeccion(Long.valueOf(idColeccion))
                 .stream()
                 .map(HechoMapper::aDTO)
+                .toList();
+
+        // Aplicar filtros si existen
+        return hechosEnColeccion.stream()
+                .filter(h -> filtro.getCategoria() == null || h.getCategoria().equalsIgnoreCase(filtro.getCategoria()))
+                .filter(h -> filtro.getFechaDesde() == null || !h.getFecha_hecho().isBefore(filtro.getFechaDesde()))
+                .filter(h -> filtro.getFechaHasta() == null || !h.getFecha_hecho().isAfter(filtro.getFechaHasta()))
                 .toList();
     }
 }
