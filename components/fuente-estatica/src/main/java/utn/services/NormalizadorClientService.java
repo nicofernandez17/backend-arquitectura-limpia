@@ -26,28 +26,38 @@ public class NormalizadorClientService {
     }
 
     public List<Hecho> normalizarHechos(List<Hecho> hechos) {
+
         List<Hecho> resultado = new ArrayList<>();
         int batchSize = 1000;
 
-        for (int i = 0; i <= hechos.size(); i+=batchSize) {
-            List<Hecho> batch = hechos.subList(i, Math.min(i + batchSize, hechos.size()));
-            List<HechoDTO> batchDTO = batch.stream().map(HechoMapper::aDTO).toList();
+        for (int i = 0; i < hechos.size(); i += batchSize) {
+
+            List<Hecho> batch = hechos.subList(
+                    i,
+                    Math.min(i + batchSize, hechos.size())
+            );
+
+            List<HechoDTO> batchDTO = batch.stream()
+                    .map(HechoMapper::aDTO)
+                    .toList();
 
             System.out.println("Enviando lote de " + batchDTO.size() + " hechos a normalizar");
 
             List<Hecho> batchNormalizado = webClient.post()
-                            .uri("/normalizar")
-                            .bodyValue(batchDTO)
+                    .uri("/normalizar")
+                    .bodyValue(batchDTO)
                     .retrieve()
                     .bodyToFlux(HechoDTO.class)
                     .map(HechoMapper::aDominio)
                     .collectList()
                     .block();
 
-            resultado.addAll(batchNormalizado);
-
+            if (batchNormalizado != null) {
+                resultado.addAll(batchNormalizado);
+            }
         }
 
         return resultado;
     }
+
 }
