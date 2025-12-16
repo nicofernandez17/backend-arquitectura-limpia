@@ -83,7 +83,7 @@ public class ColeccionController {
 
     @PostMapping
     public ResponseEntity<String> crearColeccion(@RequestBody ColeccionDTO coleccion) {
-        coleccionService.crearColeccion(coleccion.getTitulo(), coleccion.getDescripcion());
+        coleccionService.crearColeccion(coleccion);
         return ResponseEntity.status(HttpStatus.CREATED).body("Colección creada con éxito");
     }
 }

@@ -31,8 +31,8 @@ public class ColeccionAdminController {
 
     // ======= CREAR =======
     @PostMapping
-    public ResponseEntity<String> crear(@RequestParam String titulo, @RequestParam String descripcion) {
-        coleccionService.crearColeccion(titulo, descripcion);
+    public ResponseEntity<String> crear(@RequestBody ColeccionDTO coleccionDTO) {
+        coleccionService.crearColeccion(coleccionDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body("Colección creada correctamente");
     }
 

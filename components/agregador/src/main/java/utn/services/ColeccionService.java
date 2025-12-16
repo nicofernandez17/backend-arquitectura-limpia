@@ -4,8 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+import utn.models.algoritmos.AlgoritmoConsensoResolver;
 import utn.models.domain.Coleccion;
 import utn.models.domain.Hecho;
+import utn.models.dtos.ColeccionDTO;
+import utn.models.dtos.ColeccionMapper;
 import utn.models.dtos.HechoDTO;
 import utn.models.dtos.HechoMapper;
 import utn.repositories.IColeccionRepository;
@@ -18,23 +21,20 @@ public class ColeccionService {
 
     private final IColeccionRepository coleccionRepository;
     private final IHechoRepository hechoRepository;
+    private final AlgoritmoConsensoResolver algoritmoConsensoResolver;
 
     @Autowired
-    public ColeccionService(IColeccionRepository coleccionRepository, IHechoRepository hechoRepository) {
+    public ColeccionService(IColeccionRepository coleccionRepository, IHechoRepository hechoRepository, AlgoritmoConsensoResolver algoritmoConsensoResolver) {
         this.coleccionRepository = coleccionRepository;
         this.hechoRepository = hechoRepository;
+        this.algoritmoConsensoResolver = algoritmoConsensoResolver;
     }
 
     // ===== CREAR =====
-    public void crearColeccion(String titulo, String descripcion) {
-        Coleccion coleccion = Coleccion.builder()
-                .titulo(titulo)
-                .descripcion(descripcion)
-                // CAMBIO: ahora usamos Set en el dominio.
-                // Acá NO rompo nada, solo cambio la creación.
-                .hechos(new HashSet<>())
-                .criteriosDePertenencia(new ArrayList<>())
-                .build();
+    public void crearColeccion(ColeccionDTO coleccionDTO) {
+        // 🔹 Todo el mapeo lo hace el mapper
+        Coleccion coleccion = ColeccionMapper.toDomain(coleccionDTO,algoritmoConsensoResolver);
+
         coleccionRepository.save(coleccion);
     }
 
