@@ -17,7 +17,6 @@ import utn.models.helpers.FuenteNombre;
 import utn.models.helpers.HechoClaveUtils;
 import utn.repositories.IColeccionRepository;
 import utn.repositories.IHechoRepository;
-import utn.services.rabbitMQ.RabbitPublisher;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -30,19 +29,16 @@ public class AgregadorService {
     private final IColeccionRepository coleccionRepo;
     private final FuenteProvider fuenteProvider;
     private final NormalizadorHechos normalizadorHechos;
-    private final RabbitPublisher publisherService;
 
     public AgregadorService(RestTemplateBuilder builder,
                             IHechoRepository hechoRepo,
                             IColeccionRepository coleccionRepo,
                             FuenteProvider fuenteProvider,
-                            RabbitPublisher publisherService,
                             NormalizadorHechos normalizadorHechos) {
         this.restTemplate = builder.build();
         this.hechoRepo = hechoRepo;
         this.coleccionRepo = coleccionRepo;
         this.fuenteProvider = fuenteProvider;
-        this.publisherService = publisherService;
         this.normalizadorHechos = normalizadorHechos;
     }
 
@@ -116,10 +112,10 @@ public class AgregadorService {
 
         System.out.println("Total de nuevos hechos insertados: " + nuevosHechos.size());
 
-        // Publicar hechos nuevos a Rabbit
+        /* Dejo esto commiteado Publicar hechos nuevos a Rabbit /
         publisherService.publicarHechos(
                 nuevosHechos.stream().map(HechoMapper::aDTO).toList()
-        );
+        );*/
     }
 
     /**

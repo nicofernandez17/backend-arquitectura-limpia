@@ -58,7 +58,7 @@ public class HechoMapper {
                 dto.getDescripcion(),
                 categoria,
                 ubicacion,
-                fechaDeCarga,
+                fecha,
                 fechaDeCarga,
                 Origen.API);
         hecho.setMultimediaNombre(dto.getMultimediaPath());
