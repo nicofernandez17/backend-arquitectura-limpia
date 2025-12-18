@@ -7,20 +7,15 @@ import utn.services.ProxyService;
 @Component
 public class ProxyScheduler {
 
-    private ProxyService proxyService;
+    private final ProxyService proxyService;
 
     public ProxyScheduler(ProxyService proxyService) {
         this.proxyService = proxyService;
     }
 
-
-    @Scheduled(cron = "0 */4 * * * *")
+    @Scheduled(fixedRate = 600000) // cada 10 minutos
     public void cargarCSV() {
-        System.out.println("Consumiendo API'S");
-
-        proxyService.cargarYObtenerHechos();
-        
-
+        System.out.println("⏱ Consumiendo APIs...");
+        proxyService.cargarYObtenerHechos().block();
     }
-
 }

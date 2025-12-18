@@ -24,8 +24,8 @@ public class ProxyService {
 
     public Mono<List<HechoDTO>> cargarYObtenerHechos() {
         return Flux.fromIterable(fuentes)
-                .flatMap(IFuenteService::getHechos)
-                .then(Mono.fromCallable(() -> hechosRepository.findAll()))
+                .flatMap(IFuenteService::getHechos) // llama a DDSService
+                .then(Mono.fromCallable(hechosRepository::findAll))
                 .map(hechos -> hechos.stream()
                         .map(HechoMapper::aDTO)
                         .toList());

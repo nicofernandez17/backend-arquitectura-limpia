@@ -21,10 +21,12 @@ public class DDSService implements IFuenteService {
     public DDSService(WebClient.Builder webClientBuilder,
                       @Value("${api.ddsi.token}") String token,
                       IHechoRepository hechosRepository) {
+
         this.webClient = webClientBuilder
                 .baseUrl("https://api-ddsi.disilab.ar/public")
                 .defaultHeader("Authorization", "Bearer " + token)
                 .build();
+
         this.hechosRepository = hechosRepository;
     }
 
@@ -36,17 +38,16 @@ public class DDSService implements IFuenteService {
                 .bodyToMono(HechosResponseDTO.class)
                 .map(dto -> dto.getHechos().stream()
                         .map(HechoMapper::aDominio)
-                        .toList()
-                )
-                .doOnNext(this::guardarHechosEnRepositorio);
+                        .toList())
+                .doOnNext(this::guardarHechosEnRepositorio); // 👈 se ejecuta
     }
 
     @Override
     public void guardarHechosEnRepositorio(List<Hecho> hechos) {
         LocalDateTime ahora = LocalDateTime.now();
+
         for (Hecho hecho : hechos) {
             hecho.setCreated_at(ahora);
-            // TODO: aplicar normalización si hace falta
             hechosRepository.save(hecho);
             System.out.println("💾 Guardado hecho: " + hecho.getTitulo());
         }
