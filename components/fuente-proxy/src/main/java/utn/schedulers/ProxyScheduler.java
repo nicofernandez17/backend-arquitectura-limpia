@@ -13,8 +13,8 @@ public class ProxyScheduler {
         this.proxyService = proxyService;
     }
 
-    
 
+    @Scheduled(cron = "0 */4 * * * *")
     public void cargarCSV() {
         System.out.println("Consumiendo API'S");
 

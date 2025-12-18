@@ -19,7 +19,7 @@ public class FuenteScheduler {
     }
 
     @Async
-    @Scheduled(cron = "0 */3 * * * *")
+    @Scheduled(cron = "0 */2 * * * *")
     public void actualizarColecciones() {
         agregadorService.cargarHechosYAsignar();
 
