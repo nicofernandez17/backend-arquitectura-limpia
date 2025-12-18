@@ -10,14 +10,12 @@ mvn clean install \
   -Dspotbugs.skip=true \
   -Dpmd.skip=true
 
-mkdir -p logs
+echo "Levantando TODOS los servicios Spring Boot (sin logs)..."
 
-echo "Levantando TODOS los servicios Spring Boot..."
+nohup java -jar agregador/target/agregador/agregador-1.0-SNAPSHOT.jar > /dev/null 2>&1 &
+nohup java -jar fuente-dinamica/target/agregador/fuente-dinamica-1.0-SNAPSHOT.jar > /dev/null 2>&1 &
+nohup java -jar fuente-proxy/target/fuente-proxy-1.0-SNAPSHOT.jar > /dev/null 2>&1 &
+nohup java -jar fuente-estatica/target/fuente-estatica-1.0-SNAPSHOT.jar > /dev/null 2>&1 &
+nohup java -jar utils/target/utils-1.0-SNAPSHOT.jar > /dev/null 2>&1 &
 
-nohup java -jar agregador/target/agregador/agregador-1.0-SNAPSHOT.jar > logs/agregador.log 2>&1 &
-nohup java -jar fuente-dinamica/target/agregador/fuente-dinamica-1.0-SNAPSHOT.jar > logs/fuente-dinamica.log 2>&1 &
-nohup java -jar fuente-proxy/target/fuente-proxy-1.0-SNAPSHOT.jar > logs/fuente-proxy.log 2>&1 &
-nohup java -jar fuente-estatica/target/fuente-estatica-1.0-SNAPSHOT.jar > logs/fuente-estatica.log 2>&1 &
-nohup java -jar utils/target/utils-1.0-SNAPSHOT.jar > logs/utils.log 2>&1 &
-
-echo "Todos los servicios levantados en segundo plano"
+echo "Todos los servicios levantados en segundo plano (sin logs)"
