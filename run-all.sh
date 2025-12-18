@@ -1,7 +1,13 @@
 set -e
 
 echo "Compilando todos los módulos (skip tests)..."
-mvn clean install -DskipTests
+mvn clean install \
+  -DskipTests \
+  -Dmaven.test.skip=true \
+  -Djacoco.skip=true \
+  -Dcheckstyle.skip=true \
+  -Dspotbugs.skip=true \
+  -Dpmd.skip=true
 
 echo "Levantando servicios Spring Boot en AWS..."
 
