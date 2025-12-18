@@ -65,11 +65,8 @@ public class ColeccionAdminController {
 
     // ======= ACTUALIZAR =======
     @PutMapping("/{id}")
-    public ResponseEntity<String> actualizar(
-            @PathVariable Long id,
-            @RequestParam String nuevoTitulo,
-            @RequestParam String nuevaDescripcion) {
-        coleccionService.actualizarColeccion(id, nuevoTitulo, nuevaDescripcion);
+    public ResponseEntity<String> actualizar(ColeccionDTO coleccionDTO) {
+        coleccionService.actualizarColeccion(coleccionDTO);
         return ResponseEntity.ok("Colección actualizada");
     }
 

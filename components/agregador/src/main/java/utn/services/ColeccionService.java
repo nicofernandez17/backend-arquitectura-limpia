@@ -75,11 +75,17 @@ public class ColeccionService {
         });
     }
 
-    public void actualizarColeccion(Long id, String nuevoTitulo, String nuevaDescripcion) {
-        coleccionRepository.findById(id).ifPresent(coleccion -> {
-            coleccion.setTitulo(nuevoTitulo);
-            coleccion.setDescripcion(nuevaDescripcion);
-            coleccionRepository.save(coleccion);
+    public void actualizarColeccion(ColeccionDTO coleccionDTO) {
+        // Convertir DTO → Domain usando el mapper
+        Coleccion coleccion = ColeccionMapper.toDomain(coleccionDTO, algoritmoConsensoResolver);
+
+        // Guardar en DB local
+        coleccionRepository.findById(coleccion.getId()).ifPresent(existing -> {
+            existing.setTitulo(coleccion.getTitulo());
+            existing.setDescripcion(coleccion.getDescripcion());
+            existing.setFuentes(coleccion.getFuentes());
+            existing.setAlgoritmo(coleccion.getAlgoritmo());
+            coleccionRepository.save(existing);
         });
     }
 
