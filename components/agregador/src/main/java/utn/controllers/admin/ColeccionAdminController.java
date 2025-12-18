@@ -63,12 +63,7 @@ public class ColeccionAdminController {
         return ResponseEntity.ok(hechosDTO);
     }
 
-    // ======= ACTUALIZAR =======
-    @PutMapping("/{id}")
-    public ResponseEntity<String> actualizar(ColeccionDTO coleccionDTO) {
-        coleccionService.actualizarColeccion(coleccionDTO);
-        return ResponseEntity.ok("Colección actualizada");
-    }
+
 
     // ======= ELIMINAR =======
     @DeleteMapping("/{id}")

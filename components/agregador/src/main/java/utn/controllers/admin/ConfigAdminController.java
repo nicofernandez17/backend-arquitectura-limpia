@@ -1,10 +1,11 @@
 package utn.controllers.admin;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import utn.models.algoritmos.IAlgoritmoConsenso;
+import utn.models.dtos.ColeccionDTO;
 import utn.models.helpers.FuenteNombre;
+import utn.services.ColeccionService;
 
 import java.util.Arrays;
 import java.util.List;
@@ -15,9 +16,11 @@ import java.util.Map;
 public class ConfigAdminController {
 
     private final Map<String, IAlgoritmoConsenso> algoritmos;
+    private final ColeccionService coleccionService;
 
-    public ConfigAdminController(Map<String, IAlgoritmoConsenso> algoritmos) {
+    public ConfigAdminController(Map<String, IAlgoritmoConsenso> algoritmos, ColeccionService coleccionService) {
         this.algoritmos = algoritmos;
+        this.coleccionService = coleccionService;
     }
 
 
@@ -35,6 +38,16 @@ public class ConfigAdminController {
         return Arrays.stream(FuenteNombre.values())
                 .map(Enum::name)
                 .toList();
+    }
+
+    @PutMapping("colecciones/{id}")
+    public ResponseEntity<String> actualizar(@RequestBody ColeccionDTO coleccionDTO) {
+        System.out.println(coleccionDTO);
+        coleccionService.actualizarColeccion(coleccionDTO);
+
+
+
+        return ResponseEntity.ok("Colección actualizada");
     }
 
 }
