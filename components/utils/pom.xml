@@ -14,13 +14,9 @@
     <name>utils</name>
 
     <dependencies>
-        <!-- Solo las dependencias específicas de este módulo -->
-        <!-- Ejemplo: -->
-        <!--
         <dependency>
-          <groupId>org.springframework.boot</groupId>
-          <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-        -->
     </dependencies>
 </project>
