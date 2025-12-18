@@ -14,13 +14,18 @@ public class ColeccionMapper {
     public static ColeccionDTO toDTO(Coleccion coleccion) {
         List<HechoDTO> hechoDTOList = coleccion.getHechos().stream()
                 .map(HechoMapper::aDTO)
-                .collect(Collectors.toList());
+                .toList();
+
+        List<String> fuentes = coleccion.getFuentes().stream()
+                .map(Enum::name)   // o FuenteNombre::name
+                .toList();
 
         return ColeccionDTO.builder()
                 .id(coleccion.getId())
                 .titulo(coleccion.getTitulo())
                 .descripcion(coleccion.getDescripcion())
                 .hechos(hechoDTOList)
+                .fuentes(fuentes)
                 .build();
     }
 
