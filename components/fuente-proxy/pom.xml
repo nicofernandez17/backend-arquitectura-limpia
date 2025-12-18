@@ -1,9 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
+    <!-- Herencia del pom padre -->
     <parent>
         <groupId>ar.edu.utn.frba.dds</groupId>
         <artifactId>ejercicio</artifactId>
@@ -14,6 +16,7 @@
     <artifactId>fuente-proxy</artifactId>
     <name>proxy</name>
 
+    <!-- Dependencias -->
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -33,12 +36,13 @@
         </dependency>
     </dependencies>
 
+    <!-- Build -->
     <build>
         <!-- Carpeta de salida personalizada -->
         <directory>${project.basedir}/target/agregador</directory>
 
         <plugins>
-            <!-- Compilador -->
+            <!-- Compilador Java 17 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -49,13 +53,12 @@
                 </configuration>
             </plugin>
 
-            <!-- Spring Boot plugin para boot jar ejecutable -->
+            <!-- Spring Boot plugin para generar boot jar ejecutable -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>3.4.4</version>
                 <configuration>
-                    <!-- Cambiar por tu clase principal real -->
                     <mainClass>utn.ProxyApp</mainClass>
                 </configuration>
             </plugin>
