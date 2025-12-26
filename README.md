@@ -1,80 +1,96 @@
-# java-base-project
+# Backend con Arquitectura Orientada a Servicios
 
-Esta es una plantilla de proyecto diseñada para: 
+Este proyecto es un **backend desarrollado en Java con Spring Boot**, diseñado bajo un **enfoque orientado a servicios** y comunicación mediante **APIs REST**, aplicando buenas prácticas de diseño, modularidad y desacople.
 
-* Java 17. :warning: Si bien el proyecto no lo limita explícitamente, el comando `mvn verify` no funcionará con versiones más antiguas de Java. 
-* JUnit 5. :warning: La versión 5 de JUnit es la más nueva del framework y presenta algunas diferencias respecto a la versión "clásica" (JUnit 4). Para mayores detalles, ver: 
-  *  [Apunte de herramientas](https://docs.google.com/document/d/1VYBey56M0UU6C0689hAClAvF9ILE6E7nKIuOqrRJnWQ/edit#heading=h.dnwhvummp994)
-  *  [Entrada de Blog (en inglés)](https://www.baeldung.com/junit-5-migration) 
-  *  [Entrada de Blog (en español)](https://www.paradigmadigital.com/dev/nos-espera-junit-5/)
-* Maven 3.8.1 o superior
+El sistema integra múltiples fuentes de información, centraliza la lógica de negocio y expone sus capacidades a un frontend completamente desacoplado.
 
-## Ejecutar tests
+---
 
-```
-mvn test
-```
+## 🧠 Visión General
 
-## Validar el proyecto de forma exahustiva
+La arquitectura se basa en **servicios independientes**, cada uno con una responsabilidad clara.  
+Estos servicios actúan como **fuentes de datos**, las cuales son consumidas y procesadas por un **servicio agregador**, encargado de aplicar la lógica de negocio y exponer la información de forma segura y eficiente.
 
-```
-mvn clean verify
-```
+---
 
-Este comando hará lo siguiente:
+## 🧩 Arquitectura de Servicios
 
- 1. Ejecutará los tests
- 2. Validará las convenciones de formato mediante checkstyle
- 3. Detectará la presencia de (ciertos) code smells
- 4. Validará la cobertura del proyecto
+### 🔹 Servicio de Fuente Dinámica
+- Permite la **carga manual de información**.
+- Expone endpoints REST para el ingreso de datos dinámicos.
+- Representa fuentes internas o datos ingresados por usuarios.
 
-## Entrega del proyecto
+### 🔹 Servicio de Fuente Estática
+- Encargado de la **carga de datos desde archivos CSV**.
+- Incluye un **lector de archivos** para procesar información estructurada.
+- Ideal para datasets históricos o fuentes predefinidas.
 
-Para entregar el proyecto, crear un tag llamado `entrega-final`. Es importante que antes de realizarlo se corra la validación
-explicada en el punto anterior. Se recomienda hacerlo de la siguiente forma:
+### 🔹 Servicio de Fuente Proxy
+- Permite el **consumo de APIs externas**.
+- Actúa como intermediario para desacoplar dependencias de terceros.
+- Facilita la adaptación y control sobre datos externos.
 
-```
-mvn clean verify && git tag entrega-final && git push origin HEAD --tags
-```
+### 🔹 Servicio Agregador
+- Núcleo del sistema.
+- **Centraliza la información** proveniente de todas las fuentes.
+- Implementa los **procesamientos y la lógica de negocio**.
+- Orquesta y consolida los datos para su posterior exposición.
 
-## Configuración del IDE (IntelliJ)
+---
 
-### Usar el SDK de Java 17
+## 🔗 Comunicación entre Servicios
+- Comunicación basada en **APIs REST**.
+- Servicios desacoplados y autónomos.
+- Arquitectura preparada para escalar y extender nuevas fuentes sin impactar el sistema existente.
 
-1. En **File/Project Structure...**, ir a **Project Settings | Project**
-2. En **Project SDK** seleccionar la versión 17 y en **Project language level** seleccionar `17 - Sealed types, always-strict floating-point semantics`
+---
 
-![image](https://user-images.githubusercontent.com/39303639/228126065-221b9851-fb96-4f7f-a8e1-010732dc7ef6.png)
+## 🔐 Seguridad
+El sistema se encuentra **securizado mediante Spring Security**, utilizando:
 
-### Usar fin de linea unix
-1. En **File/Settings...**, ir a **Editor | Code Style**.
-2. En la lista **Line separator**, seleccionar `Unix and OS X (\n)`.
+- **Autenticación basada en JWT (JSON Web Tokens)**.
+- Protección de endpoints según roles y permisos.
+- Manejo de sesiones stateless.
+- Separación clara entre autenticación, autorización y lógica de negocio.
 
-![image](https://user-images.githubusercontent.com/39303639/228126546-352289fa-8feb-4b39-99db-d8b860915fea.png)
+---
 
-### Tabular con dos espacios
+## 🧬 Exposición de Datos
+- El **Servicio Agregador expone una interfaz GraphQL**.
+- Permite consultas flexibles y eficientes según las necesidades del cliente.
+- Reduce el overfetching y underfetching de datos.
 
-1. En **File/Settings...**, ir a **Editor | Code Style | Java | Tabs and Indents**.
-2. Cambiar **Tab size**, **Indent** y **Continuation indent** a 2, 2 y 4 respectivamente:
+---
 
-![image](https://user-images.githubusercontent.com/39303639/228127009-8c84ea72-969b-4e05-b311-45e3688a4164.png)
+## 🖥️ Frontend
+- El backend provee información a un **frontend desarrollado en un proyecto independiente**.
+- Totalmente **desacoplado del backend**.
+- Comunicación mediante GraphQL y autenticación por JWT.
+- Facilita el desarrollo, despliegue y escalabilidad independiente de cada capa.
 
-### Ordenar los imports
+---
 
-1. En **File/Settings...**, ir a **Editor | Code Style | Java | Imports**.
-2. Cambiar **Class count to use import with '*'** y **Names count to use static import with '*'** a un número muy alto (ej: 99).
-3. En **Import Layout**, dejarlo como se muestra a continuación:
-    - `import static all other imports`
-    - `<blank line>`
-    - `import all other imports`
+## 🛠️ Tecnologías Utilizadas
+- Java
+- Spring Boot
+- Spring Web (REST)
+- Spring Security
+- JWT (JSON Web Tokens)
+- GraphQL
+- Procesamiento de archivos CSV
+- Consumo de APIs externas
+- Arquitectura orientada a servicios
 
-![image](https://user-images.githubusercontent.com/39303639/228126787-36f9ecff-27f2-4b99-bf11-a6bd89f67087.png)
+---
 
-### Instalar y configurar Checkstyle
+## 🎯 Objetivos del Proyecto
+- Aplicar principios de **arquitectura limpia y modular**.
+- Diseñar un backend **seguro y escalable**.
+- Integrar múltiples fuentes de información de forma desacoplada.
+- Centralizar la lógica de negocio en un servicio agregador.
+- Exponer datos de manera eficiente mediante **GraphQL**.
+- Demostrar un backend preparado para integrarse con frontends modernos.
 
-1. Instalar el plugin https://plugins.jetbrains.com/plugin/1065-checkstyle-idea:
-2. En **File/Settings...**, ir a **Tools | Checkstyle**.
-3. Configurarlo activando los Checks de Google y la versión de Checkstyle `== 9.0.1`:
+---
 
-![image](https://github.com/dds-utn/java-base-project/assets/11719816/b1edc122-4675-4f8d-bffc-9e3d3366fac6)
-
+Este repositorio busca reflejar **criterios de diseño, organización, seguridad y buenas prácticas** aplicables a sistemas backend reales y de nivel profesional.
